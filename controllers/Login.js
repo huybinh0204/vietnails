@@ -11,7 +11,7 @@ module.exports = {
         db.query(sql, [phone,password], (err, rown, fields) => {
             if (err) throw err
             try {
-                if (rown[0].is_active === 0 && rown != "") {
+                if (rown != "" && rown[0].is_active === 0) {
                     let payload = {
                         phone:phone,
                         password:password,
