@@ -1,5 +1,6 @@
 module.exports = {
     id:'id',
+    end_code:"end_code",
     title: 'title',
     number: 'number',
     date_favorable: 'date_favorable',

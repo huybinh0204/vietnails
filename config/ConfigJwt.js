@@ -21,7 +21,6 @@ module.exports = {
         db.query(sql_key, (err, rown_key, fields) => {
             if (err) throw err
             try {
-                console.log("11")
                 let payload = jwt.verify(jwt_token, rown_key[0].conten_config);
                 if (payload["type"] != 'access')
                     throw 'invalis JWT token';

@@ -49,7 +49,7 @@ module.exports = {
         let sql = 'UPDATE news_shop SET ? WHERE id = ?'
         db.query(sql, [data, NewsShopId], (err, response) => {
             if (err) throw err
-            res.json({"status": "200", shop: 'Update success!'})
+            res.json({"status": "200", shop: 'Update news_shop success!'})
         })
     },
     store: (req, res) => {

@@ -1,12 +1,25 @@
 const db = require('../service');
 const user_model = require('../models/User_model');
 var md5 = require('md5');
+var is_OFFSET = 0;
+var is_LIMIT = 10;
+var Eis_OFFSET;
 module.exports = {
     _get: (req, res) => {
         res.render('index', {title: 'VietNails', Get_api: 'api'});
     },
     get: (req, res) => {
-        let sql = `SELECT * FROM user WHERE is_active < 2`;
+        is_OFFSET = is_OFFSET + is_LIMIT
+        var sql='';
+        if (is_OFFSET <= 10){
+            sql = `SELECT * FROM user WHERE is_active < 2 LIMIT ${is_LIMIT} OFFSET 0 `;
+            console.log("3333",sql)
+        }else{
+            Eis_OFFSET = is_OFFSET - is_LIMIT;
+            sql = `SELECT * FROM user WHERE is_active < 2 LIMIT ${is_LIMIT} OFFSET ${Eis_OFFSET} `;
+            console.log("222",sql)
+        }
+
         db.query(sql, (err, rown, fields) => {
             if (err) throw err
             var obj = [];
@@ -33,7 +46,7 @@ module.exports = {
         })
     },
     detail: (req, res) => {
-        let sql = 'SELECT * FROM user WHERE id = ?'
+        let sql = 'SELECT * FROM user WHERE id = ? '
         db.query(sql, [req.params.userId], (err, rown, fields) => {
             if (err) throw err
             var obj = [];

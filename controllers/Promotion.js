@@ -1,5 +1,7 @@
 const db = require('../service');
 const promotion_model = require('../models/Promotion_model');
+const random_random = require("../config/OpenRoles");
+// mã khuyến mại
 module.exports = {
     get: (req, res) => {
         let sql = `SELECT * FROM promotion`;
@@ -9,6 +11,7 @@ module.exports = {
             for (var i = 0; i < rown.length; i++) {
                 var Arrpromotion = {
                     [promotion_model.id]: rown[i].id,
+                    [promotion_model.end_code]: rown[i].end_code,
                     [promotion_model.title]: rown[i].title,
                     [promotion_model.number]: rown[i].number,
                     [promotion_model.date_favorable]: rown[i].date_favorable,
@@ -25,12 +28,13 @@ module.exports = {
     },
     detail: (req, res) => {
         let sql = 'SELECT * FROM promotion WHERE id = ?'
-        db.query(sql, [req.params.promotionID], (err, rown, fields) => {
+        db.query(sql, [req.params.promotionId], (err, rown, fields) => {
             if (err) throw err
             var obj = [];
             for (var i = 0; i < rown.length; i++) {
                 var Arrpromotion = {
                     [promotion_model.id]: rown[i].id,
+                    [promotion_model.end_code]: rown[i].end_code,
                     [promotion_model.title]: rown[i].title,
                     [promotion_model.number]: rown[i].number,
                     [promotion_model.date_favorable]: rown[i].date_favorable,
@@ -47,17 +51,28 @@ module.exports = {
     },
     update: (req, res) => {
         let data = req.body;
-        let promotionID = req.params.promotionID;
-        let sql =`UPDATE promotion SET ? WHERE id = ?`;
-        db.query(sql, [data, promotionID], (err, response) => {
+        let promotionId = req.params.promotionId;
+        let sql = `UPDATE promotion SET ? WHERE id = ?`;
+        db.query(sql, [data, promotionId], (err, response) => {
             if (err) throw err
             res.json({"status": "200", "message": 'Update success!'})
         })
     },
     store: (req, res) => {
-        let data = req.body;
-        console.log("qqq",JSON.stringify(data))
-        if (JSON.stringify(data) != '{}'){
+        var end_code = random_random.randomString(8);
+        let title = req.body.title;
+        let number = req.body.number;
+        let date_favorable = req.body.date_favorable;
+        let come_date = req.body.come_date;
+        var data = {
+            end_code: end_code,
+            title: title,
+            number: number,
+            date_favorable: date_favorable,
+            come_date: come_date
+        }
+        console.log("qqq", JSON.stringify(data))
+        if (JSON.stringify(data) != '{}') {
             let sql = `INSERT INTO promotion SET ?`;
             db.query(sql, [data], (err, response) => {
                 if (err) throw err
@@ -75,6 +90,7 @@ module.exports = {
                         for (var i = 0; i < rown.length; i++) {
                             var Arrpromotion = {
                                 [promotion_model.id]: rown[i].id,
+                                [promotion_model.end_code]: rown[i].end_code,
                                 [promotion_model.title]: rown[i].title,
                                 [promotion_model.number]: rown[i].number,
                                 [promotion_model.date_favorable]: rown[i].date_favorable,
@@ -85,20 +101,24 @@ module.exports = {
                         }
                         var _Arrpromotion = JSON.stringify(obj);
                         var promotionJson = JSON.parse(_Arrpromotion);
-                        var ArrGetpromotion = [{"status": "200", message: 'Promotion INSERT Ok!', "data": promotionJson}]
+                        var ArrGetpromotion = [{
+                            "status": "200",
+                            message: 'Promotion INSERT Ok!',
+                            "data": promotionJson
+                        }]
                         res.json(ArrGetpromotion);
                     })
                 })
             })
-        }else {
+        } else {
             res.json({"status": "400", message: 'Promotion No INSERT !'});
         }
     },
     delete: (req, res) => {
         let sql = 'DELETE FROM promotion WHERE id = ?'
-        db.query(sql, [req.params.promotionID], (err, response) => {
+        db.query(sql, [req.params.promotionId], (err, response) => {
             if (err) throw err
-            res.json({"status": "200", message: 'Delete success!'})
+            res.json({"status": "200", shop: 'Delete promotion success!'})
         })
     }
 }

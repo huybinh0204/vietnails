@@ -1,7 +1,17 @@
 const db = require('../service');
+var is_OFFSET = 0;
+var is_LIMIT = 10;
+var Eis_OFFSET;
 module.exports = {
     get: (req, res) => {
-        let sql = `SELECT * FROM service_shop`;
+        is_OFFSET = is_OFFSET + is_LIMIT
+        var sql='';
+        if (is_OFFSET <= 10){
+            sql = `SELECT * FROM service_shop LIMIT ${is_LIMIT} OFFSET 0 `;
+        }else{
+            Eis_OFFSET = is_OFFSET - is_LIMIT;
+            sql = `SELECT * FROM service_shop LIMIT ${is_LIMIT} OFFSET ${Eis_OFFSET} `;
+        }
         db.query(sql, (err, rown, fields) => {
             if (err) throw err
             var obj = [];

@@ -1,7 +1,21 @@
-const db = require('../service');
-const user_model = require('../models/User_model');
+var express = require('express');
+var router = express.Router();
+var bodyParser = require('body-parser');
+var shortid=require('shortid');
+var multer = require('multer');
+router.use(bodyParser.json());
+
+let token_config = require('../config/ConfigJwt');
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/Image');
+
+    }, filename: function (req, file, cb) {
+        cb(null, shortid.generate() + "00" + file.originalname );
+    }
+});
+var upload = multer({ storage: storage });
 module.exports = function(app) {
-    let token_config = require('../config/ConfigJwt');
     let UserCtrl = require('../controllers/User');
     let ServiceCtrl = require('../controllers/Service_shop');
     let ScheduleCtrl = require('../controllers/Schedule');
@@ -9,6 +23,9 @@ module.exports = function(app) {
     let LoginCtrl = require('../controllers/Login');
     let NewsCtrl = require('../controllers/News_shop');
     let RolesCtrl = require('../controllers/Roles');
+    let PromotionCtrl= require('../controllers/Promotion');
+    let Single_wordCtrl= require('../controllers/Single_word');
+    let Schedule_historicalCtrl= require('../controllers/Schedule_historical');
 
     app.route('/')
         .get(UserCtrl._get)
@@ -17,12 +34,18 @@ module.exports = function(app) {
         .post(LoginCtrl.login_user);
     //
     // //roles
-    // app.route('/api/roles/')
-    //     .get(token_config.checkToken,RolesCtrl.get);
+
     // app.route('/api/roles/')
     //     .post(token_config.checkToken,RolesCtrl.store);
     // app.route('/api/roles/edit/:rolesId')
     //     .put(token_config.checkToken,RolesCtrl.update);
+
+    app.route('/api/roles/')
+        .get(token_config.checkToken,RolesCtrl.get);
+
+    // api user quản lý user (hien thi tat ca user)
+    app.route('/api/upload_file/')
+        .post(upload.single('image_file'),LoginCtrl.upload_file);
 
     // api user quản lý user (hien thi tat ca user)
     app.route('/api/user/')
@@ -113,21 +136,50 @@ module.exports = function(app) {
     //chi tiet hoas down
     app.route('/api/schedule/:scheduleId')
         .get(token_config.checkToken,ScheduleCtrl.detail);
+
     app.route('/api/schedule_list/:scheduleId')
         .get(token_config.checkToken,ScheduleCtrl.list_detail);
 
+//    nhân viên nhận đơn làm nails
+    app.route('/api/schedule_historical/:schedule_historicalID')
+        .post(token_config.checkToken,Schedule_historicalCtrl.store);
+    //    status 0 , 1 ,2 , 3 , 4
+    app.route('/api/schedule_historical/:schedule_historicalID')
+        .post(token_config.checkToken,Schedule_historicalCtrl.store);
+    //    lịch sử làm nhân viên làm nails
+    app.route('/api/schedule_historical/user/:schedule_historicalID')
+        .get(token_config.checkToken,Schedule_historicalCtrl.get);
+
+
+
 
 //    mã khuyến mại;
-    app.route('/api/news_shop/')
-        .get(token_config.checkToken,NewsCtrl.get);
-    app.route('/api/news_shop/')
-        .post(token_config.checkToken,NewsCtrl.store);
-    app.route('/api/news_shop/:NewsShopId')
-        .get(token_config.checkToken,NewsCtrl.detail);
-    app.route('/api/news_shop/edit/:NewsShopId')
-        .put(token_config.checkToken,NewsCtrl.update);
-    app.route('/api/news_shop/delete/:NewsShopId')
-        .delete(token_config.checkToken,NewsCtrl.delete);
+    app.route('/api/promotion/')
+        .get(token_config.checkToken,PromotionCtrl.get);
+    app.route('/api/promotion/')
+        .post(token_config.checkToken,PromotionCtrl.store);
+    app.route('/api/promotion/:promotionId')
+        .get(token_config.checkToken,PromotionCtrl.detail);
+    app.route('/api/promotion/edit/:promotionId')
+        .put(token_config.checkToken,PromotionCtrl.update);
+    app.route('/api/promotion/delete/:promotionId')
+        .delete(token_config.checkToken,PromotionCtrl.delete);
+
+    //    đơn từ nghỉ phép;
+    app.route('/api/single_word/')
+        .get(token_config.checkToken,Single_wordCtrl.get_list);
+    app.route('/api/single_word/user/:single_UserId')
+        .get(token_config.checkToken,Single_wordCtrl.get);
+    app.route('/api/single_word/')
+        .post(token_config.checkToken,Single_wordCtrl.store);
+    app.route('/api/single_word/:single_wordId')
+        .get(token_config.checkToken,Single_wordCtrl.detail);
+    //admin duyet + nhan vien sưa đơn từ
+    app.route('/api/single_word/edit/:single_wordId')
+        .put(token_config.checkToken,Single_wordCtrl.update);
+    app.route('/api/single_word/delete/:single_wordId')
+        .delete(token_config.checkToken,Single_wordCtrl.delete);
+
 
 
 };

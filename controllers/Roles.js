@@ -1,5 +1,6 @@
 const db = require('../service');
 const ruoles_model = require('../models/Roles_model');
+// loại quyền
 module.exports = {
     // get cac quyen khi taoj taif khaon quyen
     get: (req, res) => {

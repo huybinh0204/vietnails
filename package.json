@@ -20,6 +20,7 @@
     "nodemon": "^2.0.4",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "save": "^2.4.0"
+    "save": "^2.4.0",
+    "shortid": "^2.2.16"
   }
 }
