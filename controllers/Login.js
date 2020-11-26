@@ -2,9 +2,12 @@ const db = require('../service');
 const jwt = require('jsonwebtoken');
 var md5 = require('md5');
 const user_model = require('../models/User_model');
+var linkfile = require("../config/OpenRoles")
 module.exports = {
     upload_file: (req, res) => {
-        res.json({status: "200", error: false, message: 'Upload file OK!'});
+        var name_file = req.file.path.replace('public', '');
+        var image_file = linkfile.url + "/Image" + name_file.substr(6);
+        res.json({status: "200", error: false, message: 'Upload file OK!', data: [{image_file: image_file}]});
     },
     login_user: async (req, res) => {
         let phone = req.body.phone;
@@ -46,7 +49,7 @@ module.exports = {
                     console.log("err", e.toString())
                 }
             })
-        }else {
+        } else {
             res.json({status: "400", error: true, message: 'Login false!'});
         }
     }
