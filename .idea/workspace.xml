@@ -10,28 +10,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba4a68ca-13aa-4ecd-9129-6ded7f0d04bc" name="Default Changelist" comment="update 7">
-      <change afterPath="$PROJECT_DIR$/controllers/Schedule_historical.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/Single_word.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/Schedule_historical_model.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/Single_word_model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="ba4a68ca-13aa-4ecd-9129-6ded7f0d04bc" name="Default Changelist" comment="update 8">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/bin/www" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/ConfigJwt.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/ConfigJwt.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/News_shop.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/News_shop.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/Promotion.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Promotion.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/Roles.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Roles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/Schedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Schedule.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/Service_shop.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Service_shop.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/Promotion_model.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Promotion_model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/User_model.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/User_model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service.js" beforeDir="false" afterPath="$PROJECT_DIR$/service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +122,7 @@
       <workItem from="1606183043032" duration="2687000" />
       <workItem from="1606304179851" duration="275000" />
       <workItem from="1606309645696" duration="10177000" />
-      <workItem from="1606355974448" duration="927000" />
+      <workItem from="1606355974448" duration="1096000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1603607956124</created>
@@ -220,7 +201,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605750267056</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="update 8">
+      <created>1606356942293</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1606356942293</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -250,7 +238,8 @@
     <MESSAGE value="update 5" />
     <MESSAGE value="update 6" />
     <MESSAGE value="update 7" />
-    <option name="LAST_COMMIT_MESSAGE" value="update 7" />
+    <MESSAGE value="update 8" />
+    <option name="LAST_COMMIT_MESSAGE" value="update 8" />
   </component>
   <component name="WindowStateProjectService">
     <state x="569" y="325" key="#Notifications" timestamp="1605786428245">
@@ -293,15 +282,23 @@
     <state width="1659" height="252" key="GridCell.Tab.0.right/0.23.1680.942@0.23.1680.942" timestamp="1605784332038" />
     <state width="1659" height="252" key="GridCell.Tab.0.right/1680.23.1366.745/0.23.1680.942@0.23.1680.942" timestamp="1605073607696" />
     <state width="1659" height="254" key="GridCell.Tab.0.right/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1603877755726" />
+    <state x="168" y="106" key="MergeDialog" timestamp="1606357026568">
+      <screen x="0" y="23" width="1680" height="942" />
+    </state>
+    <state x="168" y="106" key="MergeDialog/0.23.1680.942@0.23.1680.942" timestamp="1606357026568" />
+    <state x="478" y="262" key="MultipleFileMergeDialog" timestamp="1606357026611">
+      <screen x="0" y="23" width="1680" height="942" />
+    </state>
+    <state x="478" y="262" key="MultipleFileMergeDialog/0.23.1680.942@0.23.1680.942" timestamp="1606357026611" />
     <state x="341" y="134" key="SettingsEditor" timestamp="1605783793864">
       <screen x="0" y="23" width="1680" height="942" />
     </state>
     <state x="341" y="134" key="SettingsEditor/0.23.1680.942@0.23.1680.942" timestamp="1605783793864" />
     <state x="341" y="135" key="SettingsEditor/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1604476552538" />
-    <state x="440" y="235" key="Vcs.Push.Dialog.v2" timestamp="1605750750992">
+    <state x="440" y="235" key="Vcs.Push.Dialog.v2" timestamp="1606356953028">
       <screen x="0" y="23" width="1680" height="942" />
     </state>
-    <state x="440" y="235" key="Vcs.Push.Dialog.v2/0.23.1680.942@0.23.1680.942" timestamp="1605750750992" />
+    <state x="440" y="235" key="Vcs.Push.Dialog.v2/0.23.1680.942@0.23.1680.942" timestamp="1606356953028" />
     <state x="440" y="236" key="Vcs.Push.Dialog.v2/0.23.1680.947@0.23.1680.947" timestamp="1603844947719" />
     <state x="440" y="236" key="Vcs.Push.Dialog.v2/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1603961279494" />
     <state x="538" y="249" width="604" height="490" key="find.popup" timestamp="1605809036888">
