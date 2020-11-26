@@ -57,7 +57,7 @@ module.exports = function(app) {
 
     // thêm tài khoản
     app.route('/api/user/')
-        .post(token_config.checkToken,UserCtrl.store);
+        .post(UserCtrl.store);
 
     // sử thông tin tài kh
     app.route('/api/user/edit/:userId')
