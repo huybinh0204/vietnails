@@ -13,6 +13,9 @@
     <list default="true" id="ba4a68ca-13aa-4ecd-9129-6ded7f0d04bc" name="Default Changelist" comment="update 8">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Service_shop.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Service_shop.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Service_shop_model.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Service_shop_model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +125,7 @@
       <workItem from="1606183043032" duration="2687000" />
       <workItem from="1606304179851" duration="275000" />
       <workItem from="1606309645696" duration="10177000" />
-      <workItem from="1606355974448" duration="1096000" />
+      <workItem from="1606355974448" duration="4045000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1603607956124</created>
@@ -208,7 +211,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606356942293</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="update 8">
+      <created>1606357096256</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1606357096256</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -295,10 +305,10 @@
     </state>
     <state x="341" y="134" key="SettingsEditor/0.23.1680.942@0.23.1680.942" timestamp="1605783793864" />
     <state x="341" y="135" key="SettingsEditor/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1604476552538" />
-    <state x="440" y="235" key="Vcs.Push.Dialog.v2" timestamp="1606356953028">
+    <state x="440" y="235" key="Vcs.Push.Dialog.v2" timestamp="1606357102573">
       <screen x="0" y="23" width="1680" height="942" />
     </state>
-    <state x="440" y="235" key="Vcs.Push.Dialog.v2/0.23.1680.942@0.23.1680.942" timestamp="1606356953028" />
+    <state x="440" y="235" key="Vcs.Push.Dialog.v2/0.23.1680.942@0.23.1680.942" timestamp="1606357102573" />
     <state x="440" y="236" key="Vcs.Push.Dialog.v2/0.23.1680.947@0.23.1680.947" timestamp="1603844947719" />
     <state x="440" y="236" key="Vcs.Push.Dialog.v2/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1603961279494" />
     <state x="538" y="249" width="604" height="490" key="find.popup" timestamp="1605809036888">

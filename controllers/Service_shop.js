@@ -22,7 +22,7 @@ module.exports = {
                     content: rown[i].content,
                     moneys_ser: rown[i].moneys_ser,
                     image: rown[i].image,
-                    created_at: rown[i].created_at,
+                    service_shop_time: rown[i].service_shop_time,
                     created_translate: rown[i].created_translate,
                 };
                 obj.push(ArrService);
@@ -45,7 +45,7 @@ module.exports = {
                     content: rown[i].content,
                     moneys_ser: rown[i].moneys_ser,
                     image: rown[i].image,
-                    created_at: rown[i].created_at,
+                    service_shop_time: rown[i].service_shop_time,
                     created_translate: rown[i].created_translate,
                 };
                 obj.push(ArrService);
@@ -89,7 +89,7 @@ module.exports = {
                                 content: rown[i].content,
                                 moneys_ser: rown[i].moneys_ser,
                                 image: rown[i].image,
-                                created_at: rown[i].created_at,
+                                service_shop_time: rown[i].service_shop_time,
                                 created_translate: rown[i].created_translate,
                             };
                             obj.push(ArrService);

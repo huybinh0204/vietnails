@@ -4,7 +4,7 @@ module.exports = {
     content: 'content',
     moneys_ser: 'moneys_ser',
     image: 'image',
-    created_at: 'created_at',
+    service_shop_time: 'service_shop_time',
     id_Shop: 'id_Shop',
     created_translate: 'created_translate',
 }
