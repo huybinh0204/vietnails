@@ -94,8 +94,9 @@ module.exports = {
             res.json(ArrGetsingle_word);
         })
     },
-    lis_detail: (req, res) => {
-        let sql = `SELECT * FROM single_word WHERE single_word.end_date >= "2020-11-23%" and single_word.begin_date <= "2020-11-23%"`
+    list_mployees: (req, res) => {
+        let begin_date = req.body.begin_date;
+        let sql = `SELECT * FROM single_word WHERE single_word.end_date >= "${begin_date}%" and single_word.begin_date <= "${begin_date}%"`
         db.query(sql, [req.params.single_wordId], (err, rown, fields) => {
                 if (err) throw err
 

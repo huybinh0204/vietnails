@@ -174,9 +174,9 @@ module.exports = function(app) {
     //    đơn từ nghỉ phép;
     app.route('/api/single_word/')
         .get(token_config.checkToken,Single_wordCtrl.get_list);
-
-    app.route('/api/single_word/a')
-        .get(Single_wordCtrl.lis_detail);
+    // nhân viên đi làm
+    app.route('/api/user_mployees/')
+        .post(token_config.checkToken,Single_wordCtrl.list_mployees);
 
     app.route('/api/single_word/user/:single_UserId')
         .get(token_config.checkToken,Single_wordCtrl.get);
