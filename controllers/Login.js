@@ -19,9 +19,9 @@ module.exports = {
                 try {
                     if (rown != "" && rown[0].is_active === 0) {
                         let payload = {
-                            phone: phone,
-                            password: password,
-                            id_roles: rown[0].id_roles,
+                            [user_model.id]: rown[0].id,
+                            [user_model.phone]: phone,
+                            [user_model.password]: password,
                             [user_model.email]: rown[0].email,
                             [user_model.fullName]: rown[0].fullName,
                             [user_model.id_roles]: rown[0].id_roles,
