@@ -6,10 +6,10 @@ var Eis_OFFSET;
 module.exports = {
     get_list: (req, res) => {
         is_OFFSET = is_OFFSET + is_LIMIT;
-        var sql='';
-        if (is_OFFSET <= 10){
+        var sql = '';
+        if (is_OFFSET <= 10) {
             sql = `SELECT * FROM single_word  ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET  0 `;
-        }else{
+        } else {
             Eis_OFFSET = is_OFFSET - is_LIMIT;
             sql = `SELECT * FROM single_word ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET ${Eis_OFFSET} `;
         }
@@ -38,14 +38,14 @@ module.exports = {
     },
     get: (req, res) => {
         is_OFFSET = is_OFFSET + is_LIMIT;
-        var sql='';
-        if (is_OFFSET <= 10){
+        var sql = '';
+        if (is_OFFSET <= 10) {
             sql = `SELECT * FROM single_word WHERE id_User = ? ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET  0 `;
-        }else{
+        } else {
             Eis_OFFSET = is_OFFSET - is_LIMIT;
             sql = `SELECT * FROM single_word WHERE id_User = ? ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET ${Eis_OFFSET} `;
         }
-        db.query(sql,[req.params.single_UserId], (err, rown, fields) => {
+        db.query(sql, [req.params.single_UserId], (err, rown, fields) => {
             if (err) throw err
             var obj = [];
             for (var i = 0; i < rown.length; i++) {
@@ -93,6 +93,13 @@ module.exports = {
             res.json(ArrGetsingle_word);
         })
     },
+    lis_detail: (req, res) => {
+        let sql = 'SELECT * FROM single_word'
+        db.query(sql, [req.params.single_wordId], (err, rown, fields) => {
+            if (err) throw err
+            res.json(rown);
+        })
+    },
     update: (req, res) => {
         let data = req.body;
         let single_wordId = req.params.single_wordId;
@@ -104,8 +111,8 @@ module.exports = {
     },
     store: (req, res) => {
         let data = req.body;
-        console.log("qqq",JSON.stringify(data))
-        if (JSON.stringify(data) != '{}'){
+        console.log("qqq", JSON.stringify(data))
+        if (JSON.stringify(data) != '{}') {
             let sql = `INSERT INTO single_word SET ?`;
             db.query(sql, [data], (err, response) => {
                 if (err) throw err
@@ -134,12 +141,16 @@ module.exports = {
                         }
                         var _Arrsingle_word = JSON.stringify(obj);
                         var single_wordJson = JSON.parse(_Arrsingle_word);
-                        var ArrGetsingle_word = [{"status": "200", message: 'Single_word INSERT Ok!', "data": single_wordJson}]
+                        var ArrGetsingle_word = [{
+                            "status": "200",
+                            message: 'Single_word INSERT Ok!',
+                            "data": single_wordJson
+                        }]
                         res.json(ArrGetsingle_word);
                     })
                 })
             })
-        }else {
+        } else {
             res.json({"status": "400", message: 'Single_word No INSERT !'});
         }
     },
