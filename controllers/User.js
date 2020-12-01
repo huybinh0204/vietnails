@@ -17,9 +17,7 @@ module.exports = {
         }else{
             Eis_OFFSET = is_OFFSET - is_LIMIT;
             sql = `SELECT * FROM user WHERE is_active < 2 LIMIT ${is_LIMIT} OFFSET ${Eis_OFFSET} `;
-            console.log("222",sql)
         }
-
         db.query(sql, (err, rown, fields) => {
             if (err) throw err
             var obj = [];
