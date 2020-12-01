@@ -104,8 +104,9 @@ module.exports = {
                     let id_roles = req.body.id_roles;
                     let id_Shop = req.body.id_Shop;
                     let email = req.body.email;
+                    let is_status = 1;
                     let sql = `INSERT INTO user SET ?`;
-                    db.query(sql, [{phone,password,fullName,id_roles,id_Shop,email}], (err, response) => {
+                    db.query(sql, [{phone,password,fullName,id_roles,id_Shop,email,is_status}], (err, response) => {
                         if (err) throw err
                         let sql = 'SELECT * FROM user WHERE phone = ?'
                         db.query(sql, [phone,password], (err, rown, fields) => {
