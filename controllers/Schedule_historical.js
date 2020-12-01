@@ -6,13 +6,13 @@ var Eis_OFFSET;
 module.exports = {
     get: (req, res) => {
         is_OFFSET = is_OFFSET + is_LIMIT;
-        var sql='';
-        if (is_OFFSET <= 10){
-            sql = `SELECT * FROM schedule_historical WHERE id_User = ? ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET  0 `;
-        }else{
-            Eis_OFFSET = is_OFFSET - is_LIMIT;
-            sql = `SELECT * FROM schedule_historical WHERE id_User = ? ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET ${Eis_OFFSET} `;
-        }
+        var sql= `SELECT * FROM schedule_historical WHERE id_User = ? ORDER BY id DESC`;
+        // if (is_OFFSET <= 10){
+        //     sql = `SELECT * FROM schedule_historical WHERE id_User = ? ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET  0 `;
+        // }else{
+        //     Eis_OFFSET = is_OFFSET - is_LIMIT;
+        //     sql = `SELECT * FROM schedule_historical WHERE id_User = ? ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET ${Eis_OFFSET} `;
+        // }
         db.query(sql,[req.params.schedule_historicalID], (err, rown, fields) => {
             if (err) throw err
             var obj = [];

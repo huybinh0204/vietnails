@@ -5,13 +5,13 @@ var Eis_OFFSET;
 module.exports = {
     get: (req, res) => {
         is_OFFSET = is_OFFSET + is_LIMIT
-        var sql='';
-        if (is_OFFSET <= 10){
-            sql = `SELECT * FROM service_shop LIMIT ${is_LIMIT} OFFSET 0 `;
-        }else{
-            Eis_OFFSET = is_OFFSET - is_LIMIT;
-            sql = `SELECT * FROM service_shop LIMIT ${is_LIMIT} OFFSET ${Eis_OFFSET} `;
-        }
+        var sql=`SELECT * FROM service_shop`;
+        // if (is_OFFSET <= 10){
+        //     sql = `SELECT * FROM service_shop LIMIT ${is_LIMIT} OFFSET 0 `;
+        // }else{
+        //     Eis_OFFSET = is_OFFSET - is_LIMIT;
+        //     sql = `SELECT * FROM service_shop LIMIT ${is_LIMIT} OFFSET ${Eis_OFFSET} `;
+        // }
         db.query(sql, (err, rown, fields) => {
             if (err) throw err
             var obj = [];

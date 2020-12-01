@@ -1,18 +1,19 @@
 const db = require('../service');
 const single_word_model = require('../models/Single_word_model');
+const user_model = require("../models/User_model");
 var is_OFFSET = 0;
 var is_LIMIT = 10;
 var Eis_OFFSET;
 module.exports = {
     get_list: (req, res) => {
         is_OFFSET = is_OFFSET + is_LIMIT;
-        var sql = '';
-        if (is_OFFSET <= 10) {
-            sql = `SELECT * FROM single_word  ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET  0 `;
-        } else {
-            Eis_OFFSET = is_OFFSET - is_LIMIT;
-            sql = `SELECT * FROM single_word ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET ${Eis_OFFSET} `;
-        }
+        var sql = `SELECT * FROM single_word  ORDER BY id DESC`;
+        // if (is_OFFSET <= 10) {
+        //     sql = `SELECT * FROM single_word  ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET  0 `;
+        // } else {
+        //     Eis_OFFSET = is_OFFSET - is_LIMIT;
+        //     sql = `SELECT * FROM single_word ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET ${Eis_OFFSET} `;
+        // }
         db.query(sql, (err, rown, fields) => {
             if (err) throw err
             var obj = [];
@@ -94,11 +95,23 @@ module.exports = {
         })
     },
     lis_detail: (req, res) => {
-        let sql = 'SELECT * FROM single_word'
+        let sql = `SELECT * FROM single_word WHERE single_word.end_date >= "2020-11-23%" and single_word.begin_date <= "2020-11-23%"`
         db.query(sql, [req.params.single_wordId], (err, rown, fields) => {
-            if (err) throw err
-            res.json(rown);
-        })
+                if (err) throw err
+
+                let sqlk = `SELECT * FROM user WHERE id_roles = 2 and is_active =0`;
+                db.query(sqlk, (err, rownn, fields) => {
+                    if (err) throw err
+                    var obj = [];
+                    var a = rown.map(x=>x.id_User);
+                    var b = rownn.map(y=>y.id);
+
+                    var _sqlkUser = JSON.stringify(obj);
+                    var sqlkUserJson = JSON.parse(_sqlkUser);
+                    res.json({"status": "200", "message": 'User  !', "data": sqlkUserJson})
+                })
+            }
+        )
     },
     update: (req, res) => {
         let data = req.body;
