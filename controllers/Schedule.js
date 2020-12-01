@@ -186,6 +186,33 @@ module.exports = {
         }
 
     },
+    Get_Open_Schedule: (req, res, next) => {
+        let start_time = req.body.start_time;
+        let id_User = req.body.id_User;
+        let sql = `SELECT * FROM schedule_details JOIN schedule ` +
+            `ON schedule_details.id_Schedule = schedule.id WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
+        console.log("12w")
+        db.query(sql, [start_time, req.params.start_time], (err, rown, fields) => {
+            if (err) throw err
+            var obj = [];
+            for (var i = 0; i < rown.length; i++) {
+                var ArrSchedule = {
+                    id: rown[i].id,
+                    code_schedule: rown[i].code_schedule,
+                    moneys: rown[i].moneys,
+                    working_time: rown[i].working_time,
+                    phone_kh: rown[i].phone_kh,
+                    id_Service_shop: rown[i].id_Service_shop,
+                    id_Schedule: rown[i].id_Schedule,
+                };
+                obj.push(ArrSchedule);
+            }
+            var _ArrSchedule = JSON.stringify(obj);
+            var ScheduleJson = JSON.parse(_ArrSchedule);
+            var ArrGetSchedule = [{"status": "200", "data": ScheduleJson}]
+            res.json(ArrGetSchedule);
+        })
+    },
 
     Open_Schedule: (req, res, next) => {
         // var d = new Date();
@@ -203,7 +230,7 @@ module.exports = {
         //-----------
         let start_time = req.body.start_time;
         let id_User = req.body.id_User;
-        let sql = `SELECT end_time,start_time,status,working_time FROM schedule_details JOIN schedule `+
+        let sql = `SELECT end_time,start_time,status,working_time FROM schedule_details JOIN schedule ` +
             `ON schedule_details.id_Schedule = schedule.id WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
 
         db.query(sql, [start_time, req.params.start_time], (err, rown, fields) => {

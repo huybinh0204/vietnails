@@ -130,9 +130,15 @@ module.exports = function(app) {
     //list thoi gian dat licj
     app.route('/api/schedule/:start_time')
         .post(token_config.checkToken,ScheduleCtrl.Open_Schedule);
+
+    //taoj hoas don
+    app.route('/api/schedule/history/:start_time')
+        .post(token_config.checkToken,ScheduleCtrl.Get_Open_Schedule);
+
     //taoj hoas don
     app.route('/api/schedule/')
         .post(token_config.checkToken,ScheduleCtrl.store);
+
     //chi tiet hoas down
     app.route('/api/schedule/:scheduleId')
         .get(token_config.checkToken,ScheduleCtrl.detail);
