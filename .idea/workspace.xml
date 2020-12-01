@@ -10,17 +10,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba4a68ca-13aa-4ecd-9129-6ded7f0d04bc" name="Default Changelist" comment="update 9">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VietNails_VIP.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/.Login.js.swo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/.Login.js.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/Single_word.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Single_word.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/n_vietnails.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service.js" beforeDir="false" afterPath="$PROJECT_DIR$/service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    <list default="true" id="ba4a68ca-13aa-4ecd-9129-6ded7f0d04bc" name="Default Changelist" comment="update b">
+      <change afterPath="$PROJECT_DIR$/vietnails_vi1p.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +128,7 @@
       <workItem from="1606373622421" duration="834000" />
       <workItem from="1606756293740" duration="7932000" />
       <workItem from="1606805127429" duration="1840000" />
-      <workItem from="1606809569959" duration="101000" />
+      <workItem from="1606809569959" duration="780000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1603607956124</created>
@@ -237,7 +228,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606360315730</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="update b">
+      <created>1606809805759</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1606809805759</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -269,7 +267,8 @@
     <MESSAGE value="update 7" />
     <MESSAGE value="update 8" />
     <MESSAGE value="update 9" />
-    <option name="LAST_COMMIT_MESSAGE" value="update 9" />
+    <MESSAGE value="update b" />
+    <option name="LAST_COMMIT_MESSAGE" value="update b" />
   </component>
   <component name="WindowStateProjectService">
     <state x="569" y="325" key="#Notifications" timestamp="1605786428245">
@@ -330,12 +329,12 @@
     </state>
     <state x="341" y="134" key="SettingsEditor/0.23.1680.942@0.23.1680.942" timestamp="1605783793864" />
     <state x="341" y="135" key="SettingsEditor/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1604476552538" />
-    <state x="440" y="235" key="Vcs.Push.Dialog.v2" timestamp="1606360341880">
-      <screen x="0" y="23" width="1680" height="942" />
+    <state x="440" y="236" key="Vcs.Push.Dialog.v2" timestamp="1606809841152">
+      <screen x="0" y="23" width="1680" height="947" />
     </state>
     <state x="440" y="235" key="Vcs.Push.Dialog.v2/0.23.1680.942@0.23.1680.942" timestamp="1606360341880" />
     <state x="440" y="236" key="Vcs.Push.Dialog.v2/0.23.1680.947@0.23.1680.947" timestamp="1603844947719" />
-    <state x="440" y="236" key="Vcs.Push.Dialog.v2/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1603961279494" />
+    <state x="440" y="236" key="Vcs.Push.Dialog.v2/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1606809841152" />
     <state x="538" y="249" width="604" height="490" key="find.popup" timestamp="1605809036888">
       <screen x="0" y="23" width="1680" height="942" />
     </state>
