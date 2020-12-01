@@ -158,27 +158,27 @@ module.exports = {
                         })
                     })
                     // INSERT INTO schedule_details
-                    // let sql_schedule_details = `SELECT id FROM schedule WHERE code_schedule ="${code_schedule}"`;
-                    // db.query(sql_schedule_details, (err, rowsk, response) => {
-                    //     if (err) throw err
-                    //     var id_Schedule = Number(rowsk.map(x => x.id).toString());
-                    //     for (var k = 0; k < id_schedule_details.length; k++) {
-                    //         var id_Service_shop = id_schedule_details[k].id_Service_shop;
-                    //         var working_time = id_schedule_details[k].working_time;
-                    //         var data_schedule_details = {
-                    //             phone_kh: phone_kh,
-                    //             id_User: id_User,
-                    //             id_Schedule: id_Schedule,
-                    //             id_Service_shop: id_Service_shop,
-                    //             working_time: working_time,
-                    //         }
-                    //         let is_sql_schedule_details = 'INSERT INTO schedule_details SET ?';
-                    //         db.query(is_sql_schedule_details, [data_schedule_details], (err, rown, fields) => {
-                    //             if (err) throw err
-                    //             console.log("Schedule_details INSERT OK")
-                    //         })
-                    //     }
-                    // })
+                    let sql_schedule_details = `SELECT id FROM schedule WHERE code_schedule ="${code_schedule}"`;
+                    db.query(sql_schedule_details, (err, rowsk, response) => {
+                        if (err) throw err
+                        var id_Schedule = Number(rowsk.map(x => x.id).toString());
+                        for (var k = 0; k < id_schedule_details.length; k++) {
+                            var id_Service_shop = id_schedule_details[k].id_Service_shop;
+                            var working_time = id_schedule_details[k].working_time;
+                            var data_schedule_details = {
+                                phone_kh: phone_kh,
+                                id_User: id_User,
+                                id_Schedule: id_Schedule,
+                                id_Service_shop: id_Service_shop,
+                                working_time: working_time,
+                            }
+                            let is_sql_schedule_details = 'INSERT INTO schedule_details SET ?';
+                            db.query(is_sql_schedule_details, [data_schedule_details], (err, rown, fields) => {
+                                if (err) throw err
+                                console.log("Schedule_details INSERT OK")
+                            })
+                        }
+                    })
                 })
             });
         } else {
@@ -204,7 +204,7 @@ module.exports = {
         let start_time = req.body.start_time;
         let id_User = req.body.id_User;
         let sql = `SELECT end_time,start_time,status,working_time FROM schedule_details JOIN schedule `+
-        `ON schedule_details.id_Schedule = schedule.id WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
+            `ON schedule_details.id_Schedule = schedule.id WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
 
         db.query(sql, [start_time, req.params.start_time], (err, rown, fields) => {
             if (err) throw err
