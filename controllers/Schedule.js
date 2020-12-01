@@ -189,29 +189,32 @@ module.exports = {
     Get_Open_Schedule: (req, res, next) => {
         let start_time = req.body.start_time;
         let id_User = req.body.id_User;
-        let sql = `SELECT * FROM schedule_details JOIN schedule ` +
-            `ON schedule_details.id_Schedule = schedule.id WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
-        console.log("12w")
-        db.query(sql, [start_time, req.params.start_time], (err, rown, fields) => {
-            if (err) throw err
-            var obj = [];
-            for (var i = 0; i < rown.length; i++) {
-                var ArrSchedule = {
-                    id: rown[i].id,
-                    code_schedule: rown[i].code_schedule,
-                    moneys: rown[i].moneys,
-                    working_time: rown[i].working_time,
-                    phone_kh: rown[i].phone_kh,
-                    id_Service_shop: rown[i].id_Service_shop,
-                    id_Schedule: rown[i].id_Schedule,
-                };
-                obj.push(ArrSchedule);
-            }
-            var _ArrSchedule = JSON.stringify(obj);
-            var ScheduleJson = JSON.parse(_ArrSchedule);
-            var ArrGetSchedule = [{"status": "200", "data": ScheduleJson}]
-            res.json(ArrGetSchedule);
-        })
+        if(start_time && id_User != undefined) {
+            let sql = `SELECT * FROM schedule_details JOIN schedule ` +
+                `ON schedule_details.id_Schedule = schedule.id WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
+            db.query(sql, [start_time, req.params.start_time], (err, rown, fields) => {
+                if (err) throw err
+                var obj = [];
+                for (var i = 0; i < rown.length; i++) {
+                    var ArrSchedule = {
+                        id: rown[i].id,
+                        code_schedule: rown[i].code_schedule,
+                        moneys: rown[i].moneys,
+                        working_time: rown[i].working_time,
+                        phone_kh: rown[i].phone_kh,
+                        id_Service_shop: rown[i].id_Service_shop,
+                        id_Schedule: rown[i].id_Schedule,
+                    };
+                    obj.push(ArrSchedule);
+                }
+                var _ArrSchedule = JSON.stringify(obj);
+                var ScheduleJson = JSON.parse(_ArrSchedule);
+                var ArrGetSchedule = [{"status": "200",message: 'schedule No INSERT !', "data": ScheduleJson}]
+                res.json(ArrGetSchedule);
+            })
+        }else {
+            res.json({ "status": "400", message: 'schedule No Get_Open_Schedule !'});
+        }
     },
 
     Open_Schedule: (req, res, next) => {
@@ -230,95 +233,63 @@ module.exports = {
         //-----------
         let start_time = req.body.start_time;
         let id_User = req.body.id_User;
-        let sql = `SELECT end_time,start_time,status,working_time FROM schedule_details JOIN schedule ` +
-            `ON schedule_details.id_Schedule = schedule.id WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
+        if(start_time && id_User != undefined) {
+            let sql = `SELECT end_time,start_time,status,working_time FROM schedule_details JOIN schedule ` +
+                `ON schedule_details.id_Schedule = schedule.id WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
+            console.log("11", sql)
+            db.query(sql, [start_time, req.params.start_time], (err, rown, fields) => {
+                if (err) throw err
+                var derts = ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00",
+                    "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30",
+                    "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00"];
+                var objN = [];
+                var ArrSchedule;
+                for (var i = 0; i < derts.length; i++) {
+                    var x = derts[i];
+                    if (rown.length > 0) {
+                        for (var k = 0; k < rown.length; k++) {
+                            var working_time = rown[k].working_time;
+                            var status = rown[k].status;
+                            var start_time = rown[k].start_time;
+                            var end_time = rown[k].end_time;
 
-        db.query(sql, [start_time, req.params.start_time], (err, rown, fields) => {
-            if (err) throw err
-            var derts = ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00",
-                "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30",
-                "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00"];
-
-            var objN = [];
-            var ArrSchedule;
-            for (var i = 0; i < derts.length; i++) {
-                var x = derts[i];
-                if (rown.length > 0) {
-                    for (var k = 0; k < rown.length; k++) {
-                        var working_time = rown[k].working_time;
-                        var status = rown[k].status;
-                        var start_time = rown[k].start_time;
-                        var end_time = rown[k].end_time;
-
-                        if (x == working_time) {
-                            ArrSchedule = {
-                                working_time: working_time,
-                                start_time: start_time,
-                                end_time: end_time,
-                                status: status,
-                            };
-                            ArrSchedule && objN.push(ArrSchedule)
-                            break
-                        } else {
-                            if (k == (rown.length - 1)) {
+                            if (x == working_time) {
                                 ArrSchedule = {
-                                    working_time: x,
-                                    status: 3,
+                                    working_time: working_time,
+                                    start_time: start_time,
+                                    end_time: end_time,
+                                    status: status,
                                 };
                                 ArrSchedule && objN.push(ArrSchedule)
+                                break
+                            } else {
+                                if (k == (rown.length - 1)) {
+                                    ArrSchedule = {
+                                        working_time: x,
+                                        status: 3,
+                                    };
+                                    ArrSchedule && objN.push(ArrSchedule)
+                                }
                             }
+
                         }
-
+                    } else {
+                        ArrSchedule = {
+                            working_time: x,
+                            status: 3,
+                        };
+                        ArrSchedule && objN.push(ArrSchedule)
                     }
-                } else {
-                    ArrSchedule = {
-                        working_time: x,
-                        status: 3,
-                    };
-                    ArrSchedule && objN.push(ArrSchedule)
-                }
 
-            }
-            // for (var i = 8; i < 22; i++) {
-            //     var l = 0;
-            //     while (l <= 30) {
-            //         var x;
-            //         if (i > 9) {
-            //             x = l == 0 ? (i + ":" + l + 0) : (i + ":" + l);
-            //         } else {
-            //             x = l == 0 ? ("0" + i + ":" + l + 0) : ("0" + i + ":" + l);
-            //         }
-            //         for (var k = 0; k < rown.length; k++) {
-            //             var working_time = rown[k].working_time;
-            //             var status = rown[k].status;
-            //             var start_time = rown[k].start_time;
-            //             var end_time = rown[k].end_time;
-            //             if (x == working_time) {
-            //                 ArrSchedule = {
-            //                     working_time: working_time,
-            //                     start_time: start_time,
-            //                     end_time: end_time,
-            //                     status: status,
-            //                 };
-            //                 ArrSchedule && objN.push(ArrSchedule)
-            //                 break
-            //             } else {
-            //                 if (k == (rown.length - 1)) {
-            //                     ArrSchedule = {
-            //                         working_time: x,
-            //                         status: 3,
-            //                     };
-            //                     ArrSchedule && objN.push(ArrSchedule)
-            //                 }
-            //             }
-            //
-            //         }
-            //         l = l + 30
-            //     }
-            // }
-            res.json(objN);
-        })
-    },
+                }
+                res.json(objN);
+            })
+        }else {
+            res.json({ "status": "400", message: 'schedule No Open_Schedule !',});
+
+        }
+    }
+    ,
     // store: (req, res) => {
     //     var code_schedule = random_random.randomString(10);
     //     let start_time = req.body.start_time;
