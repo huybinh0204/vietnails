@@ -39,13 +39,13 @@ module.exports = {
     },
     get: (req, res) => {
         is_OFFSET = is_OFFSET + is_LIMIT;
-        var sql = '';
-        if (is_OFFSET <= 10) {
-            sql = `SELECT * FROM single_word WHERE id_User = ? ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET  0 `;
-        } else {
-            Eis_OFFSET = is_OFFSET - is_LIMIT;
-            sql = `SELECT * FROM single_word WHERE id_User = ? ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET ${Eis_OFFSET} `;
-        }
+        var sql = `SELECT * FROM single_word WHERE id_User = ? ORDER BY id DESC`;
+        // if (is_OFFSET <= 10) {
+        //     sql = `SELECT * FROM single_word WHERE id_User = ? ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET  0 `;
+        // } else {
+        //     Eis_OFFSET = is_OFFSET - is_LIMIT;
+        //     sql = `SELECT * FROM single_word WHERE id_User = ? ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET ${Eis_OFFSET} `;
+        // }
         db.query(sql, [req.params.single_UserId], (err, rown, fields) => {
             if (err) throw err
             var obj = [];
@@ -65,7 +65,7 @@ module.exports = {
             }
             var _Arrsingle_word = JSON.stringify(obj);
             var single_wordJson = JSON.parse(_Arrsingle_word);
-            var ArrGetsingle_word = [{"status": "200", "data": single_wordJson}]
+            var ArrGetsingle_word = [{"status": "200","message": 'Single_word list !', "data": single_wordJson}]
             res.json(ArrGetsingle_word);
         })
     },
@@ -90,7 +90,7 @@ module.exports = {
             }
             var _Arrsingle_word = JSON.stringify(obj);
             var single_wordJson = JSON.parse(_Arrsingle_word);
-            var ArrGetsingle_word = [{"status": "200", "data": single_wordJson}]
+            var ArrGetsingle_word = [{"status": "200","message": 'Single_word detail !', "data": single_wordJson}]
             res.json(ArrGetsingle_word);
         })
     },
@@ -103,12 +103,26 @@ module.exports = {
                 db.query(sqlk, (err, rownn, fields) => {
                     if (err) throw err
                     var obj = [];
-                    var a = rown.map(x=>x.id_User);
-                    var b = rownn.map(y=>y.id);
-
-                    var _sqlkUser = JSON.stringify(obj);
-                    var sqlkUserJson = JSON.parse(_sqlkUser);
-                    res.json({"status": "200", "message": 'User  !', "data": sqlkUserJson})
+                    for (var i = 0; i < rownn.length; i++) {
+                        var ArrUser = {
+                            [user_model.id]: rownn[i].id,
+                            [user_model.phone]: rownn[i].phone,
+                            [user_model.email]: rownn[i].email,
+                            [user_model.fullName]: rownn[i].fullName,
+                            [user_model.id_roles]: rownn[i].id_roles,
+                            [user_model.avatar]: rownn[i].avatar,
+                            [user_model.address]: rownn[i].address,
+                            [user_model.birthday]: rownn[i].birthday,
+                            [user_model.gender]: rownn[i].gender,
+                            [user_model.is_active]: rownn[i].is_active,
+                            [user_model.created_user]: rownn[i].created_user
+                        };
+                        obj.push(ArrUser);
+                    }
+                    var _ArrUser = JSON.stringify(obj);
+                    var UserJson = JSON.parse(_ArrUser);
+                    var ArrGetUser = [{"status": "200","message": 'User mployees go to work!', "data": UserJson}]
+                    res.json( ArrGetUser)
                 })
             }
         )
