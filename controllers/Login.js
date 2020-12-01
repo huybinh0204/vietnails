@@ -37,7 +37,7 @@ module.exports = {
                             if (err) throw err
                             let token = jwt.sign(payload, rown_key[0].conten_config, {
                                 algorithm: 'HS256',
-                                expiresIn: 360000
+                                expiresIn: 5184000
                             })
                             console.log("access")
                             res.json({status: "200", error: false, message: 'Login true!', "token": token});
