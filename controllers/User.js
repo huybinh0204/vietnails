@@ -10,14 +10,14 @@ module.exports = {
     },
     get: (req, res) => {
         is_OFFSET = is_OFFSET + is_LIMIT
-        var sql='';
-        if (is_OFFSET <= 10){
-            sql = `SELECT * FROM user WHERE is_active < 2 LIMIT ${is_LIMIT} OFFSET 0 `;
-            console.log("3333",sql)
-        }else{
-            Eis_OFFSET = is_OFFSET - is_LIMIT;
-            sql = `SELECT * FROM user WHERE is_active < 2 LIMIT ${is_LIMIT} OFFSET ${Eis_OFFSET} `;
-        }
+        var sql=`SELECT * FROM user WHERE is_active < 2`;
+        // if (is_OFFSET <= 10){
+        //     sql = `SELECT * FROM user WHERE is_active < 2 LIMIT ${is_LIMIT} OFFSET 0 `;
+        //     // console.log("3333",sql)
+        // }else{
+        //     Eis_OFFSET = is_OFFSET - is_LIMIT;
+        //     sql = `SELECT * FROM user WHERE is_active < 2 LIMIT ${is_LIMIT} OFFSET ${Eis_OFFSET} `;
+        // }
         db.query(sql, (err, rown, fields) => {
             if (err) throw err
             var obj = [];
