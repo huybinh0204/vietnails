@@ -5,7 +5,7 @@ var is_LIMIT = 10;
 var Eis_OFFSET;
 module.exports = {
     get: (req, res) => {
-        is_OFFSET = is_OFFSET + is_LIMIT;
+        // is_OFFSET = is_OFFSET + is_LIMIT;
         var sql= `SELECT * FROM schedule_historical WHERE id_User = ? ORDER BY id DESC`;
         // if (is_OFFSET <= 10){
         //     sql = `SELECT * FROM schedule_historical WHERE id_User = ? ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET  0 `;

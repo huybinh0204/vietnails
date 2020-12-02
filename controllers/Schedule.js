@@ -101,7 +101,7 @@ module.exports = {
         let phone_kh = req.body.phone_kh;
         let id_User = req.body.id_User;
 
-        if (start_time && end_time && moneys && id_Shop && id_promotion && content_schedule != null) {
+        if (start_time && end_time && moneys && id_Shop && id_promotion && content_schedule != null || undefined) {
             let sql = `SELECT number FROM promotion WHERE id =${id_promotion}`;
             db.query(sql, (err, rows, response) => {
                 if (err) throw err

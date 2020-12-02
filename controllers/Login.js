@@ -6,13 +6,19 @@ var linkfile = require("../config/OpenRoles")
 module.exports = {
     upload_file: (req, res) => {
         var name_file = req.file.path.replace('public', '');
-        var image_file = linkfile.url + "/Image" + name_file.substr(6);
-        res.json({status: "200", error: false, message: 'Upload file OK!', data: [{image_file: image_file}]});
+        var name_str = name_file.substr(7)
+        if (name_str != "aa.png"){
+            var image_file = linkfile.url + "/Image/" + name_str;
+            res.json({status: "200", error: false, message: 'Upload file OK!', data: [{image_file: image_file}]});
+        }else {
+            res.json({status: "400", error: true, message: 'NO Upload file!'});
+        }
     },
     login_user: async (req, res) => {
         let phone = req.body.phone;
         let password = req.body.password;
-        if (phone && password != "") {
+        console.log("12",phone + ":",password)
+        if (phone && password != undefined || '') {
             var sql = `SELECT * FROM user WHERE phone = "${phone}" and password = "${md5(password)}"`;
             db.query(sql, [phone, password], (err, rown, fields) => {
                 if (err) throw err

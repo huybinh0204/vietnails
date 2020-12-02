@@ -6,7 +6,7 @@ var is_LIMIT = 10;
 var Eis_OFFSET;
 module.exports = {
     get_list: (req, res) => {
-        is_OFFSET = is_OFFSET + is_LIMIT;
+        // is_OFFSET = is_OFFSET + is_LIMIT;
         var sql = `SELECT * FROM single_word  ORDER BY id DESC`;
         // if (is_OFFSET <= 10) {
         //     sql = `SELECT * FROM single_word  ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET  0 `;
@@ -38,7 +38,7 @@ module.exports = {
         })
     },
     get: (req, res) => {
-        is_OFFSET = is_OFFSET + is_LIMIT;
+        // is_OFFSET = is_OFFSET + is_LIMIT;
         var sql = `SELECT * FROM single_word WHERE id_User = ? ORDER BY id DESC`;
         // if (is_OFFSET <= 10) {
         //     sql = `SELECT * FROM single_word WHERE id_User = ? ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET  0 `;
@@ -99,7 +99,6 @@ module.exports = {
         let sql = `SELECT * FROM single_word WHERE single_word.end_date >= "${begin_date}%" and single_word.begin_date <= "${begin_date}%"`
         db.query(sql, [req.params.single_wordId], (err, rown, fields) => {
                 if (err) throw err
-
                 let sqlk = `SELECT * FROM user WHERE id_roles = 2 and is_active =0`;
                 db.query(sqlk, (err, rownn, fields) => {
                     if (err) throw err

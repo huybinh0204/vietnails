@@ -9,5 +9,5 @@ module.exports = {
         return randomString;
     }
 }
-module.exports.url = 'http://localhost:3000'
+module.exports.url = 'http://vietnails.cf'
 
