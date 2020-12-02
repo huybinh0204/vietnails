@@ -55,7 +55,7 @@ module.exports = {
         })
     },
     list_detail: (req, res) => {
-        let scheduleId  = req.params.scheduleId;
+        let scheduleId = req.params.scheduleId;
         let sql = `SELECT DISTINCT schedule.id, code_schedule,start_time,moneys,minus_point,phone_nv,content_schedule FROM schedule ` +
             `JOIN schedule_details ON schedule_details.id_Schedule = schedule.id WHERE schedule_details.id_User = ${scheduleId}`;
         // console.log("123",sql)
@@ -120,70 +120,64 @@ module.exports = {
                     minus_point: minus_point,
                     id_Shop: id_Shop,
                     id_promotion: id_promotion,
-                    id_User:id_User_nv,
+                    id_User: id_User_nv,
                     content_schedule: content_schedule,
                     status: 0
                 }
                 let sql = `INSERT INTO schedule SET ?`;
                 db.query(sql, [data], (err, response) => {
                     if (err) throw err
-                    let sqlSELECT = `SELECT MAX(id) as id FROM schedule`;
-                    db.query(sqlSELECT, (err, rownM, fields) => {
+                    let _sqlSELECT = 'SELECT * FROM schedule ORDER BY id DESC LIMIT 1';
+                    db.query(_sqlSELECT, [ServiceJson], (err, rown, fields) => {
                         if (err) throw err
-                        const Idmap = rownM.map(x => x.id);
-                        var ServiceJson = JSON.parse(Idmap);
-                        let _sqlSELECT = 'SELECT * FROM schedule WHERE id = ?';
-                        db.query(_sqlSELECT, [ServiceJson], (err, rown, fields) => {
-                            if (err) throw err
-                            var obj = [];
-                            for (var i = 0; i < rown.length; i++) {
-                                var ArrSchedule = {
-                                    id: rown[i].id,
-                                    code_schedule: rown[i].code_schedule,
-                                    start_time: rown[i].start_time,
-                                    end_time: rown[i].end_time,
-                                    moneys: rown[i].moneys,
-                                    minus_point: rown[i].minus_point,
-                                    phone_nv: rown[i].phone_nv,
-                                    status: rown[i].status,
-                                    Username: rown[i].Username,
-                                    content_schedule: rown[i].content_schedule,
-                                    created_schedule: rown[i].created_schedule,
-                                };
-                                obj.push(ArrSchedule);
-                            }
-                            var _ArrSchedule = JSON.stringify(obj);
-                            var ScheduleJson = JSON.parse(_ArrSchedule);
-                            var ArrGetSchedule = [{
-                                "status": "200",
-                                message: 'Schedule INSERT Ok!',
-                                "data": ScheduleJson
-                            }]
-                            res.json(ArrGetSchedule);
-                        })
-                    })
-                    // INSERT INTO schedule_details
-                    let sql_schedule_details = `SELECT id FROM schedule WHERE code_schedule ="${code_schedule}"`;
-                    db.query(sql_schedule_details, (err, rowsk, response) => {
-                        if (err) throw err
-                        var id_Schedule = Number(rowsk.map(x => x.id).toString());
-                        for (var k = 0; k < id_schedule_details.length; k++) {
-                            var id_Service_shop = id_schedule_details[k].id_Service_shop;
-                            var working_time = id_schedule_details[k].working_time;
-                            var data_schedule_details = {
-                                phone_kh: phone_kh,
-                                id_User: id_User,
-                                id_Schedule: id_Schedule,
-                                id_Service_shop: id_Service_shop,
-                                working_time: working_time,
-                            }
-                            let is_sql_schedule_details = 'INSERT INTO schedule_details SET ?';
-                            db.query(is_sql_schedule_details, [data_schedule_details], (err, rown, fields) => {
-                                if (err) throw err
-                                console.log("Schedule_details INSERT OK")
-                            })
+                        var obj = [];
+                        for (var i = 0; i < rown.length; i++) {
+                            var ArrSchedule = {
+                                id: rown[i].id,
+                                code_schedule: rown[i].code_schedule,
+                                start_time: rown[i].start_time,
+                                end_time: rown[i].end_time,
+                                moneys: rown[i].moneys,
+                                minus_point: rown[i].minus_point,
+                                phone_nv: rown[i].phone_nv,
+                                status: rown[i].status,
+                                Username: rown[i].Username,
+                                content_schedule: rown[i].content_schedule,
+                                created_schedule: rown[i].created_schedule,
+                            };
+                            obj.push(ArrSchedule);
                         }
+                        var _ArrSchedule = JSON.stringify(obj);
+                        var ScheduleJson = JSON.parse(_ArrSchedule);
+                        var ArrGetSchedule = [{
+                            "status": "200",
+                            message: 'Schedule INSERT Ok!',
+                            "data": ScheduleJson
+                        }]
+                        res.json(ArrGetSchedule);
                     })
+                })
+                // INSERT INTO schedule_details
+                let sql_schedule_details = `SELECT id FROM schedule WHERE code_schedule ="${code_schedule}"`;
+                db.query(sql_schedule_details, (err, rowsk, response) => {
+                    if (err) throw err
+                    var id_Schedule = Number(rowsk.map(x => x.id).toString());
+                    for (var k = 0; k < id_schedule_details.length; k++) {
+                        var id_Service_shop = id_schedule_details[k].id_Service_shop;
+                        var working_time = id_schedule_details[k].working_time;
+                        var data_schedule_details = {
+                            phone_kh: phone_kh,
+                            id_User: id_User,
+                            id_Schedule: id_Schedule,
+                            id_Service_shop: id_Service_shop,
+                            working_time: working_time,
+                        }
+                        let is_sql_schedule_details = 'INSERT INTO schedule_details SET ?';
+                        db.query(is_sql_schedule_details, [data_schedule_details], (err, rown, fields) => {
+                            if (err) throw err
+                            console.log("Schedule_details INSERT OK")
+                        })
+                    }
                 })
             });
         } else {
@@ -193,7 +187,7 @@ module.exports = {
     Get_Open_Schedule: (req, res, next) => {
         let start_time = req.body.start_time;
         let id_User = req.body.id_User;
-        if(start_time && id_User != undefined) {
+        if (start_time && id_User != undefined) {
             let sql = `SELECT * FROM schedule_details JOIN schedule ` +
                 `ON schedule_details.id_Schedule = schedule.id WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
             db.query(sql, [start_time, req.params.start_time], (err, rown, fields) => {
@@ -213,11 +207,11 @@ module.exports = {
                 }
                 var _ArrSchedule = JSON.stringify(obj);
                 var ScheduleJson = JSON.parse(_ArrSchedule);
-                var ArrGetSchedule = [{"status": "200",message: 'schedule No INSERT !', "data": ScheduleJson}]
+                var ArrGetSchedule = [{"status": "200", message: 'schedule No INSERT !', "data": ScheduleJson}]
                 res.json(ArrGetSchedule);
             })
-        }else {
-            res.json({ "status": "400", message: 'schedule No Get_Open_Schedule !'});
+        } else {
+            res.json({"status": "400", message: 'schedule No Get_Open_Schedule !'});
         }
     },
 
@@ -237,9 +231,9 @@ module.exports = {
         //-----------
         let start_time = req.body.start_time;
         let id_User = req.body.id_User;
-        if(start_time && id_User != undefined) {
-            let sql = `SELECT end_time,start_time,status,working_time FROM schedule_details JOIN schedule ON `+
-            `schedule_details.id_Schedule = schedule.id WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
+        if (start_time && id_User != undefined) {
+            let sql = `SELECT end_time,start_time,status,working_time FROM schedule_details JOIN schedule ON ` +
+                `schedule_details.id_Schedule = schedule.id WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
             console.log("11", sql)
             db.query(sql, [start_time, req.params.start_time], (err, rown, fields) => {
                 if (err) throw err
@@ -288,8 +282,8 @@ module.exports = {
                 }
                 res.json(objN);
             })
-        }else {
-            res.json({ "status": "400", message: 'schedule No Open_Schedule !',});
+        } else {
+            res.json({"status": "400", message: 'schedule No Open_Schedule !',});
 
         }
     }

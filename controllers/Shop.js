@@ -62,42 +62,36 @@ module.exports = {
     },
     store: (req, res) => {
         let data = req.body;
-        console.log("qqq",JSON.stringify(data))
-        if (JSON.stringify(data) != '{}'){
+        console.log("qqq", JSON.stringify(data))
+        if (JSON.stringify(data) != '{}') {
             let sql = `INSERT INTO shop SET ?`;
             db.query(sql, [data], (err, response) => {
                 if (err) throw err
-                let sqlSELECT = `SELECT MAX(id) as id FROM shop`;
-                db.query(sqlSELECT, (err, rownM, fields) => {
+                let _sqlSELECT = 'SELECT * FROM shop ORDER BY id DESC LIMIT 1'
+                db.query(_sqlSELECT, (err, rown, fields) => {
                     if (err) throw err
-                    const Idmap = rownM.map(x => x.id);
-                    var ShopJson = JSON.parse(Idmap);
-                    let _sqlSELECT = 'SELECT * FROM shop WHERE id = ?'
-                    db.query(_sqlSELECT, [ShopJson], (err, rown, fields) => {
-                        if (err) throw err
-                        var obj = [];
-                        for (var i = 0; i < rown.length; i++) {
-                            var ArrShop = {
-                                [shop_model.id]: rown[i].id,
-                                [shop_model.title]: rown[i].title,
-                                [shop_model.content]: rown[i].content,
-                                [shop_model.image]: rown[i].image,
-                                [shop_model.address]: rown[i].address,
-                                [shop_model.longitude]: rown[i].longitude,
-                                [shop_model.latitude]: rown[i].latitude,
-                                [shop_model.status_shop]: rown[i].status_shop,
-                                [shop_model.created_sh]: rown[i].created_sh,
-                            };
-                            obj.push(ArrShop);
-                        }
-                        var _ArrShop = JSON.stringify(obj);
-                        var ShopJson = JSON.parse(_ArrShop);
-                        var ArrGetShop = [{"status": "200", message: 'Shop INSERT Ok!', "data": ShopJson}]
-                        res.json(ArrGetShop);
-                    })
+                    var obj = [];
+                    for (var i = 0; i < rown.length; i++) {
+                        var ArrShop = {
+                            [shop_model.id]: rown[i].id,
+                            [shop_model.title]: rown[i].title,
+                            [shop_model.content]: rown[i].content,
+                            [shop_model.image]: rown[i].image,
+                            [shop_model.address]: rown[i].address,
+                            [shop_model.longitude]: rown[i].longitude,
+                            [shop_model.latitude]: rown[i].latitude,
+                            [shop_model.status_shop]: rown[i].status_shop,
+                            [shop_model.created_sh]: rown[i].created_sh,
+                        };
+                        obj.push(ArrShop);
+                    }
+                    var _ArrShop = JSON.stringify(obj);
+                    var ShopJson = JSON.parse(_ArrShop);
+                    var ArrGetShop = [{"status": "200", message: 'Shop INSERT Ok!', "data": ShopJson}]
+                    res.json(ArrGetShop);
                 })
             })
-        }else {
+        } else {
             res.json({"status": "400", message: 'Shop No INSERT !'});
         }
     },

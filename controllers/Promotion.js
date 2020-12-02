@@ -76,38 +76,30 @@ module.exports = {
             let sql = `INSERT INTO promotion SET ?`;
             db.query(sql, [data], (err, response) => {
                 if (err) throw err
-                let sqlSELECT = `SELECT MAX(id) as id FROM promotion`;
-                db.query(sqlSELECT, (err, rownM, fields) => {
+                let _sqlSELECT = 'SELECT * FROM promotion ORDER BY id DESC LIMIT 1'
+                db.query(_sqlSELECT, [ShopJson], (err, rown, fields) => {
                     if (err) throw err
-
-                    const Idmap = rownM.map(x => x.id);
-                    var ShopJson = JSON.parse(Idmap);
-
-                    let _sqlSELECT = 'SELECT * FROM promotion WHERE id = ?'
-                    db.query(_sqlSELECT, [ShopJson], (err, rown, fields) => {
-                        if (err) throw err
-                        var obj = [];
-                        for (var i = 0; i < rown.length; i++) {
-                            var Arrpromotion = {
-                                [promotion_model.id]: rown[i].id,
-                                [promotion_model.end_code]: rown[i].end_code,
-                                [promotion_model.title]: rown[i].title,
-                                [promotion_model.number]: rown[i].number,
-                                [promotion_model.date_favorable]: rown[i].date_favorable,
-                                [promotion_model.come_date]: rown[i].come_date,
-                                [promotion_model.created_special]: rown[i].created_special,
-                            };
-                            obj.push(Arrpromotion);
-                        }
-                        var _Arrpromotion = JSON.stringify(obj);
-                        var promotionJson = JSON.parse(_Arrpromotion);
-                        var ArrGetpromotion = [{
-                            "status": "200",
-                            message: 'Promotion INSERT Ok!',
-                            "data": promotionJson
-                        }]
-                        res.json(ArrGetpromotion);
-                    })
+                    var obj = [];
+                    for (var i = 0; i < rown.length; i++) {
+                        var Arrpromotion = {
+                            [promotion_model.id]: rown[i].id,
+                            [promotion_model.end_code]: rown[i].end_code,
+                            [promotion_model.title]: rown[i].title,
+                            [promotion_model.number]: rown[i].number,
+                            [promotion_model.date_favorable]: rown[i].date_favorable,
+                            [promotion_model.come_date]: rown[i].come_date,
+                            [promotion_model.created_special]: rown[i].created_special,
+                        };
+                        obj.push(Arrpromotion);
+                    }
+                    var _Arrpromotion = JSON.stringify(obj);
+                    var promotionJson = JSON.parse(_Arrpromotion);
+                    var ArrGetpromotion = [{
+                        "status": "200",
+                        message: 'Promotion INSERT Ok!',
+                        "data": promotionJson
+                    }]
+                    res.json(ArrGetpromotion);
                 })
             })
         } else {
