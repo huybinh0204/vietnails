@@ -55,9 +55,11 @@ module.exports = {
         })
     },
     list_detail: (req, res) => {
+        let scheduleId  = req.params.scheduleId;
         let sql = `SELECT DISTINCT schedule.id, code_schedule,start_time,moneys,minus_point,phone_nv,content_schedule FROM schedule ` +
-            `JOIN schedule_details ON schedule_details.id_Schedule = schedule.id WHERE schedule_details.id_User = ?`;
-        db.query(sql, [req.params.scheduleId], (err, rown, fields) => {
+            `JOIN schedule_details ON schedule_details.id_Schedule = schedule.id WHERE schedule_details.id_User = ${scheduleId}`;
+        // console.log("123",sql)
+        db.query(sql, [scheduleId], (err, rown, fields) => {
             if (err) throw err
             var obj = [];
             for (var i = 0; i < rown.length; i++) {
