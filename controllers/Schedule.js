@@ -102,6 +102,7 @@ module.exports = {
         let id_schedule_details = req.body.id_schedule_details;
         let phone_kh = req.body.phone_kh;
         let id_User = req.body.id_User;
+        let id_User_nv = req.body.id_User_nv;
 
         if (start_time && end_time && moneys && id_Shop && id_promotion && content_schedule != null || undefined) {
             let sql = `SELECT number FROM promotion WHERE id =${id_promotion}`;
@@ -118,6 +119,7 @@ module.exports = {
                     minus_point: minus_point,
                     id_Shop: id_Shop,
                     id_promotion: id_promotion,
+                    id_User:id_User_nv,
                     content_schedule: content_schedule,
                     status: 0
                 }
@@ -236,8 +238,8 @@ module.exports = {
         let start_time = req.body.start_time;
         let id_User = req.body.id_User;
         if(start_time && id_User != undefined) {
-            let sql = `SELECT end_time,start_time,status,working_time FROM schedule_details JOIN schedule ` +
-                `ON schedule_details.id_Schedule = schedule.id WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
+            let sql = `SELECT end_time,start_time,status,working_time FROM schedule_details JOIN schedule ON `+
+            `schedule_details.id_Schedule = schedule.id WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
             console.log("11", sql)
             db.query(sql, [start_time, req.params.start_time], (err, rown, fields) => {
                 if (err) throw err
