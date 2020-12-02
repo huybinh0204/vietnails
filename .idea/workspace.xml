@@ -10,9 +10,15 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba4a68ca-13aa-4ecd-9129-6ded7f0d04bc" name="Default Changelist" comment="update b">
+    <list default="true" id="ba4a68ca-13aa-4ecd-9129-6ded7f0d04bc" name="Default Changelist" comment="update 10ab3">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/bin/www" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/OpenRoles.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/OpenRoles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Schedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Schedule.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Schedule_historical.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Schedule_historical.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Single_word.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Single_word.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service.js" beforeDir="false" afterPath="$PROJECT_DIR$/service.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -130,7 +136,7 @@
       <workItem from="1606373622421" duration="834000" />
       <workItem from="1606756293740" duration="7932000" />
       <workItem from="1606805127429" duration="1840000" />
-      <workItem from="1606809569959" duration="929000" />
+      <workItem from="1606809569959" duration="36043000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1603607956124</created>
@@ -244,7 +250,119 @@
       <option name="project" value="LOCAL" />
       <updated>1606810407187</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="update b">
+      <created>1606810556965</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1606810556965</updated>
+    </task>
+    <task id="LOCAL-00018" summary="update b">
+      <created>1606813186472</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1606813186472</updated>
+    </task>
+    <task id="LOCAL-00019" summary="update b">
+      <created>1606814580366</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1606814580366</updated>
+    </task>
+    <task id="LOCAL-00020" summary="update b">
+      <created>1606814684035</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1606814684035</updated>
+    </task>
+    <task id="LOCAL-00021" summary="update 9">
+      <created>1606815159027</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1606815159027</updated>
+    </task>
+    <task id="LOCAL-00022" summary="update 10">
+      <created>1606817403732</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1606817403732</updated>
+    </task>
+    <task id="LOCAL-00023" summary="update 10">
+      <created>1606818483589</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1606818483589</updated>
+    </task>
+    <task id="LOCAL-00024" summary="update 10">
+      <created>1606823803775</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1606823803775</updated>
+    </task>
+    <task id="LOCAL-00025" summary="update 10">
+      <created>1606826815667</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1606826815667</updated>
+    </task>
+    <task id="LOCAL-00026" summary="update 10a">
+      <created>1606827386804</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1606827386804</updated>
+    </task>
+    <task id="LOCAL-00027" summary="update 10a">
+      <created>1606829556289</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1606829556289</updated>
+    </task>
+    <task id="LOCAL-00028" summary="update 10ab">
+      <created>1606830966269</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1606830966269</updated>
+    </task>
+    <task id="LOCAL-00029" summary="update 10ab">
+      <created>1606831564432</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1606831564432</updated>
+    </task>
+    <task id="LOCAL-00030" summary="update 10ab3">
+      <created>1606840196089</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1606840196089</updated>
+    </task>
+    <task id="LOCAL-00031" summary="update 10ab3">
+      <created>1606840789563</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1606840789563</updated>
+    </task>
+    <task id="LOCAL-00032" summary="update 10ab3">
+      <created>1606842054095</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1606842054095</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -275,28 +393,36 @@
     <MESSAGE value="update 6" />
     <MESSAGE value="update 7" />
     <MESSAGE value="update 8" />
-    <MESSAGE value="update 9" />
     <MESSAGE value="update b" />
-    <option name="LAST_COMMIT_MESSAGE" value="update b" />
+    <MESSAGE value="update 9" />
+    <MESSAGE value="update 10" />
+    <MESSAGE value="update 10a" />
+    <MESSAGE value="update 10ab" />
+    <MESSAGE value="update 10ab3" />
+    <option name="LAST_COMMIT_MESSAGE" value="update 10ab3" />
   </component>
   <component name="WindowStateProjectService">
     <state x="569" y="325" key="#Notifications" timestamp="1605786428245">
       <screen x="0" y="23" width="1680" height="942" />
     </state>
     <state x="569" y="325" key="#Notifications/0.23.1680.942@0.23.1680.942" timestamp="1605786428245" />
-    <state x="304" y="158" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606796748443">
+    <state x="304" y="158" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606882596259">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
     <state x="304" y="157" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.942@0.23.1680.942" timestamp="1606310059597" />
-    <state x="304" y="158" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.947@0.23.1680.947" timestamp="1603824086544" />
+    <state x="304" y="158" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.947@0.23.1680.947" timestamp="1606839487968" />
     <state x="304" y="157" key="#com.intellij.execution.impl.EditConfigurationsDialog/1680.23.1366.745/0.23.1680.942@0.23.1680.942" timestamp="1605491814165" />
-    <state x="304" y="158" key="#com.intellij.execution.impl.EditConfigurationsDialog/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1606796748443" />
-    <state x="551" y="305" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606794486900">
+    <state x="304" y="158" key="#com.intellij.execution.impl.EditConfigurationsDialog/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1606882596259" />
+    <state x="551" y="305" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606876068224">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
     <state x="551" y="304" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1680.942@0.23.1680.942" timestamp="1606325572837" />
     <state x="551" y="305" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1680.947@0.23.1680.947" timestamp="1603598302468" />
-    <state x="551" y="305" key="#com.intellij.fileTypes.FileTypeChooser/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1606794486900" />
+    <state x="551" y="305" key="#com.intellij.fileTypes.FileTypeChooser/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1606876068224" />
+    <state x="168" y="107" key="DiffContextDialog" timestamp="1606814614505">
+      <screen x="0" y="23" width="1680" height="947" />
+    </state>
+    <state x="168" y="107" key="DiffContextDialog/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1606814614505" />
     <state width="1659" height="254" key="GridCell.Tab.0.bottom" timestamp="1606756615027">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
@@ -338,12 +464,12 @@
     </state>
     <state x="341" y="134" key="SettingsEditor/0.23.1680.942@0.23.1680.942" timestamp="1605783793864" />
     <state x="341" y="135" key="SettingsEditor/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1604476552538" />
-    <state x="440" y="236" key="Vcs.Push.Dialog.v2" timestamp="1606810411394">
+    <state x="440" y="236" key="Vcs.Push.Dialog.v2" timestamp="1606842058730">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
     <state x="440" y="235" key="Vcs.Push.Dialog.v2/0.23.1680.942@0.23.1680.942" timestamp="1606360341880" />
-    <state x="440" y="236" key="Vcs.Push.Dialog.v2/0.23.1680.947@0.23.1680.947" timestamp="1603844947719" />
-    <state x="440" y="236" key="Vcs.Push.Dialog.v2/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1606810411394" />
+    <state x="440" y="236" key="Vcs.Push.Dialog.v2/0.23.1680.947@0.23.1680.947" timestamp="1606842058730" />
+    <state x="440" y="236" key="Vcs.Push.Dialog.v2/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1606831586756" />
     <state x="538" y="249" width="604" height="490" key="find.popup" timestamp="1605809036888">
       <screen x="0" y="23" width="1680" height="942" />
     </state>
