@@ -128,7 +128,7 @@ module.exports = {
                 db.query(sql, [data], (err, response) => {
                     if (err) throw err
                     let _sqlSELECT = 'SELECT * FROM schedule ORDER BY id DESC LIMIT 1';
-                    db.query(_sqlSELECT, [ServiceJson], (err, rown, fields) => {
+                    db.query(_sqlSELECT, (err, rown, fields) => {
                         if (err) throw err
                         var obj = [];
                         for (var i = 0; i < rown.length; i++) {

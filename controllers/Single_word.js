@@ -96,19 +96,18 @@ module.exports = {
     },
     list_mployees: (req, res) => {
         var begin_date = req.body.begin_date;
-        let sql =``;
-        if(begin_date == undefined || begin_date == ""){
+        let sql = ``;
+        if (begin_date == undefined || begin_date == "") {
             var a = new Date();
-            begin_date_ = a.getFullYear()+"-"+(a.getMonth()+1)+"-"+(a.getDay()-1);
+            begin_date_ = a.getFullYear() + "-" + (a.getMonth() + 1) + "-" + (a.getDay() - 1);
             sql = `SELECT * FROM user WHERE id NOT IN (SELECT id_User FROM single_word WHERE ` +
                 `single_word.end_date >= "${begin_date_}%" and single_word.begin_date <= "${begin_date_}%") and id_roles = 2 and is_active =0`;
-        }else {
+        } else {
             sql = `SELECT * FROM user WHERE id NOT IN (SELECT id_User FROM single_word WHERE ` +
                 `single_word.end_date >= "${begin_date}%" and single_word.begin_date <= "${begin_date}%") and id_roles = 2 and is_active =0`;
         }
         db.query(sql, [req.params.single_wordId], (err, rown, fields) => {
                 if (err) throw err
-
                 //     let difference = a.filter(x => !b.includes(x));
                 var obj = [];
                 for (var i = 0; i < rown.length; i++) {
@@ -151,38 +150,32 @@ module.exports = {
             let sql = `INSERT INTO single_word SET ?`;
             db.query(sql, [data], (err, response) => {
                 if (err) throw err
-                let sqlSELECT = `SELECT MAX(id) as id FROM single_word`;
-                db.query(sqlSELECT, (err, rownM, fields) => {
+                let _sqlSELECT = 'SELECT * FROM single_word WHERE ORDER BY id DESC LIMIT 1'
+                db.query(_sqlSELECT, (err, rown, fields) => {
                     if (err) throw err
-                    const Idmap = rownM.map(x => x.id);
-                    var ShopJson = JSON.parse(Idmap);
-                    let _sqlSELECT = 'SELECT * FROM single_word WHERE id = ?'
-                    db.query(_sqlSELECT, [ShopJson], (err, rown, fields) => {
-                        if (err) throw err
-                        var obj = [];
-                        for (var i = 0; i < rown.length; i++) {
-                            var Arrsingle_word = {
-                                [single_word_model.id]: rown[i].id,
-                                [single_word_model.content]: rown[i].content,
-                                [single_word_model.is_types]: rown[i].is_types,
-                                [single_word_model.begin_date]: rown[i].begin_date,
-                                [single_word_model.end_date]: rown[i].end_date,
-                                [single_word_model.is_status]: rown[i].is_status,
-                                [single_word_model.id_User]: rown[i].id_User,
-                                [single_word_model.created_single]: rown[i].created_single,
+                    var obj = [];
+                    for (var i = 0; i < rown.length; i++) {
+                        var Arrsingle_word = {
+                            [single_word_model.id]: rown[i].id,
+                            [single_word_model.content]: rown[i].content,
+                            [single_word_model.is_types]: rown[i].is_types,
+                            [single_word_model.begin_date]: rown[i].begin_date,
+                            [single_word_model.end_date]: rown[i].end_date,
+                            [single_word_model.is_status]: rown[i].is_status,
+                            [single_word_model.id_User]: rown[i].id_User,
+                            [single_word_model.created_single]: rown[i].created_single,
 
-                            };
-                            obj.push(Arrsingle_word);
-                        }
-                        var _Arrsingle_word = JSON.stringify(obj);
-                        var single_wordJson = JSON.parse(_Arrsingle_word);
-                        var ArrGetsingle_word = [{
-                            "status": "200",
-                            message: 'Single_word INSERT Ok!',
-                            "data": single_wordJson
-                        }]
-                        res.json(ArrGetsingle_word);
-                    })
+                        };
+                        obj.push(Arrsingle_word);
+                    }
+                    var _Arrsingle_word = JSON.stringify(obj);
+                    var single_wordJson = JSON.parse(_Arrsingle_word);
+                    var ArrGetsingle_word = [{
+                        "status": "200",
+                        message: 'Single_word INSERT Ok!',
+                        "data": single_wordJson
+                    }]
+                    res.json(ArrGetsingle_word);
                 })
             })
         } else {
