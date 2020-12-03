@@ -28,6 +28,41 @@ module.exports = {
             res.json(ArrGetSchedule);
         })
     },
+    get_date_time: (req, res) => {
+        var todoy = new Date();
+        var a = todoy.getDay()-1;
+        var  yero;
+        if( a < 10){
+            yero =todoy.getFullYear()+"-"+(todoy.getMonth()+1)+"-"+"0"+(todoy.getDay()-1);
+        }else {
+            yero=todoy.getFullYear()+"-"+(todoy.getMonth()+1)+"-"+(todoy.getDay()-1);
+        }
+        console.log("1111",yero)
+        let sql = `SELECT * FROM schedule WHERE start_time = "${yero}%"`;
+        db.query(sql, (err, rown, fields) => {
+            if (err) throw err
+            var obj = [];
+            for (var i = 0; i < rown.length; i++) {
+                var ArrSchedule = {
+                    id: rown[i].id,
+                    code_schedule: rown[i].code_schedule,
+                    start_time: rown[i].start_time,
+                    moneys: rown[i].moneys,
+                    minus_point: rown[i].minus_point,
+                    phone_nv: rown[i].phone_nv,
+                    status: rown[i].status,
+                    Username: rown[i].Username,
+                    content_schedule: rown[i].content_schedule,
+                    created_schedule: rown[i].created_schedule,
+                };
+                obj.push(ArrSchedule);
+            }
+            var _ArrSchedule = JSON.stringify(obj);
+            var ScheduleJson = JSON.parse(_ArrSchedule);
+            var ArrGetSchedule = [{"status": "200", "data": ScheduleJson}]
+            res.json(ArrGetSchedule);
+        })
+    },
     detail: (req, res) => {
         let sql = 'SELECT * FROM schedule JOIN schedule_details ON schedule_details.id_Schedule=schedule.id WHERE schedule.id = ?'
         db.query(sql, [req.params.scheduleId], (err, rown, fields) => {

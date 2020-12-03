@@ -143,6 +143,9 @@ module.exports = function (app) {
     // api schedule taats car hoas ddown
     app.route('/api/schedule/')
         .get(token_config.checkToken, ScheduleCtrl.get);
+
+    app.route('/api/schedule/get_date_time/')
+        .get(token_config.checkToken, ScheduleCtrl.get_date_time);
     //list thoi gian dat licj
     app.route('/api/schedule/:start_time')
         .post(token_config.checkToken, ScheduleCtrl.Open_Schedule);
