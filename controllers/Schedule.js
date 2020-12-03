@@ -124,10 +124,12 @@ module.exports = {
                     content_schedule: content_schedule,
                     status: 0
                 }
+
+
                 let sql = `INSERT INTO schedule SET ?`;
                 db.query(sql, [data], (err, response) => {
                     if (err) throw err
-                    let _sqlSELECT = 'SELECT * FROM schedule ORDER BY id DESC LIMIT 1';
+                    let _sqlSELECT = `SELECT * FROM schedule ORDER BY id DESC LIMIT 1`;
                     db.query(_sqlSELECT, (err, rown, fields) => {
                         if (err) throw err
                         var obj = [];
@@ -216,24 +218,10 @@ module.exports = {
     },
 
     Open_Schedule: (req, res, next) => {
-        // var d = new Date();
-        // var _date = d.getDate();
-        // var _dateN = d.getDate() + 1;
-        // var _month = d.getMonth() + 1;
-        // var _year = d.getFullYear();
-        //
-        // var _hours = d.getHours();
-        // var _minutes = d.getMinutes();
-        // var _seconds = d.getSeconds();
-        // var hlj = _hours + ":" + _minutes + ":" + _seconds;
-        // var amc = _year + "-" + _month + "-" + _date;
-        // var _amc = _year + "-" + _month + "-" + _dateN;
-        //-----------
         let start_time = req.body.start_time;
         let id_User = req.body.id_User;
         if (start_time && id_User != undefined) {
-            let sql = `SELECT end_time,start_time,status,working_time FROM schedule_details JOIN schedule ON ` +
-                `schedule_details.id_Schedule = schedule.id WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
+            let sql = `SELECT * FROM schedule WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
             console.log("11", sql)
             db.query(sql, [start_time, req.params.start_time], (err, rown, fields) => {
                 if (err) throw err
@@ -244,22 +232,23 @@ module.exports = {
                 var ArrSchedule;
                 for (var i = 0; i < derts.length; i++) {
                     var x = derts[i];
+                    // console.log("111",x);
                     if (rown.length > 0) {
                         for (var k = 0; k < rown.length; k++) {
-                            var working_time = rown[k].working_time;
                             var status = rown[k].status;
-                            var start_time = rown[k].start_time;
-                            var end_time = rown[k].end_time;
-
-                            if (x == working_time) {
+                            var start_time = rown[k].start_time.toString();
+                            var end_time = rown[k].end_time.toString();
+                            var a = start_time.slice(16, 21);
+                            var b = end_time.slice(16, 21);
+                            if (x >= a && x <= b) {
                                 ArrSchedule = {
-                                    working_time: working_time,
-                                    start_time: start_time,
-                                    end_time: end_time,
+                                    working_time: x,
+                                    start_time: rown[k].start_time,
+                                    end_time: rown[k].end_time,
                                     status: status,
                                 };
                                 ArrSchedule && objN.push(ArrSchedule)
-                                break
+                                break;
                             } else {
                                 if (k == (rown.length - 1)) {
                                     ArrSchedule = {
@@ -269,7 +258,6 @@ module.exports = {
                                     ArrSchedule && objN.push(ArrSchedule)
                                 }
                             }
-
                         }
                     } else {
                         ArrSchedule = {
@@ -280,7 +268,8 @@ module.exports = {
                     }
 
                 }
-                res.json(objN);
+                var ArrGetSchedule = [{"status": "200", message: 'schedule working time !', "data": objN}]
+                res.json(ArrGetSchedule);
             })
         } else {
             res.json({"status": "400", message: 'schedule No Open_Schedule !',});
