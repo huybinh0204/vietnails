@@ -55,7 +55,6 @@ module.exports = {
         }else if(status == 2){
             var data = {
                 status:2,
-                phone_nv:phone_nv,
                 id_User:id_User
             }
             let sql = 'UPDATE schedule SET ? WHERE id = ?'
@@ -82,7 +81,6 @@ module.exports = {
             var data = {
                 id_User: null,
                 status: 0,
-                phone_nv: null
             }
             let sql = 'UPDATE schedule SET ? WHERE id = ?'
             db.query(sql, [data, schedule_historicalID], (err, response) => {
@@ -114,7 +112,18 @@ module.exports = {
                 if (err) throw err
                 res.json({"status": "200", "message": 'Đơn làm nails hoàn thành !'});
             })
-        }else{
+        }else if(status == 5) {
+            var data = {
+                status:5,
+                phone_nv:phone_nv
+            }
+            let sql = 'UPDATE schedule SET ? WHERE id = ?'
+            db.query(sql, [data,schedule_historicalID], (err, response) => {
+                if (err) throw err
+                res.json({"status": "200", "message": 'Đơn làm lể tân xác nhận khách hang den !'});
+            })
+        }
+        else{
             res.json({"status": "403", "message": 'không có quyền với status này !'});
         }
 

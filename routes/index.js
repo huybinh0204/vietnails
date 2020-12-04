@@ -166,8 +166,8 @@ module.exports = function (app) {
         .get(token_config.checkToken, ScheduleCtrl.list_detail);
 
 //    nhân viên nhận đơn làm nails
-    app.route('/api/schedule_historical/:schedule_historicalID')
-        .post(token_config.checkToken, Schedule_historicalCtrl.store);
+//     app.route('/api/schedule_historical/:schedule_historicalID')
+//         .post(token_config.checkToken, Schedule_historicalCtrl.store);
     //    status 0 , 1 ,2 , 3 , 4
     app.route('/api/schedule_historical/:schedule_historicalID')
         .post(token_config.checkToken, Schedule_historicalCtrl.store);
@@ -206,6 +206,5 @@ module.exports = function (app) {
         .put(token_config.checkToken, Single_wordCtrl.update);
     app.route('/api/single_word/delete/:single_wordId')
         .delete(token_config.checkToken, Single_wordCtrl.delete);
-
 
 };
