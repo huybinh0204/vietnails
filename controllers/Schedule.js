@@ -144,6 +144,7 @@ module.exports = {
             let sql = `SELECT number FROM promotion WHERE id =${id_promotion}`;
             db.query(sql, (err, rows, response) => {
                 if (err) throw err
+                res.json("123412")
                 // var number = rows.map(x => x.number);
                 // var is_number = number.toString();
                 // var minus_point = Math.ceil((moneys * is_number) / 100000);
@@ -195,7 +196,7 @@ module.exports = {
                         // }]
                         // res.json(ArrGetSchedule);
                     // })
-                })
+                // })
                 //INSERT INTO schedule_details
                 // let sql_schedule_details = `SELECT id FROM schedule WHERE code_schedule ="${code_schedule}"`;
                 // db.query(sql_schedule_details, (err, rowsk, response) => {
@@ -218,7 +219,7 @@ module.exports = {
                 //         })
                 //     }
                 // })
-            // });
+            });
         } else {
             res.json({"status": "400", message: 'schedule No INSERT !'});
         }
