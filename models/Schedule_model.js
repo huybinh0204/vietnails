@@ -12,6 +12,7 @@ module.exports = {
     id_promotion: 'id_promotion',
     content_schedule: 'content_schedule',
 
-    id_schedule_details: 'id_schedule_details'
+    id_schedule_details: 'id_schedule_details',
+    id_User_nv: 'id_User_nv'
 }
 

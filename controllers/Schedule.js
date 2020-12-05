@@ -159,42 +159,39 @@ module.exports = {
                     status: 0,
                     content_schedule: content_schedule,
                 }
-                res.json(data)
-            //
-            //     let sql = `INSERT INTO schedule SET ?`;
-            //     db.query(sql, [data], (err, response) => {
-            //         if (err) throw err
-            //
-            //         let _sqlSELECT = `SELECT * FROM schedule ORDER BY id DESC LIMIT 1`;
-            //         db.query(_sqlSELECT, (err, rown, fields) => {
-            //             if (err) throw err
-            //             var obj = [];
-            //             for (var i = 0; i < rown.length; i++) {
-            //                 var ArrSchedule = {
-            //                     id: rown[i].id,
-            //                     code_schedule: rown[i].code_schedule,
-            //                     start_time: rown[i].start_time,
-            //                     end_time: rown[i].end_time,
-            //                     moneys: rown[i].moneys,
-            //                     minus_point: rown[i].minus_point,
-            //                     phone_nv: rown[i].phone_nv,
-            //                     status: rown[i].status,
-            //                     Username: rown[i].Username,
-            //                     content_schedule: rown[i].content_schedule,
-            //                     created_schedule: rown[i].created_schedule,
-            //                 };
-            //                 obj.push(ArrSchedule);
-            //             }
-            //             var _ArrSchedule = JSON.stringify(obj);
-            //             var ScheduleJson = JSON.parse(_ArrSchedule);
-            //             var ArrGetSchedule = [{
-            //                 "status": "200",
-            //                 message: 'Schedule INSERT Ok!',
-            //                 "data": ScheduleJson
-            //             }]
-            //             res.json(ArrGetSchedule);
-            //         })
-            //     })
+                let sql = `INSERT INTO schedule SET ?`;
+                db.query(sql, [data], (err, response) => {
+                    if (err) throw err
+                    let _sqlSELECT = `SELECT * FROM schedule ORDER BY id DESC LIMIT 1`;
+                    db.query(_sqlSELECT, (err, rown, fields) => {
+                        if (err) throw err
+                        var obj = [];
+                        for (var i = 0; i < rown.length; i++) {
+                            var ArrSchedule = {
+                                id: rown[i].id,
+                                code_schedule: rown[i].code_schedule,
+                                start_time: rown[i].start_time,
+                                end_time: rown[i].end_time,
+                                moneys: rown[i].moneys,
+                                minus_point: rown[i].minus_point,
+                                phone_nv: rown[i].phone_nv,
+                                status: rown[i].status,
+                                Username: rown[i].Username,
+                                content_schedule: rown[i].content_schedule,
+                                created_schedule: rown[i].created_schedule,
+                            };
+                            obj.push(ArrSchedule);
+                        }
+                        var _ArrSchedule = JSON.stringify(obj);
+                        var ScheduleJson = JSON.parse(_ArrSchedule);
+                        var ArrGetSchedule = [{
+                            "status": "200",
+                            message: 'Schedule INSERT Ok!',
+                            "data": ScheduleJson
+                        }]
+                        res.json(ArrGetSchedule);
+                    })
+                })
             //     //INSERT INTO schedule_details
             //     let sql_schedule_details = `SELECT id FROM schedule WHERE code_schedule ="${code_schedule}"`;
             //     db.query(sql_schedule_details, (err, rowsk, response) => {
