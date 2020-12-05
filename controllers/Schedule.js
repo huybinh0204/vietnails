@@ -144,7 +144,7 @@ module.exports = {
             let sql = `SELECT number FROM promotion WHERE id =${id_promotion}`;
             db.query(sql, (err, rows, response) => {
                 if (err) throw err
-                res.json("123412")
+                res.json(rows)
                 // var number = rows.map(x => x.number);
                 // var is_number = number.toString();
                 // var minus_point = Math.ceil((moneys * is_number) / 100000);
