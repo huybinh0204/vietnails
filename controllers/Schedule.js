@@ -140,7 +140,7 @@ module.exports = {
         let id_User = req.body.id_User;
         let id_User_nv = req.body.id_User_nv;
 
-        if (start_time && end_time && moneys && id_Shop && id_promotion != null || undefined) {
+        if (start_time && end_time && moneys && id_Shop && id_promotion && content_schedule != null || undefined) {
             let sql = `SELECT number FROM promotion WHERE id =${id_promotion}`;
             db.query(sql, (err, rows, response) => {
                 if (err) throw err
@@ -156,7 +156,8 @@ module.exports = {
                     id_Shop: id_Shop,
                     id_promotion: id_promotion,
                     id_User: id_User_nv,
-                    status: 0
+                    status: 0,
+                    content_schedule: content_schedule,
                 }
 
                 let sql = `INSERT INTO schedule SET ?`;
@@ -178,6 +179,7 @@ module.exports = {
                                 phone_nv: rown[i].phone_nv,
                                 status: rown[i].status,
                                 Username: rown[i].Username,
+                                content_schedule: rown[i].content_schedule,
                                 created_schedule: rown[i].created_schedule,
                             };
                             obj.push(ArrSchedule);
