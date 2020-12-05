@@ -142,23 +142,24 @@ module.exports = {
 
         if (start_time && end_time && moneys && id_Shop && id_promotion && content_schedule != null || undefined) {
             let sql = `SELECT number FROM promotion WHERE id =${id_promotion}`;
-            // db.query(sql, (err, rows, response) => {
-            //     if (err) throw err
-            //     var number = rows.map(x => x.number);
-            //     var is_number = number.toString();
-            //     var minus_point = Math.ceil((moneys * is_number) / 100000);
-            //     var data = {
-            //         code_schedule: code_schedule,
-            //         start_time: start_time,
-            //         end_time: end_time,
-            //         moneys: moneys,
-            //         minus_point: minus_point,
-            //         id_Shop: id_Shop,
-            //         id_promotion: id_promotion,
-            //         id_User: id_User_nv,
-            //         status: 0,
-            //         content_schedule: content_schedule,
-            //     }
+            db.query(sql, (err, rows, response) => {
+                if (err) throw err
+                var number = rows.map(x => x.number);
+                var is_number = number.toString();
+                var minus_point = Math.ceil((moneys * is_number) / 100000);
+                var data = {
+                    code_schedule: code_schedule,
+                    start_time: start_time,
+                    end_time: end_time,
+                    moneys: moneys,
+                    minus_point: minus_point,
+                    id_Shop: id_Shop,
+                    id_promotion: id_promotion,
+                    id_User: id_User_nv,
+                    status: 0,
+                    content_schedule: content_schedule,
+                }
+                res.json(data)
             //
             //     let sql = `INSERT INTO schedule SET ?`;
             //     db.query(sql, [data], (err, response) => {
@@ -216,7 +217,7 @@ module.exports = {
             //             })
             //         }
             //     })
-            // });
+            });
         } else {
             res.json({"status": "400", message: 'schedule No INSERT !'});
         }
