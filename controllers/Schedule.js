@@ -156,7 +156,6 @@ module.exports = {
                     id_Shop: id_Shop,
                     id_promotion: id_promotion,
                     id_User: id_User_nv,
-                    content_schedule: content_schedule,
                     status: 0
                 }
 
@@ -179,7 +178,6 @@ module.exports = {
                                 phone_nv: rown[i].phone_nv,
                                 status: rown[i].status,
                                 Username: rown[i].Username,
-                                content_schedule: rown[i].content_schedule,
                                 created_schedule: rown[i].created_schedule,
                             };
                             obj.push(ArrSchedule);
