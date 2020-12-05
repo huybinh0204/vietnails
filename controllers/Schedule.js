@@ -160,10 +160,10 @@ module.exports = {
                     status: 0
                 }
 
-
                 let sql = `INSERT INTO schedule SET ?`;
                 db.query(sql, [data], (err, response) => {
                     if (err) throw err
+
                     let _sqlSELECT = `SELECT * FROM schedule ORDER BY id DESC LIMIT 1`;
                     db.query(_sqlSELECT, (err, rown, fields) => {
                         if (err) throw err
@@ -194,7 +194,7 @@ module.exports = {
                         res.json(ArrGetSchedule);
                     })
                 })
-                // INSERT INTO schedule_details
+                //INSERT INTO schedule_details
                 let sql_schedule_details = `SELECT id FROM schedule WHERE code_schedule ="${code_schedule}"`;
                 db.query(sql_schedule_details, (err, rowsk, response) => {
                     if (err) throw err
