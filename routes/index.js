@@ -27,8 +27,6 @@ var storage = multer.diskStorage({
         } catch (e) {
             console.log("err",e.toString())
         }
-
-
     }
 });
 var upload = multer({storage: storage});
@@ -146,6 +144,9 @@ module.exports = function (app) {
 
     app.route('/api/schedule/get_date_time/')
         .get(token_config.checkToken, ScheduleCtrl.get_date_time);
+
+    app.route('/api/schedule/get_schedule_nv/:id_User')
+        .post(token_config.checkToken, ScheduleCtrl.get_nv);
     //list thoi gian dat licj
     app.route('/api/schedule/:start_time')
         .post(token_config.checkToken, ScheduleCtrl.Open_Schedule);

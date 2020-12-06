@@ -28,6 +28,40 @@ module.exports = {
             res.json(ArrGetSchedule);
         })
     },
+    get_nv: (req, res) => {
+        let start_time = req.body.start_time;
+        let id_User = req.body.id_User;
+        let sql = `SELECT * FROM schedule WHERE start_time LIKE '${start_time}%' and id_User = ${id_User}`;
+        console.log("111",sql)
+        if (start_time && id_User != undefined || '') {
+            db.query(sql, [{start_time, id_User}], (err, rown, fields) => {
+                if (err) throw err
+                var obj = [];
+                for (var i = 0; i < rown.length; i++) {
+                    var ArrSchedule = {
+                        id: rown[i].id,
+                        code_schedule: rown[i].code_schedule,
+                        start_time: rown[i].start_time,
+                        moneys: rown[i].moneys,
+                        minus_point: rown[i].minus_point,
+                        phone_nv: rown[i].phone_nv,
+                        status: rown[i].status,
+                        Username: rown[i].Username,
+                        content_schedule: rown[i].content_schedule,
+                        created_schedule: rown[i].created_schedule,
+                    };
+                    obj.push(ArrSchedule);
+                }
+                var _ArrSchedule = JSON.stringify(obj);
+                var ScheduleJson = JSON.parse(_ArrSchedule);
+                var ArrGetSchedule = [{"status": "200", "data": ScheduleJson}]
+                res.json(ArrGetSchedule);
+            })
+        }else {
+
+            res.json({"status": "400","message": 'acc no!'});
+        }
+    },
     get_date_time: (req, res) => {
         var todoy = new Date();
         var a = todoy.getDay()-1;
@@ -37,7 +71,6 @@ module.exports = {
         }else {
             yero=todoy.getFullYear()+"-"+(todoy.getMonth()+1)+"-"+(todoy.getDay()-1);
         }
-        console.log("1111",yero)
         let sql = `SELECT * FROM schedule WHERE start_time = "${yero}%"`;
         db.query(sql, (err, rown, fields) => {
             if (err) throw err
