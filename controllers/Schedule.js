@@ -173,8 +173,9 @@ module.exports = {
         let id_User = req.body.id_User;
         let id_User_nv = req.body.id_User_nv;
 
-        if (start_time && end_time && moneys && id_Shop && id_promotion && content_schedule != null || undefined && id_schedule_details != "") {
+        if (id_schedule_details != '' && start_time && end_time && moneys && id_Shop && id_promotion && content_schedule != null || undefined ) {
             let sql = `SELECT number FROM promotion WHERE id =${id_promotion}`;
+            console.log("123",sql)
             db.query(sql, (err, rows, response) => {
                 if(rows != '') {
                     if (err) throw err
