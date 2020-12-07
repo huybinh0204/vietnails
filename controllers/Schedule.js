@@ -173,7 +173,7 @@ module.exports = {
         let id_User = req.body.id_User;
         let id_User_nv = req.body.id_User_nv;
 
-        if (start_time && end_time && moneys && id_Shop && id_promotion && content_schedule != null || undefined) {
+        if (start_time && end_time && moneys && id_Shop && id_promotion && content_schedule  && id_schedule_details != null || undefined) {
             let sql = `SELECT number FROM promotion WHERE id =${id_promotion}`;
             db.query(sql, (err, rows, response) => {
                 if(rows != '') {
@@ -347,8 +347,8 @@ module.exports = {
             res.json({"status": "400", message: 'schedule No Open_Schedule !',});
 
         }
-    }
-    ,
+    },
+
     // store: (req, res) => {
     //     var code_schedule = random_random.randomString(10);
     //     let start_time = req.body.start_time;
