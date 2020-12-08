@@ -198,6 +198,11 @@ module.exports = function (app) {
 
     app.route('/api/single_word/user/:single_UserId')
         .get(token_config.checkToken, Single_wordCtrl.get);
+
+    app.route('/api/get_list_time/')
+        .get(token_config.checkToken,Schedule_historicalCtrl.get_list_time);
+
+
     app.route('/api/single_word/')
         .post(token_config.checkToken, Single_wordCtrl.store);
     app.route('/api/single_word/:single_wordId')

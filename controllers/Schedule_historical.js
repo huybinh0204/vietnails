@@ -6,14 +6,14 @@ var Eis_OFFSET;
 module.exports = {
     get: (req, res) => {
         // is_OFFSET = is_OFFSET + is_LIMIT;
-        var sql= `SELECT * FROM schedule_historical WHERE id_User = ? ORDER BY id DESC`;
+        var sql = `SELECT * FROM schedule_historical WHERE id_User = ? ORDER BY id DESC`;
         // if (is_OFFSET <= 10){
         //     sql = `SELECT * FROM schedule_historical WHERE id_User = ? ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET  0 `;
         // }else{
         //     Eis_OFFSET = is_OFFSET - is_LIMIT;
         //     sql = `SELECT * FROM schedule_historical WHERE id_User = ? ORDER BY id DESC LIMIT ${is_LIMIT} OFFSET ${Eis_OFFSET} `;
         // }
-        db.query(sql,[req.params.schedule_historicalID], (err, rown, fields) => {
+        db.query(sql, [req.params.schedule_historicalID], (err, rown, fields) => {
             if (err) throw err
             var obj = [];
             for (var i = 0; i < rown.length; i++) {
@@ -36,6 +36,33 @@ module.exports = {
         })
     },
 
+    get_list_time: (req, res) => {
+        let todoy = new Date();
+        let year = todoy.getFullYear();
+        let month = todoy.getMonth() + 1
+        let date = todoy.getDate()
+        let hours = todoy.getHours()
+        let Minutes = todoy.getMinutes()
+        let Seconds = todoy.getSeconds();
+        let toong = "";
+        if (month && Minutes >= 10 && date >= 10) {
+            toong = year + "-" + month + "-" + date + " " + hours + ":" + Minutes + ":" + Seconds;
+        } else {
+            if (month >= 10 && Minutes < 10 && date >=10) {
+                toong = year + "-" + month + "-" + date + " " + hours + ":" + "0" + Minutes + ":" + Seconds;
+            }else if (month < 10 && Minutes >= 10 && date >=10) {
+                toong = year + "-" +  "0" + month + "-" + date + " " + hours + ":" + Minutes + ":" + Seconds;
+            }else if (month >=10 && Minutes >= 10 && date <10) {
+                toong = year + "-" + month + "-"+  "0"  + date + " " + hours + ":" + Minutes + ":" + Seconds;
+            }else {
+                toong = year + "-" +  "0" + month + "-" +  "0" + date + " " + hours + ":" + "0" +Minutes + ":" + Seconds;
+            }
+        }
+
+        var ArrGetschedule_historical = [{"status": "200", "data": toong}]
+        res.json(ArrGetschedule_historical);
+    },
+
     store: (req, res) => {
         let schedule_historicalID = req.params.schedule_historicalID;
         var id_User = req.body.id_User;
@@ -43,32 +70,32 @@ module.exports = {
         let phone_nv = req.body.phone_nv;
         let content = req.body.content;
 
-        if(status == 1) {
+        if (status == 1) {
             var data = {
-                status:1,
+                status: 1,
             }
             let sql = 'UPDATE schedule SET ? WHERE id = ?'
-            db.query(sql, [data,schedule_historicalID], (err, response) => {
+            db.query(sql, [data, schedule_historicalID], (err, response) => {
                 if (err) throw err
                 res.json({"status": "200", "schedule": 'khách hàng huỷ đơn!'});
             })
-        }else if(status == 2){
+        } else if (status == 2) {
             var data = {
-                status:2,
-                id_User:id_User
+                status: 2,
+                id_User: id_User
             }
             let sql = 'UPDATE schedule SET ? WHERE id = ?'
-            db.query(sql, [data,schedule_historicalID], (err, response) => {
+            db.query(sql, [data, schedule_historicalID], (err, response) => {
                 if (err) throw err
                 let schedule_sql = `SELECT * FROM schedule WHERE id = ${schedule_historicalID}`
                 db.query(schedule_sql, (err, rown, fields) => {
                     if (err) throw err
                     var data = {
-                        end_code_schedule:rown[0].code_schedule,
-                        is_status:1,
-                        id_schedule:rown[0].id,
-                        id_User:id_User,
-                        content:content
+                        end_code_schedule: rown[0].code_schedule,
+                        is_status: 1,
+                        id_schedule: rown[0].id,
+                        id_User: id_User,
+                        content: content
                     }
                     let sql = `INSERT INTO schedule_historical SET ?`;
                     db.query(sql, [data], (err, response) => {
@@ -77,7 +104,7 @@ module.exports = {
                     });
                 })
             })
-        }else if(status == 3) {
+        } else if (status == 3) {
             var data = {
                 id_User: null,
                 status: 0,
@@ -89,11 +116,11 @@ module.exports = {
                 db.query(schedule_sql, (err, rown, fields) => {
                     if (err) throw err
                     var data = {
-                        end_code_schedule:rown[0].code_schedule,
-                        is_status:2,
-                        id_schedule:rown[0].id,
-                        id_User:id_User,
-                        content:content
+                        end_code_schedule: rown[0].code_schedule,
+                        is_status: 2,
+                        id_schedule: rown[0].id,
+                        id_User: id_User,
+                        content: content
                     }
                     let sql = `INSERT INTO schedule_historical SET ?`;
                     db.query(sql, [data], (err, response) => {
@@ -102,28 +129,27 @@ module.exports = {
                     });
                 })
             })
-        }else if(status == 4) {
+        } else if (status == 4) {
             var data = {
-                status:4,
-                content_schedule:content
+                status: 4,
+                content_schedule: content
             }
             let sql = 'UPDATE schedule SET ? WHERE id = ?'
-            db.query(sql, [data,schedule_historicalID], (err, response) => {
+            db.query(sql, [data, schedule_historicalID], (err, response) => {
                 if (err) throw err
                 res.json({"status": "200", "message": 'Đơn làm nails hoàn thành !'});
             })
-        }else if(status == 5) {
+        } else if (status == 5) {
             var data = {
-                status:5,
-                phone_nv:phone_nv
+                status: 5,
+                phone_nv: phone_nv
             }
             let sql = 'UPDATE schedule SET ? WHERE id = ?'
-            db.query(sql, [data,schedule_historicalID], (err, response) => {
+            db.query(sql, [data, schedule_historicalID], (err, response) => {
                 if (err) throw err
                 res.json({"status": "200", "message": 'Đơn làm lể tân xác nhận khách hang den !'});
             })
-        }
-        else{
+        } else {
             res.json({"status": "403", "message": 'không có quyền với status này !'});
         }
 
