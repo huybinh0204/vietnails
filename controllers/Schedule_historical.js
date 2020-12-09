@@ -37,7 +37,7 @@ module.exports = {
     },
 
     get_list_time: (req, res) => {
-        let todoy = new Date().getTimezoneOffset;
+        let todoy = new Date();
 
         let year = todoy.getFullYear();
         let month = todoy.getMonth() + 1
@@ -46,25 +46,7 @@ module.exports = {
         let Minutes = todoy.getMinutes()
         let Seconds = todoy.getSeconds();
         let toong = "";
-        if (month && Minutes >= 10 && date >= 10 && hours >=10) {
-            toong = year + "-" + month + "-" + date + " " + hours + ":" + Minutes + ":" + Seconds;
-        } else {
-            if (month >= 10 && Minutes < 10 && date >=10 && hours >=10) {
-                toong = year + "-" + month + "-" + date + " " + hours + ":" + "0" + Minutes + ":" + Seconds;
-
-            }else if (month < 10 && Minutes >= 10 && date >=10 && hours >=10) {
-                toong = year + "-" +  "0" + month + "-" + date + " " + hours + ":" + Minutes + ":" + Seconds;
-
-            }else if (month >=10 && Minutes >= 10 && date <10 && hours >=10) {
-                toong = year + "-" + month + "-"+  "0"  + date + " " + hours + ":" + Minutes + ":" + Seconds;
-
-            }else if (month >=10 && Minutes >= 10 && date >= 10 && hours < 10) {
-
-                toong = year + "-" + month + "-" + date + " " +  "0" + hours + ":" + Minutes + ":" + Seconds;
-            }else {
-                toong = year + "-" +  "0" + month + "-" +  "0" + date + " " + "0" + hours + ":" + "0" +Minutes + ":" + Seconds;
-            }
-        }
+        toong = year + "-" + month + "-" + date + " " + hours + ":" + Minutes + ":" + Seconds;
 
         var ArrGetschedule_historical = [{"status": "200", "data": toong}]
         res.json(ArrGetschedule_historical);
