@@ -14,10 +14,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/bin/www" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/OpenRoles.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/OpenRoles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/Notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Notification.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service.js" beforeDir="false" afterPath="$PROJECT_DIR$/service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,14 +143,7 @@
       <workItem from="1607360462617" duration="1021000" />
       <workItem from="1607397122308" duration="1946000" />
       <workItem from="1607442850044" duration="2485000" />
-      <workItem from="1607486525340" duration="12395000" />
-    </task>
-    <task id="LOCAL-00026" summary="update 10a">
-      <created>1606827386804</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1606827386804</updated>
+      <workItem from="1607486525340" duration="12527000" />
     </task>
     <task id="LOCAL-00027" summary="update 10a">
       <created>1606829556289</created>
@@ -491,7 +481,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607502725637</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="updata notify">
+      <created>1607504909284</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1607504909284</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -554,10 +551,10 @@
     <state x="551" y="304" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1680.942@0.23.1680.942" timestamp="1606325572837" />
     <state x="551" y="305" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1680.947@0.23.1680.947" timestamp="1603598302468" />
     <state x="551" y="305" key="#com.intellij.fileTypes.FileTypeChooser/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1606876068224" />
-    <state x="168" y="107" key="DiffContextDialog" timestamp="1607500358289">
+    <state x="168" y="107" key="DiffContextDialog" timestamp="1607504985723">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
-    <state x="168" y="107" key="DiffContextDialog/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1607500358289" />
+    <state x="168" y="107" key="DiffContextDialog/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1607504985723" />
     <state width="1659" height="254" key="GridCell.Tab.0.bottom" timestamp="1607324720617">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
@@ -599,12 +596,12 @@
     </state>
     <state x="341" y="134" key="SettingsEditor/0.23.1680.942@0.23.1680.942" timestamp="1605783793864" />
     <state x="341" y="135" key="SettingsEditor/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1604476552538" />
-    <state x="440" y="236" key="Vcs.Push.Dialog.v2" timestamp="1607502732665">
+    <state x="440" y="236" key="Vcs.Push.Dialog.v2" timestamp="1607504987885">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
     <state x="440" y="235" key="Vcs.Push.Dialog.v2/0.23.1680.942@0.23.1680.942" timestamp="1606360341880" />
     <state x="440" y="236" key="Vcs.Push.Dialog.v2/0.23.1680.947@0.23.1680.947" timestamp="1607444740855" />
-    <state x="440" y="236" key="Vcs.Push.Dialog.v2/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1607502732665" />
+    <state x="440" y="236" key="Vcs.Push.Dialog.v2/1680.23.1366.745/0.23.1680.947@0.23.1680.947" timestamp="1607504987885" />
     <state x="538" y="249" width="604" height="490" key="find.popup" timestamp="1605809036888">
       <screen x="0" y="23" width="1680" height="942" />
     </state>
