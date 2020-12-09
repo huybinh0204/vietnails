@@ -1,4 +1,5 @@
 const db = require('../service');
+const moment = require('moment-timezone');
 const schedule_historical_model = require('../models/Schedule_historical_model');
 var is_OFFSET = 0;
 var is_LIMIT = 10;
@@ -37,17 +38,7 @@ module.exports = {
     },
 
     get_list_time: (req, res) => {
-        let todoy = new Date();
-
-        let year = todoy.getFullYear();
-        let month = todoy.getMonth() + 1
-        let date = todoy.getDate()
-        let hours = todoy.getHours()
-        let Minutes = todoy.getMinutes()
-        let Seconds = todoy.getSeconds();
-        let toong = "";
-        toong = year + "-" + month + "-" + date + " " + hours + ":" + Minutes + ":" + Seconds;
-
+        let toong = moment().tz("Asia/Ho_Chi_Minh").format();
         var ArrGetschedule_historical = [{"status": "200", "data": toong}]
         res.json(ArrGetschedule_historical);
     },
