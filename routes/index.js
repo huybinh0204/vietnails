@@ -41,6 +41,7 @@ module.exports = function (app) {
     let PromotionCtrl = require('../controllers/Promotion');
     let Single_wordCtrl = require('../controllers/Single_word');
     let Schedule_historicalCtrl = require('../controllers/Schedule_historical');
+    let Notify_UserCtrl = require('../controllers/Notify_User');
     app.route('/')
         .get(UserCtrl._get)
     // Login đăng nhập
@@ -212,5 +213,12 @@ module.exports = function (app) {
         .put(token_config.checkToken, Single_wordCtrl.update);
     app.route('/api/single_word/delete/:single_wordId')
         .delete(token_config.checkToken, Single_wordCtrl.delete);
+
+
+    app.route('/api/notify_userkey/')
+        .post(Notify_UserCtrl.store);
+
+    app.route('/api/get_key_notify/')
+        .post(Notify_UserCtrl.get_key_notify);
 
 };
