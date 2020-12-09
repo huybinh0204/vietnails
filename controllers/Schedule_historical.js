@@ -38,13 +38,13 @@ module.exports = {
     },
 
     get_list_time: (req, res) => {
-        // let toong = moment().tz("Asia/Ho_Chi_Minh").format();
-        // let get_yeur = toong.slice(0,10);
-        // let  get_home = toong.slice(11,19);
-        //
-        // let moth = get_yeur+ " "+  get_home;
-        // var ArrGetschedule_historical = [{"status": "200", "data": moth}]
-        // res.json(ArrGetschedule_historical);
+        let toong = moment().tz("Asia/Ho_Chi_Minh").format();
+        let get_yeur = toong.slice(0,10);
+        let  get_home = toong.slice(11,19);
+
+        let moth = get_yeur+ " "+  get_home;
+        var ArrGetschedule_historical = [{"status": "200", "data": moth}]
+        res.json(ArrGetschedule_historical);
     },
 
     store: (req, res) => {
