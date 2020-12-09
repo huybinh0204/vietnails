@@ -346,9 +346,9 @@
     "ms" "2.0.0"
 
 "debug@^3.2.6":
-  "integrity" "sha512-mel+jf7nrtEl5Pn1Qx46zARXKDpBbvzezse7p7LqINmdoIk8PYP5SySaxEmYv6TZ0JyEKA1hsCId6DIhgITtWQ=="
-  "resolved" "https://registry.npmjs.org/debug/-/debug-3.2.6.tgz"
-  "version" "3.2.6"
+  "integrity" "sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ=="
+  "resolved" "https://registry.npmjs.org/debug/-/debug-3.2.7.tgz"
+  "version" "3.2.7"
   dependencies:
     "ms" "^2.1.1"
 
@@ -960,6 +960,18 @@
   dependencies:
     "minimist" "^1.2.5"
 
+"moment-timezone@^0.5.32":
+  "integrity" "sha512-Z8QNyuQHQAmWucp8Knmgei8YNo28aLjJq6Ma+jy1ZSpSk5nyfRT8xgUbSQvD2+2UajISfenndwvFuH3NGS+nvA=="
+  "resolved" "https://registry.npmjs.org/moment-timezone/-/moment-timezone-0.5.32.tgz"
+  "version" "0.5.32"
+  dependencies:
+    "moment" ">= 2.9.0"
+
+"moment@^2.29.1", "moment@>= 2.9.0":
+  "integrity" "sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ=="
+  "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz"
+  "version" "2.29.1"
+
 "morgan@~1.9.1":
   "integrity" "sha512-HQStPIV4y3afTiCYVxirakhlCfGkI161c76kKFca7Fk1JusM//Qeo1ej2XaMniiNeaZklMVrh3vTtIzpzwbpmA=="
   "resolved" "https://registry.npmjs.org/morgan/-/morgan-1.9.1.tgz"
@@ -1262,9 +1274,9 @@
     "picomatch" "^2.2.1"
 
 "registry-auth-token@^4.0.0":
-  "integrity" "sha512-P+lWzPrsgfN+UEpDS3U8AQKg/UjZX6mQSJueZj3EK+vNESoqBSpBUD3gmu4sF9lOsjXWjF11dQKUqemf3veq1w=="
-  "resolved" "https://registry.npmjs.org/registry-auth-token/-/registry-auth-token-4.2.0.tgz"
-  "version" "4.2.0"
+  "integrity" "sha512-6gkSb4U6aWJB4SF2ZvLb76yCBjcvufXBqvvEx1HbmKPkutswjW1xNVRY0+daljIYRbogN7O0etYSlbiaEQyMyw=="
+  "resolved" "https://registry.npmjs.org/registry-auth-token/-/registry-auth-token-4.2.1.tgz"
+  "version" "4.2.1"
   dependencies:
     "rc" "^1.2.8"
 
