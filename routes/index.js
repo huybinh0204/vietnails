@@ -202,7 +202,7 @@ module.exports = function (app) {
 
     // thoi gian
     app.route('/api/get_list_time/')
-        .get(token_config.checkToken,Schedule_historicalCtrl.get_list_time);
+        .get(Schedule_historicalCtrl.get_list_time);
 
 
     app.route('/api/single_word/')
