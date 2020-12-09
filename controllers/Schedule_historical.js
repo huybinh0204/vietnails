@@ -37,7 +37,8 @@ module.exports = {
     },
 
     get_list_time: (req, res) => {
-        let todoy = new Date();
+        let todoy = new Date().getTimezoneOffset;
+
         let year = todoy.getFullYear();
         let month = todoy.getMonth() + 1
         let date = todoy.getDate()
