@@ -44,18 +44,21 @@ module.exports = {
         let hours = todoy.getHours()
         let Minutes = todoy.getMinutes()
         let Seconds = todoy.getSeconds();
+        console.log("111",hours)
         let toong = "";
-        if (month && Minutes >= 10 && date >= 10) {
+        if (month && Minutes >= 10 && date >= 10 && hours >=10) {
             toong = year + "-" + month + "-" + date + " " + hours + ":" + Minutes + ":" + Seconds;
         } else {
-            if (month >= 10 && Minutes < 10 && date >=10) {
+            if (month >= 10 && Minutes < 10 && date >=10 && hours >=10) {
                 toong = year + "-" + month + "-" + date + " " + hours + ":" + "0" + Minutes + ":" + Seconds;
-            }else if (month < 10 && Minutes >= 10 && date >=10) {
+            }else if (month < 10 && Minutes >= 10 && date >=10 && hours >=10) {
                 toong = year + "-" +  "0" + month + "-" + date + " " + hours + ":" + Minutes + ":" + Seconds;
-            }else if (month >=10 && Minutes >= 10 && date <10) {
+            }else if (month >=10 && Minutes >= 10 && date <10 && hours >=10) {
                 toong = year + "-" + month + "-"+  "0"  + date + " " + hours + ":" + Minutes + ":" + Seconds;
+            }else if (month >=10 && Minutes >= 10 && date >= 10 && hours < 10) {
+                toong = year + "-" + month + "-" + date + " " +  "0" + hours + ":" + Minutes + ":" + Seconds;
             }else {
-                toong = year + "-" +  "0" + month + "-" +  "0" + date + " " + hours + ":" + "0" +Minutes + ":" + Seconds;
+                toong = year + "-" +  "0" + month + "-" +  "0" + date + " " + "0" + hours + ":" + "0" +Minutes + ":" + Seconds;
             }
         }
 
