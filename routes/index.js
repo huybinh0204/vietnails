@@ -200,6 +200,7 @@ module.exports = function (app) {
     app.route('/api/single_word/user/:single_UserId')
         .get(token_config.checkToken, Single_wordCtrl.get);
 
+    // thoi gian
     app.route('/api/get_list_time/')
         .get(token_config.checkToken,Schedule_historicalCtrl.get_list_time);
 
