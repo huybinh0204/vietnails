@@ -10,6 +10,7 @@ module.exports = {
                 var ArrNews = {
                     [news_shop_model.id]: rown[i].id,
                     [news_shop_model.title]: rown[i].title,
+                    [news_shop_model.image]: rown[i].image,
                     [news_shop_model.content_news]: rown[i].content_news,
                     [news_shop_model.id_Shop]: rown[i].id_Shop,
                     [news_shop_model.created_news]: rown[i].created_news,
@@ -31,6 +32,7 @@ module.exports = {
                 var ArrNews = {
                     [news_shop_model.id]: rown[i].id,
                     [news_shop_model.title]: rown[i].title,
+                    [news_shop_model.image]: rown[i].image,
                     [news_shop_model.content_news]: rown[i].content_news,
                     [news_shop_model.id_Shop]: rown[i].id_Shop,
                     [news_shop_model.created_news]: rown[i].created_news,
@@ -67,6 +69,7 @@ module.exports = {
                         var ArrShop = {
                             [news_shop_model.id]: rown[i].id,
                             [news_shop_model.title]: rown[i].title,
+                            [news_shop_model.image]: rown[i].image,
                             [news_shop_model.content_news]: rown[i].content_news,
                             [news_shop_model.id_Shop]: rown[i].id_Shop,
                             [news_shop_model.created_news]: rown[i].created_news,
