@@ -109,6 +109,7 @@ module.exports = {
                         if (err) throw err
                         if (rowns != '') {
                             var a = 60;
+                            var id_User = rowns[0].id_User;
                             var is_created = rowns[0].created_otp.toString();
                             var gio = Number(is_created.slice(11, 13));
                             var phut = Number(is_created.slice(14, 16));
@@ -118,22 +119,31 @@ module.exports = {
                             var is_giay = Number(created_otp.slice(17, 19));
                             var d = a - giay;
                             var m = d + is_giay;//gio chay caanf lay
-                            var _phut = phut + 1
-                            if (is_gio >= gio) {
+                            var _phut = phut + 1;
+                            if (is_gio >= gio && is_phut >= phut && _phut >= is_phut) {
                                 if (a >= m) {
                                     let otp_status = "Y";
                                     let id = rowns[0].id
                                     let is_sql_otp = `UPDATE check_otp SET ? WHERE id = ${id}`;
+
                                     console.log("1111",is_sql_otp)
                                     db.query(is_sql_otp, [{otp_status}], (err, response) => {
                                         if (err) throw err
-                                        res.json({"status": "200", "message": 'User otp ok 5'})
+                                        res.json({"status": "200", "message": 'User otp ok'})
+                                    })
+
+                                    let user_sql = `UPDATE user SET ? WHERE id = ${id_User}`;
+
+                                    let is_active = 0;
+                                    db.query(user_sql, [{is_active}], (err, response) => {
+                                        if (err) throw err
+                                        console.log("1111")
                                     })
                                 } else {
-                                    res.json({"status": "400", "message": 'User otp no 44'})
+                                    res.json({"status": "400", "message": 'User otp no'})
                                 }
                             } else {
-                                res.json({"status": "400", "message": 'User otp no'})
+                                res.json({"status": "400", "message": 'User otp no '})
                             }
                         } else {
                             res.json({"status": "400", "message": 'User otp no'})
@@ -166,6 +176,7 @@ module.exports = {
                 let id_Shop = req.body.id_Shop;
                 let email = req.body.email;
                 let is_status = 1;
+                let is_active = 2;
 
                 axios.get(url)
                     .then(function (response) {
@@ -178,7 +189,7 @@ module.exports = {
                                 id_roles,
                                 id_Shop,
                                 email,
-                                is_status
+                                is_status,is_active
                             }], (err, response) => {
                                 if (err) throw err
                                 let sql_SELECT = 'SELECT * FROM user WHERE phone = ?'
@@ -228,22 +239,22 @@ module.exports = {
                 db.query(sql, (err, rown, response) => {
                     if (err) throw err
                     if (rown.length < 3) {
-                        // axios.get(url)
-                        //     .then(function (response) {
-                        //         if (response.data.CodeResult == 100) {
+                        axios.get(url)
+                            .then(function (response) {
+                                if (response.data.CodeResult == 100) {
                         let sql_otp = `INSERT INTO check_otp SET ?`;
                         console.log("222s", sql_otp)
                         db.query(sql_otp, [{otp, otp_status, id_User, created_otp}], (err, response) => {
                             if (err) throw err
                             res.json({"status": "200", "message": 'Phone not valid:'})
                         })
-                        // } else {
-                        //     res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
-                        // }
-                        // })
-                        // .catch(function (error) {
-                        //     console.log("err11")
-                        // });
+                        } else {
+                            res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
+                        }
+                        })
+                        .catch(function (error) {
+                            console.log("err11")
+                        });
                     } else {
                         res.json({"status": "409", "message": 'quá 3 lần check otp!'})
                     }
