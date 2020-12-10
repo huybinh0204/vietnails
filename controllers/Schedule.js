@@ -33,7 +33,10 @@ module.exports = {
     get_nv: (req, res) => {
         let start_time = req.body.start_time;
         let id_User = req.body.id_User;
-        let sql = `SELECT * FROM schedule WHERE start_time LIKE '${start_time}%' and id_User = ${id_User}`;
+        // let sql = `SELECT * FROM schedule WHERE start_time LIKE '${start_time}%' and id_User = ${id_User}`;
+        let sql = `SELECT DISTINCT code_schedule , schedule.id , start_time, end_time ,status ,phone_nv ,moneys ,fullName ,phone_kh, `+
+        ` created_schedule , schedule.id_User FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule`+
+        ` WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
         console.log("111",sql)
         if (start_time && id_User != undefined || '') {
             db.query(sql, [{start_time, id_User}], (err, rown, fields) => {
@@ -45,11 +48,11 @@ module.exports = {
                         code_schedule: rown[i].code_schedule,
                         start_time: rown[i].start_time,
                         moneys: rown[i].moneys,
-                        minus_point: rown[i].minus_point,
                         phone_nv: rown[i].phone_nv,
+                        id_User: rown[i].id_User,
                         status: rown[i].status,
-                        Username: rown[i].Username,
-                        content_schedule: rown[i].content_schedule,
+                        fullName: rown[i].fullName,
+                        phone_kh: rown[i].phone_kh,
                         created_schedule: rown[i].created_schedule,
                     };
                     obj.push(ArrSchedule);

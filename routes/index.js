@@ -149,7 +149,7 @@ module.exports = function (app) {
     app.route('/api/schedule/get_date_time/')
         .get(token_config.checkToken, ScheduleCtrl.get_date_time);
 
-    app.route('/api/schedule/get_schedule_nv/:id_User')
+    app.route('/api/schedule/get_schedule_nv/')
         .post(token_config.checkToken, ScheduleCtrl.get_nv);
     //list thoi gian dat licj
     app.route('/api/schedule/:start_time')
