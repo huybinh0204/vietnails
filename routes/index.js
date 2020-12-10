@@ -226,6 +226,8 @@ module.exports = function (app) {
         .post(Notify_UserCtrl.get_key_notify);
     app.route('/api/get_get/')
         .get(Notify_UserCtrl.get);
+    app.route('/api/check_otp/:userId')
+        .post(UserCtrl.check_otp);
 
 
 };
