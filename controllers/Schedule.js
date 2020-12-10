@@ -1,6 +1,8 @@
 const db = require('../service');
 const random_random = require("../config/OpenRoles");
 const schedule_details_mode = require("../models/Schedule_details_model")
+var moment = require('moment-timezone');
+var year = moment().tz("Asia/Ho_Chi_Minh").format("YYYY-MM-DD");
 module.exports = {
     get: (req, res) => {
         let sql = `SELECT * FROM schedule`;
@@ -63,15 +65,8 @@ module.exports = {
         }
     },
     get_date_time: (req, res) => {
-        var todoy = new Date();
-        var a = todoy.getDay()-1;
-        var  yero;
-        if( a < 10){
-            yero =todoy.getFullYear()+"-"+(todoy.getMonth()+1)+"-"+"0"+(todoy.getDay()-1);
-        }else {
-            yero=todoy.getFullYear()+"-"+(todoy.getMonth()+1)+"-"+(todoy.getDay()-1);
-        }
-        let sql = `SELECT * FROM schedule WHERE start_time = "${yero}%"`;
+        let sql = `SELECT * FROM schedule WHERE start_time = "${year}%"`;
+        console.log("111",sql)
         db.query(sql, (err, rown, fields) => {
             if (err) throw err
             var obj = [];

@@ -4,13 +4,19 @@ var md5 = require('md5');
 var is_OFFSET = 0;
 var is_LIMIT = 10;
 var Eis_OFFSET;
+const axios = require('axios');
+const random_random = require("../config/OpenRoles");
+var moment = require('moment-timezone');
+var time = moment().format("YYYY-MM-DD");
+var created_otp = moment().tz("Asia/Ho_Chi_Minh").format();
+
 module.exports = {
     _get: (req, res) => {
         res.render('index', {title: 'VietNails', Get_api: 'api'});
     },
     get: (req, res) => {
         is_OFFSET = is_OFFSET + is_LIMIT
-        var sql=`SELECT * FROM user WHERE is_active < 2`;
+        var sql = `SELECT * FROM user WHERE is_active < 2`;
         // if (is_OFFSET <= 10){
         //     sql = `SELECT * FROM user WHERE is_active < 2 LIMIT ${is_LIMIT} OFFSET 0 `;
         //     // console.log("3333",sql)
@@ -73,7 +79,7 @@ module.exports = {
     update: (req, res) => {
         let data = req.body;
         let userId = req.params.userId;
-        let sql =`UPDATE user SET ? WHERE id = ?`;
+        let sql = `UPDATE user SET ? WHERE id = ?`;
         db.query(sql, [data, userId], (err, response) => {
             if (err) throw err
             res.json({"status": "200", "message": 'Update success!'})
@@ -83,74 +89,180 @@ module.exports = {
     update_password: (req, res) => {
         let password = md5(req.body.password);
         let userId = req.params.userId;
-        let sql =`UPDATE user SET ? WHERE id = ?`;
+        let sql = `UPDATE user SET ? WHERE id = ?`;
         db.query(sql, [{password}, userId], (err, response) => {
             if (err) throw err
             res.json({"status": "200", "message": 'Update Password Ok success!'})
         })
     },
+    check_otp: (req, res) => {
+        let userId = req.params.userId;
+        let sql = `SELECT * FROM check_otp WHERE id_User = ${userId} AND created_otp LIKE "${time}%" ORDER BY id DESC LIMIT 1`;
+        if (userId != undefined) {
+            db.query(sql, [userId], (err, rown, response) => {
+                if (err) throw err
+                if (rown != '') {
+                    // var otp = rown[0].otp;
+                    var otp = req.body.otp;
+                    let sql_otp = `SELECT * FROM check_otp WHERE otp_status = "N" AND otp="${otp}"`;
+                    db.query(sql_otp, (err, rowns, response) => {
+                        if (err) throw err
+                        if (rowns != '') {
+                            var a = 60;
+                            var is_created = rowns[0].created_otp.toString();
+                            var gio = Number(is_created.slice(11, 13));
+                            var phut = Number(is_created.slice(14, 16));
+                            var giay = Number(is_created.slice(17, 19));
+                            var is_gio = Number(created_otp.slice(11, 13));
+                            var is_phut = Number(created_otp.slice(14, 16));
+                            var is_giay = Number(created_otp.slice(17, 19));
+                            var d = a - giay;
+                            var m = d + is_giay;//gio chay caanf lay
+                            var _phut = phut + 1
+                            if (is_gio >= gio) {
+                                if (a >= m) {
+                                    let otp_status = "Y";
+                                    let id = rowns[0].id
+                                    let is_sql_otp = `UPDATE check_otp SET ? WHERE id = ${id}`;
+                                    console.log("1111",is_sql_otp)
+                                    db.query(is_sql_otp, [{otp_status}], (err, response) => {
+                                        if (err) throw err
+                                        res.json({"status": "200", "message": 'User otp ok 5'})
+                                    })
+                                } else {
+                                    res.json({"status": "400", "message": 'User otp no 44'})
+                                }
+                            } else {
+                                res.json({"status": "400", "message": 'User otp no'})
+                            }
+                        } else {
+                            res.json({"status": "400", "message": 'User otp no'})
+                        }
+                    })
+                } else {
+                    res.json({"status": "400", "message": 'User otp no'})
+                }
+
+            })
+        } else {
+            res.json({"status": "400", "message": 'User otp no'})
+        }
+    },
     store: (req, res) => {
-        let sql_check = `SELECT phone  FROM user WHERE phone =(${req.body.phone})`;
+        var otp = random_random.randomString(6);
+        var otp_status = "N";
+        let sql_check = `SELECT id , phone , is_status  FROM user WHERE phone =(${req.body.phone})`;
         db.query(sql_check, (err, rown, fields) => {
             if (err) throw err
-            let data =req.body.id_roles;
+            let phone = req.body.phone;
+            var url = `${random_random.esms_url}?Phone=${phone}&Content=${otp}&ApiKey=${random_random.ApiKey}&SecretKey=` +
+                `${random_random.SecretKey}&Brandname=${random_random.Brandname}&SmsType=${random_random.SmsType}`;
+
+            let data = req.body.id_roles;
             if (rown == "" && data != undefined) {
-                // if ( data <= 5 ) {
-                    let phone = req.body.phone;
-                    let password = md5(req.body.password);
-                    let fullName = req.body.fullName;
-                    let id_roles = req.body.id_roles;
-                    let id_Shop = req.body.id_Shop;
-                    let email = req.body.email;
-                    let is_status = 1;
-                    let sql = `INSERT INTO user SET ?`;
-                    db.query(sql, [{phone,password,fullName,id_roles,id_Shop,email,is_status}], (err, response) => {
-                        if (err) throw err
-                        let sql = 'SELECT * FROM user WHERE phone = ?'
-                        db.query(sql, [phone,password], (err, rown, fields) => {
-                            if (err) throw err
-                            var obj = [];
-                            for (var i = 0; i < rown.length; i++) {
-                                var INSERTUser = {
-                                    [user_model.id]: rown[i].id,
-                                    [user_model.phone]: rown[i].phone,
-                                    [user_model.email]: rown[i].email,
-                                    [user_model.fullName]: rown[i].fullName,
-                                    [user_model.id_roles]: rown[i].id_roles,
-                                    [user_model.avatar]: rown[i].avatar,
-                                    [user_model.address]: rown[i].address,
-                                    [user_model.birthday]: rown[i].birthday,
-                                    [user_model.gender]: rown[i].gender,
-                                    [user_model.is_active]: rown[i].is_active,
-                                    [user_model.created_user]: rown[i].created_user
-                                };
-                                obj.push(INSERTUser);
-                            }
-                            var _INSERTUser = JSON.stringify(obj);
-                            var INSERTUserJson = JSON.parse(_INSERTUser);
-                            res.json({"status": "200", "message": 'User INSERT Ok!', "data": INSERTUserJson})
-                        })
+                let password = md5(req.body.password);
+                let fullName = req.body.fullName;
+                let id_roles = req.body.id_roles;
+                let id_Shop = req.body.id_Shop;
+                let email = req.body.email;
+                let is_status = 1;
+
+                axios.get(url)
+                    .then(function (response) {
+                        if (response.data.CodeResult == 100) {
+                            let sql = `INSERT INTO user SET ?`;
+                            db.query(sql, [{
+                                phone,
+                                password,
+                                fullName,
+                                id_roles,
+                                id_Shop,
+                                email,
+                                is_status
+                            }], (err, response) => {
+                                if (err) throw err
+                                let sql_SELECT = 'SELECT * FROM user WHERE phone = ?'
+                                db.query(sql_SELECT, [phone, password], (err, rown, fields) => {
+                                    if (err) throw err
+                                    var id_User = rown[0].id;
+                                    let sql_otp = `INSERT INTO check_otp SET ?`;
+                                    console.log("11", sql_otp)
+                                    db.query(sql_otp, [{otp, otp_status, id_User, created_otp}], (err, response) => {
+                                        if (err) throw err
+                                        console.log("111",)
+                                    })
+                                    var obj = [];
+                                    for (var i = 0; i < rown.length; i++) {
+                                        var INSERTUser = {
+                                            [user_model.id]: rown[i].id,
+                                            [user_model.phone]: rown[i].phone,
+                                            [user_model.email]: rown[i].email,
+                                            [user_model.fullName]: rown[i].fullName,
+                                            [user_model.id_roles]: rown[i].id_roles,
+                                            [user_model.avatar]: rown[i].avatar,
+                                            [user_model.address]: rown[i].address,
+                                            [user_model.birthday]: rown[i].birthday,
+                                            [user_model.gender]: rown[i].gender,
+                                            [user_model.is_active]: rown[i].is_active,
+                                            [user_model.created_user]: rown[i].created_user
+                                        };
+                                        obj.push(INSERTUser);
+                                    }
+                                    var _INSERTUser = JSON.stringify(obj);
+                                    var INSERTUserJson = JSON.parse(_INSERTUser);
+                                    res.json({"status": "200", "message": 'User INSERT Ok!', "data": INSERTUserJson})
+                                })
+                            })
+                        } else {
+                            res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
+                        }
+
                     })
-                // }else {
-                //     res.json({"status": "400", "message": 'User On INSERT Table lever Wrong !'})
-                // }
+                    .catch(function (error) {
+                        console.log("err1")
+                    });
+
             } else {
-                res.json({"status": "400", "message": 'User On INSERT !'})
+                var id_User = rown[0].id;
+                let sql = `SELECT id FROM check_otp WHERE id_User = ${id_User} AND created_otp LIKE "${time}%"`;
+                db.query(sql, (err, rown, response) => {
+                    if (err) throw err
+                    if (rown.length < 3) {
+                        // axios.get(url)
+                        //     .then(function (response) {
+                        //         if (response.data.CodeResult == 100) {
+                        let sql_otp = `INSERT INTO check_otp SET ?`;
+                        console.log("222s", sql_otp)
+                        db.query(sql_otp, [{otp, otp_status, id_User, created_otp}], (err, response) => {
+                            if (err) throw err
+                            res.json({"status": "200", "message": 'Phone not valid:'})
+                        })
+                        // } else {
+                        //     res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
+                        // }
+                        // })
+                        // .catch(function (error) {
+                        //     console.log("err11")
+                        // });
+                    } else {
+                        res.json({"status": "409", "message": 'quá 3 lần check otp!'})
+                    }
+                })
             }
         })
     },
     delete: (req, res) => {
         let userId = req.params.userId;
         let sql = `SELECT id_roles  FROM user WHERE id = ${userId}`;
-        db.query(sql,[userId], (err,rown, response) => {
+        db.query(sql, [userId], (err, rown, response) => {
             if (err) throw err
-            if(rown[0].id_roles != 1 ){
-                let DE_sql =`UPDATE user SET is_active = 2 WHERE id = ?`
+            if (rown[0].id_roles != 1) {
+                let DE_sql = `UPDATE user SET is_active = 2 WHERE id = ?`
                 db.query(DE_sql, [userId], (err, response) => {
                     if (err) throw err
                     res.json({"status": "200", "message": 'DELETE  success!'})
                 })
-            }else {
+            } else {
                 res.json({"status": "400", "message": 'User No delete!'})
             }
 
@@ -161,16 +273,16 @@ module.exports = {
         let userId = req.params.userId;
         let is_active = req.body.is_active;
         let sql = `SELECT id_roles , is_active  FROM user WHERE id = ${userId}`;
-        db.query(sql, (err,rown, response) => {
+        db.query(sql, (err, rown, response) => {
             if (err) throw err
-            if(rown[0].id_roles != 1 && is_active <= 1){
+            if (rown[0].id_roles != 1 && is_active <= 1) {
 
-                let UP_sql =`UPDATE user SET ? WHERE id = ?`;
+                let UP_sql = `UPDATE user SET ? WHERE id = ?`;
                 db.query(UP_sql, [{is_active}, userId], (err, response) => {
                     if (err) throw err
                     res.json({"status": "200", "message": 'Open  success!'})
                 })
-            }else {
+            } else {
                 res.json({"status": "400", "message": 'NO Success !'})
             }
 
