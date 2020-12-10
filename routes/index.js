@@ -47,6 +47,9 @@ module.exports = function (app) {
     // Login đăng nhập
     app.route('/api/login/')
         .post(LoginCtrl.login_user);
+
+    app.route('/api/get_time_schedule/')
+        .get(Notify_UserCtrl.get_time_schedule);
     //
     // //roles
 
@@ -221,5 +224,8 @@ module.exports = function (app) {
 
     app.route('/api/get_key_notify/')
         .post(Notify_UserCtrl.get_key_notify);
+    app.route('/api/get_get/')
+        .get(Notify_UserCtrl.get);
+
 
 };
