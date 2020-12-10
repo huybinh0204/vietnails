@@ -99,8 +99,9 @@ module.exports = {
         }
     },
     delete: (req, res) => {
-        let sql = 'DELETE FROM service_shop WHERE id = ?'
-        db.query(sql, [req.params.serviceId], (err, response) => {
+        let id = req.params.serviceId
+        let sql = `DELETE FROM service_shop WHERE id = ${id}`
+        db.query(sql, [id], (err, response) => {
             if (err) throw err
             res.json({"status": "200", message: 'Delete success!'})
         })
