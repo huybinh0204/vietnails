@@ -123,7 +123,7 @@ module.exports = function (app) {
     app.route('/api/service/edit/:serviceId')
         .put(token_config.checkToken, ServiceCtrl.update);
     app.route('/api/service/delete/:serviceId')
-        .delete(token_config.checkToken, ServiceCtrl.delete);
+        .delete(token_config.checkToken,ServiceCtrl.delete);
 
     // api News shop bài
     app.route('/api/news_shop/')
