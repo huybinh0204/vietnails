@@ -68,7 +68,7 @@ module.exports = {
         }
     },
     get_date_time: (req, res) => {
-        let sql = `SELECT * FROM schedule WHERE start_time LIKE "${year}%"`;
+        let sql = `SELECT DISTINCT code_schedule , schedule.id , start_time, end_time ,status ,phone_nv ,moneys ,user.fullName as fullName_nv , working_time as fullName_kh ,phone_kh, created_schedule , schedule.id_User as id_User_nv, schedule_details.id_User as id_User_kh FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule JOIN user ON user.id = schedule.id_User WHERE start_time LIKE "${year}%"`;
         console.log("111",sql)
         db.query(sql, (err, rown, fields) => {
             if (err) throw err
@@ -168,6 +168,7 @@ module.exports = {
         let content_schedule = req.body.content_schedule;
         let id_schedule_details = req.body.id_schedule_details;
         let phone_kh = req.body.phone_kh;
+        let fullName_kh = req.body.fullName_kh;
         let id_User = req.body.id_User;
         let id_User_nv = req.body.id_User_nv;
 
@@ -228,19 +229,19 @@ module.exports = {
                         })
                     })
                     //INSERT INTO schedule_details
-                    let sql_schedule_details = `SELECT id FROM schedule WHERE code_schedule ="${code_schedule}"`;
+                    let sql_schedule_details = `SELECT * FROM schedule WHERE code_schedule ="${code_schedule}"`;
                     db.query(sql_schedule_details, (err, rowsk, response) => {
                         if (err) throw err
                         var id_Schedule = Number(rowsk.map(x => x.id).toString());
                         for (var k = 0; k < id_schedule_details.length; k++) {
                             var id_Service_shop = id_schedule_details[k].id_Service_shop;
-                            var working_time = id_schedule_details[k].working_time;
+                            // var working_time = id_schedule_details[k].working_time;
                             var data_schedule_details = {
                                 phone_kh: phone_kh,
                                 id_User: id_User,
                                 id_Schedule: id_Schedule,
                                 id_Service_shop: id_Service_shop,
-                                working_time: working_time,
+                                working_time: fullName_kh,
                             }
                             let is_sql_schedule_details = 'INSERT INTO schedule_details SET ?';
                             db.query(is_sql_schedule_details, [data_schedule_details], (err, rown, fields) => {

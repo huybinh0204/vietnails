@@ -5,5 +5,6 @@ module.exports = {
     id_User: 'id_User',
     id_Service_shop: 'id_Service_shop',
     id_Schedule: 'id_Schedule',
+    fullName_kh: 'fullName_kh',
 }
 
