@@ -53,7 +53,7 @@ module.exports = {
         let status = req.body.status;
         let phone_nv = req.body.phone_nv;
         let content = req.body.content;
-
+        console.log("1222",id_User + " :"+ status + ":"+ content);
         if (status == 1) {
             var data = {
                 status: 1,
