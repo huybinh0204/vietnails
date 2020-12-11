@@ -68,7 +68,7 @@ module.exports = {
         }
     },
     get_date_time: (req, res) => {
-        let sql = `SELECT * FROM schedule WHERE start_time = "${year}%"`;
+        let sql = `SELECT * FROM schedule WHERE start_time LIKE "${year}%"`;
         console.log("111",sql)
         db.query(sql, (err, rown, fields) => {
             if (err) throw err
