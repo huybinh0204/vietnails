@@ -96,14 +96,16 @@ module.exports = {
         })
     },
     check_otp: (req, res) => {
-        let userId = req.params.userId;
-        let sql = `SELECT * FROM check_otp WHERE id_User = ${userId} AND created_otp LIKE "${time}%" ORDER BY id DESC LIMIT 1`;
-        if (userId != undefined) {
-            db.query(sql, [userId], (err, rown, response) => {
+        let id_User = req.body.id_User;
+        var otp = req.body.otp;
+        let sql = `SELECT * FROM check_otp WHERE id_User = ${id_User} AND created_otp LIKE "${time}%" ORDER BY id DESC LIMIT 1`;
+        console.log("121",sql)
+        if (id_User != undefined && otp != '') {
+            db.query(sql, (err, rown, response) => {
                 if (err) throw err
                 if (rown != '') {
                     // var otp = rown[0].otp;
-                    var otp = req.body.otp;
+
                     let sql_otp = `SELECT * FROM check_otp WHERE otp_status = "N" AND otp="${otp}"`;
                     db.query(sql_otp, (err, rowns, response) => {
                         if (err) throw err
