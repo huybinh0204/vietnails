@@ -85,7 +85,35 @@ module.exports = {
             res.json({"status": "200", "message": 'Update success!'})
         })
     },
-    //Update Password Ok success!
+    check_phone: (req, res) => {
+        let phone = req.body.phone;
+        let sql = `SELECT * FROM user WHERE phone = "${phone}"`;
+        db.query(sql, [{phone}], (err, rown, response) => {
+            if (err) throw err
+            var obj = [];
+            for (var i = 0; i < rown.length; i++) {
+                var ArrUser = {
+                    [user_model.id]: rown[i].id,
+                    [user_model.phone]: rown[i].phone,
+                    [user_model.email]: rown[i].email,
+                    [user_model.fullName]: rown[i].fullName,
+                    [user_model.id_roles]: rown[i].id_roles,
+                    [user_model.avatar]: rown[i].avatar,
+                    [user_model.address]: rown[i].address,
+                    [user_model.birthday]: rown[i].birthday,
+                    [user_model.gender]: rown[i].gender,
+                    [user_model.is_active]: rown[i].is_active,
+                    [user_model.created_user]: rown[i].created_user
+                };
+                obj.push(ArrUser);
+            }
+            var _ArrUser = JSON.stringify(obj);
+            var UserJson = JSON.parse(_ArrUser);
+            var ArrGetUser = [{"status": "200","message": 'Check phone success!', "data": UserJson}]
+            res.json(ArrGetUser);
+        })
+    },
+    // đỗi password
     update_password: (req, res) => {
         let password = md5(req.body.password);
         let userId = req.params.userId;
@@ -97,9 +125,8 @@ module.exports = {
     },
     check_otp: (req, res) => {
         let id_User = req.body.id_User;
-        var otp = req.body.otp;
+        var otp = req.body.on_key;
         let sql = `SELECT * FROM check_otp WHERE id_User = ${id_User} AND created_otp LIKE "${time}%" ORDER BY id DESC LIMIT 1`;
-        console.log("121",sql)
         if (id_User != undefined && otp != '') {
             db.query(sql, (err, rown, response) => {
                 if (err) throw err
@@ -128,7 +155,7 @@ module.exports = {
                                     let id = rowns[0].id
                                     let is_sql_otp = `UPDATE check_otp SET ? WHERE id = ${id}`;
 
-                                    console.log("1111",is_sql_otp)
+                                    console.log("1111", is_sql_otp)
                                     db.query(is_sql_otp, [{otp_status}], (err, response) => {
                                         if (err) throw err
                                         res.json({"status": "200", "message": 'User otp ok'})
@@ -160,159 +187,160 @@ module.exports = {
             res.json({"status": "400", "message": 'User otp no'})
         }
     },
-    store: (req, res) => {
-        let sql_check = `SELECT phone  FROM user WHERE phone =(${req.body.phone})`;
-        db.query(sql_check, (err, rown, fields) => {
-            if (err) throw err
-            let data =req.body.id_roles;
-            if (rown == "" && data != undefined) {
-                // if ( data <= 5 ) {
-                let phone = req.body.phone;
-                let password = md5(req.body.password);
-                let fullName = req.body.fullName;
-                let id_roles = req.body.id_roles;
-                let id_Shop = req.body.id_Shop;
-                let email = req.body.email;
-                let sql = `INSERT INTO user SET ?`;
-                db.query(sql, [{phone,password,fullName,id_roles,id_Shop,email}], (err, response) => {
-                    if (err) throw err
-                    let sql = 'SELECT * FROM user WHERE phone = ?'
-                    db.query(sql, [phone,password], (err, rown, fields) => {
-                        if (err) throw err
-                        var obj = [];
-                        for (var i = 0; i < rown.length; i++) {
-                            var INSERTUser = {
-                                [user_model.id]: rown[i].id,
-                                [user_model.phone]: rown[i].phone,
-                                [user_model.email]: rown[i].email,
-                                [user_model.fullName]: rown[i].fullName,
-                                [user_model.id_roles]: rown[i].id_roles,
-                                [user_model.avatar]: rown[i].avatar,
-                                [user_model.address]: rown[i].address,
-                                [user_model.birthday]: rown[i].birthday,
-                                [user_model.gender]: rown[i].gender,
-                                [user_model.is_active]: rown[i].is_active,
-                                [user_model.created_user]: rown[i].created_user
-                            };
-                            obj.push(INSERTUser);
-                        }
-                        var _INSERTUser = JSON.stringify(obj);
-                        var INSERTUserJson = JSON.parse(_INSERTUser);
-                        res.json({"status": "200", "message": 'User INSERT Ok!', "data": INSERTUserJson})
-                    })
-                })
-                // }else {
-                //     res.json({"status": "400", "message": 'User On INSERT Table lever Wrong !'})
-                // }
-            } else {
-                res.json({"status": "400", "message": 'User On INSERT !'})
-            }
-        })
-    },
-        // store: (req, res) => {
-    //     var otp = random_random.randomString(6);
-    //     var otp_status = "N";
-    //     let sql_check = `SELECT id , phone , is_status  FROM user WHERE phone =(${req.body.phone})`;
+    // store: (req, res) => {
+    //     let sql_check = `SELECT phone  FROM user WHERE phone =(${req.body.phone})`;
     //     db.query(sql_check, (err, rown, fields) => {
     //         if (err) throw err
-    //         let phone = req.body.phone;
-    //         var url = `${random_random.esms_url}?Phone=${phone}&Content=${otp}&ApiKey=${random_random.ApiKey}&SecretKey=` +
-    //             `${random_random.SecretKey}&Brandname=${random_random.Brandname}&SmsType=${random_random.SmsType}`;
-    //
-    //         let data = req.body.id_roles;
+    //         let data =req.body.id_roles;
     //         if (rown == "" && data != undefined) {
+    //             // if ( data <= 5 ) {
+    //             let phone = req.body.phone;
     //             let password = md5(req.body.password);
     //             let fullName = req.body.fullName;
     //             let id_roles = req.body.id_roles;
     //             let id_Shop = req.body.id_Shop;
     //             let email = req.body.email;
-    //             let is_status = 1;
-    //             let is_active = 2;
-    //
-    //             axios.get(url)
-    //                 .then(function (response) {
-    //                     if (response.data.CodeResult == 100) {
-    //                         let sql = `INSERT INTO user SET ?`;
-    //                         db.query(sql, [{
-    //                             phone,
-    //                             password,
-    //                             fullName,
-    //                             id_roles,
-    //                             id_Shop,
-    //                             email,
-    //                             is_status,is_active
-    //                         }], (err, response) => {
-    //                             if (err) throw err
-    //                             let sql_SELECT = 'SELECT * FROM user WHERE phone = ?'
-    //                             db.query(sql_SELECT, [phone, password], (err, rown, fields) => {
-    //                                 if (err) throw err
-    //                                 var id_User = rown[0].id;
-    //                                 let sql_otp = `INSERT INTO check_otp SET ?`;
-    //                                 console.log("11", sql_otp)
-    //                                 db.query(sql_otp, [{otp, otp_status, id_User, created_otp}], (err, response) => {
-    //                                     if (err) throw err
-    //                                     console.log("111",)
-    //                                 })
-    //                                 var obj = [];
-    //                                 for (var i = 0; i < rown.length; i++) {
-    //                                     var INSERTUser = {
-    //                                         [user_model.id]: rown[i].id,
-    //                                         [user_model.phone]: rown[i].phone,
-    //                                         [user_model.email]: rown[i].email,
-    //                                         [user_model.fullName]: rown[i].fullName,
-    //                                         [user_model.id_roles]: rown[i].id_roles,
-    //                                         [user_model.avatar]: rown[i].avatar,
-    //                                         [user_model.address]: rown[i].address,
-    //                                         [user_model.birthday]: rown[i].birthday,
-    //                                         [user_model.gender]: rown[i].gender,
-    //                                         [user_model.is_active]: rown[i].is_active,
-    //                                         [user_model.created_user]: rown[i].created_user
-    //                                     };
-    //                                     obj.push(INSERTUser);
-    //                                 }
-    //                                 var _INSERTUser = JSON.stringify(obj);
-    //                                 var INSERTUserJson = JSON.parse(_INSERTUser);
-    //                                 res.json({"status": "200", "message": 'User INSERT Ok!', "data": INSERTUserJson})
-    //                             })
-    //                         })
-    //                     } else {
-    //                         res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
-    //                     }
-    //
-    //                 })
-    //                 .catch(function (error) {
-    //                     console.log("err1")
-    //                 });
-    //
-    //         } else {
-    //             var id_User = rown[0].id;
-    //             let sql = `SELECT id FROM check_otp WHERE id_User = ${id_User} AND created_otp LIKE "${time}%"`;
-    //             db.query(sql, (err, rown, response) => {
+    //             let sql = `INSERT INTO user SET ?`;
+    //             db.query(sql, [{phone,password,fullName,id_roles,id_Shop,email}], (err, response) => {
     //                 if (err) throw err
-    //                 if (rown.length < 3) {
-    //                     axios.get(url)
-    //                         .then(function (response) {
-    //                             if (response.data.CodeResult == 100) {
-    //                     let sql_otp = `INSERT INTO check_otp SET ?`;
-    //                     console.log("222s", sql_otp)
-    //                     db.query(sql_otp, [{otp, otp_status, id_User, created_otp}], (err, response) => {
-    //                         if (err) throw err
-    //                         res.json({"status": "200", "message": 'Phone not valid:'})
-    //                     })
-    //                     } else {
-    //                         res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
+    //                 let sql = 'SELECT * FROM user WHERE phone = ?'
+    //                 db.query(sql, [phone,password], (err, rown, fields) => {
+    //                     if (err) throw err
+    //                     var obj = [];
+    //                     for (var i = 0; i < rown.length; i++) {
+    //                         var INSERTUser = {
+    //                             [user_model.id]: rown[i].id,
+    //                             [user_model.phone]: rown[i].phone,
+    //                             [user_model.email]: rown[i].email,
+    //                             [user_model.fullName]: rown[i].fullName,
+    //                             [user_model.id_roles]: rown[i].id_roles,
+    //                             [user_model.avatar]: rown[i].avatar,
+    //                             [user_model.address]: rown[i].address,
+    //                             [user_model.birthday]: rown[i].birthday,
+    //                             [user_model.gender]: rown[i].gender,
+    //                             [user_model.is_active]: rown[i].is_active,
+    //                             [user_model.created_user]: rown[i].created_user
+    //                         };
+    //                         obj.push(INSERTUser);
     //                     }
-    //                     })
-    //                     .catch(function (error) {
-    //                         console.log("err11")
-    //                     });
-    //                 } else {
-    //                     res.json({"status": "409", "message": 'quá 3 lần check otp!'})
-    //                 }
+    //                     var _INSERTUser = JSON.stringify(obj);
+    //                     var INSERTUserJson = JSON.parse(_INSERTUser);
+    //                     res.json({"status": "200", "message": 'User INSERT Ok!', "data": INSERTUserJson})
+    //                 })
     //             })
+    //             // }else {
+    //             //     res.json({"status": "400", "message": 'User On INSERT Table lever Wrong !'})
+    //             // }
+    //         } else {
+    //             res.json({"status": "400", "message": 'User On INSERT !'})
     //         }
     //     })
     // },
+    store: (req, res) => {
+        var otp = random_random.randomString(6);
+        var otp_status = "N";
+        let sql_check = `SELECT id , phone , is_status  FROM user WHERE phone =(${req.body.phone})`;
+        db.query(sql_check, (err, rown, fields) => {
+            if (err) throw err
+            let phone = req.body.phone;
+            var url = `${random_random.esms_url}?Phone=${phone}&Content=${otp}&ApiKey=${random_random.ApiKey}&SecretKey=` +
+                `${random_random.SecretKey}&Brandname=${random_random.Brandname}&SmsType=${random_random.SmsType}`;
+            console.log("123",url)
+            let data = req.body.id_roles;
+            if (rown == "" && data != undefined) {
+                let password = md5(req.body.password);
+                let fullName = req.body.fullName;
+                let id_roles = req.body.id_roles;
+                let id_Shop = req.body.id_Shop;
+                let email = req.body.email;
+                let is_status = 1;
+                let is_active = 2;
+                axios.get(url)
+                    .then(function (response) {
+                        if (response.data.CodeResult == 100) {
+                            let sql = `INSERT INTO user SET ?`;
+                            console.log("11",sql)
+                            db.query(sql, [{
+                                phone,
+                                password,
+                                fullName,
+                                id_roles,
+                                id_Shop,
+                                email,
+                                is_status, is_active
+                            }], (err, response) => {
+                                if (err) throw err
+                                let sql_SELECT = 'SELECT * FROM user WHERE phone = ?'
+                                console.log("44444",sql_SELECT)
+                                db.query(sql_SELECT, [phone, password], (err, rown, fields) => {
+                                    if (err) throw err
+                                    var id_User = rown[0].id;
+                                    let sql_otp = `INSERT INTO check_otp SET ?`;
+                                    console.log("11", sql_otp)
+                                    db.query(sql_otp, [{otp, otp_status, id_User, created_otp}], (err, response) => {
+                                        if (err) throw err
+                                        console.log("111",)
+                                    })
+                                    var obj = [];
+                                    for (var i = 0; i < rown.length; i++) {
+                                        var INSERTUser = {
+                                            [user_model.id]: rown[i].id,
+                                            [user_model.phone]: rown[i].phone,
+                                            [user_model.email]: rown[i].email,
+                                            [user_model.fullName]: rown[i].fullName,
+                                            [user_model.id_roles]: rown[i].id_roles,
+                                            [user_model.avatar]: rown[i].avatar,
+                                            [user_model.address]: rown[i].address,
+                                            [user_model.birthday]: rown[i].birthday,
+                                            [user_model.gender]: rown[i].gender,
+                                            [user_model.is_active]: rown[i].is_active,
+                                            [user_model.created_user]: rown[i].created_user
+                                        };
+                                        obj.push(INSERTUser);
+                                    }
+                                    var _INSERTUser = JSON.stringify(obj);
+                                    var INSERTUserJson = JSON.parse(_INSERTUser);
+                                    res.json({"status": "200", "message": 'User INSERT Ok!', "data": INSERTUserJson})
+                                })
+                            })
+                        } else {
+                            res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
+                        }
+
+                    })
+                    .catch(function (error) {
+                        console.log("err1")
+                    });
+
+            } else {
+                var id_User = rown[0].id;
+                let sql = `SELECT id FROM check_otp WHERE id_User = ${id_User} AND created_otp LIKE "${time}%"`;
+                db.query(sql, (err, rown, response) => {
+                    if (err) throw err
+                    if (rown.length < 3) {
+                        axios.get(url)
+                            .then(function (response) {
+                                if (response.data.CodeResult == 100) {
+                                    let sql_otp = `INSERT INTO check_otp SET ?`;
+                                    console.log("222s", sql_otp)
+                                    db.query(sql_otp, [{otp, otp_status, id_User, created_otp}], (err, response) => {
+                                        if (err) throw err
+                                        res.json({"status": "200", "message": 'tao taoi khoan thanh cong'})
+                                    })
+                                } else {
+                                    res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
+                                }
+                            })
+                            .catch(function (error) {
+                                console.log("err11")
+                            });
+                    } else {
+                        res.json({"status": "409", "message": 'quá 3 lần check otp!'})
+                    }
+                })
+            }
+        })
+    },
     delete: (req, res) => {
         let userId = req.params.userId;
         let sql = `SELECT id_roles  FROM user WHERE id = ${userId}`;

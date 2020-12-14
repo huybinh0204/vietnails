@@ -224,8 +224,12 @@ module.exports = function (app) {
 
     app.route('/api/get_key_notify/')
         .post(Notify_UserCtrl.get_key_notify);
+
     app.route('/api/get_get/')
         .get(Notify_UserCtrl.get);
+
+    app.route('/api/check_phone/')
+        .post(UserCtrl.check_phone);
 
     app.route('/api/check_otp/')
         .post(UserCtrl.check_otp);
