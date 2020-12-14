@@ -85,32 +85,57 @@ module.exports = {
             res.json({"status": "200", "message": 'Update success!'})
         })
     },
+    //check sddt
     check_phone: (req, res) => {
         let phone = req.body.phone;
         let sql = `SELECT * FROM user WHERE phone = "${phone}"`;
         db.query(sql, [{phone}], (err, rown, response) => {
             if (err) throw err
             var obj = [];
-            for (var i = 0; i < rown.length; i++) {
-                var ArrUser = {
-                    [user_model.id]: rown[i].id,
-                    [user_model.phone]: rown[i].phone,
-                    [user_model.email]: rown[i].email,
-                    [user_model.fullName]: rown[i].fullName,
-                    [user_model.id_roles]: rown[i].id_roles,
-                    [user_model.avatar]: rown[i].avatar,
-                    [user_model.address]: rown[i].address,
-                    [user_model.birthday]: rown[i].birthday,
-                    [user_model.gender]: rown[i].gender,
-                    [user_model.is_active]: rown[i].is_active,
-                    [user_model.created_user]: rown[i].created_user
-                };
-                obj.push(ArrUser);
+            if (rown != ''){
+                var otp = random_random.randomString(6);
+                var otp_status = "N";
+                var id_User = rown[0].id;
+                var url = `${random_random.esms_url}?Phone=${phone}&Content=${otp}&ApiKey=${random_random.ApiKey}&SecretKey=` +
+                    `${random_random.SecretKey}&Brandname=${random_random.Brandname}&SmsType=${random_random.SmsType}`;
+                axios.get(url)
+                    .then(function (response) {
+                        if (response.data.CodeResult == 100) {
+                            let sql_otp = `INSERT INTO check_otp SET ?`;
+                            console.log("222s", sql_otp)
+                            db.query(sql_otp, [{otp, otp_status, id_User, created_otp}], (err, response) => {
+                                if (err) throw err
+                                for (var i = 0; i < rown.length; i++) {
+                                    var ArrUser = {
+                                        [user_model.id]: rown[i].id,
+                                        [user_model.phone]: rown[i].phone,
+                                        [user_model.email]: rown[i].email,
+                                        [user_model.fullName]: rown[i].fullName,
+                                        [user_model.id_roles]: rown[i].id_roles,
+                                        [user_model.avatar]: rown[i].avatar,
+                                        [user_model.address]: rown[i].address,
+                                        [user_model.birthday]: rown[i].birthday,
+                                        [user_model.gender]: rown[i].gender,
+                                        [user_model.is_active]: rown[i].is_active,
+                                        [user_model.created_user]: rown[i].created_user
+                                    };
+                                    obj.push(ArrUser);
+                                }
+                                var _ArrUser = JSON.stringify(obj);
+                                var UserJson = JSON.parse(_ArrUser);
+                                var ArrGetUser = [{"status": "200","message": 'Check phone success!', "data": UserJson}]
+                                res.json(ArrGetUser);
+                            })
+                        } else {
+                            res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("err11")
+                    });
+            }else {
+                res.json({"status": "400","message": 'Check phone on!',});
             }
-            var _ArrUser = JSON.stringify(obj);
-            var UserJson = JSON.parse(_ArrUser);
-            var ArrGetUser = [{"status": "200","message": 'Check phone success!', "data": UserJson}]
-            res.json(ArrGetUser);
         })
     },
     // đỗi password
@@ -123,6 +148,7 @@ module.exports = {
             res.json({"status": "200", "message": 'Update Password Ok success!'})
         })
     },
+    // check otp
     check_otp: (req, res) => {
         let id_User = req.body.id_User;
         var otp = req.body.on_key;
@@ -245,7 +271,6 @@ module.exports = {
             let phone = req.body.phone;
             var url = `${random_random.esms_url}?Phone=${phone}&Content=${otp}&ApiKey=${random_random.ApiKey}&SecretKey=` +
                 `${random_random.SecretKey}&Brandname=${random_random.Brandname}&SmsType=${random_random.SmsType}`;
-            console.log("123",url)
             let data = req.body.id_roles;
             if (rown == "" && data != undefined) {
                 let password = md5(req.body.password);
@@ -257,6 +282,7 @@ module.exports = {
                 let is_active = 2;
                 axios.get(url)
                     .then(function (response) {
+
                         if (response.data.CodeResult == 100) {
                             let sql = `INSERT INTO user SET ?`;
                             console.log("11",sql)
