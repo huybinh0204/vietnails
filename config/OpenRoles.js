@@ -10,6 +10,7 @@ module.exports = {
     }
 }
 module.exports.url = 'http://vietnails.cf'
+
 // module.exports.url = 'http://localhost:8080';
 
 module.exports.esms_url = 'http://rest.esms.vn/MainService.svc/json/SendMultipleMessage_V4_get'
