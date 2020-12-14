@@ -223,7 +223,7 @@ module.exports = function (app) {
         .post(Notify_UserCtrl.store);
 
     app.route('/api/get_key_notify/')
-        .post(Notify_UserCtrl.get_key_notify);
+        .post(token_config.checkToken,Notify_UserCtrl.get_key_notify);
 
     app.route('/api/get_get/')
         .get(Notify_UserCtrl.get);

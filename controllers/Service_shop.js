@@ -5,7 +5,7 @@ var Eis_OFFSET;
 module.exports = {
     get: (req, res) => {
         is_OFFSET = is_OFFSET + is_LIMIT
-        var sql = `SELECT * FROM service_shop`;
+        var sql = `SELECT * FROM service_shop WHERE is_status = 0`;
         // if (is_OFFSET <= 10){
         //     sql = `SELECT * FROM service_shop LIMIT ${is_LIMIT} OFFSET 0 `;
         // }else{
@@ -34,7 +34,7 @@ module.exports = {
         })
     },
     detail: (req, res) => {
-        let sql = 'SELECT * FROM service_shop WHERE id = ?'
+        let sql = 'SELECT * FROM service_shop WHERE is_status = 0 and id = ?'
         db.query(sql, [req.params.serviceId], (err, rown, fields) => {
             if (err) throw err
             var obj = [];
@@ -100,8 +100,10 @@ module.exports = {
     },
     delete: (req, res) => {
         let id = req.params.serviceId
-        let sql = `DELETE FROM service_shop WHERE id = ${id}`
-        db.query(sql, [id], (err, response) => {
+        let is_status = 1
+        let sql = `UPDATE service_shop SET ? WHERE id = ${id}`;
+        console.log("11",sql)
+        db.query(sql, [{is_status,id}], (err, response) => {
             if (err) throw err
             res.json({"status": "200", message: 'Delete success!'})
         })
