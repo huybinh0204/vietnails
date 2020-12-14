@@ -68,7 +68,10 @@ module.exports = {
         }
     },
     get_date_time: (req, res) => {
-        let sql = `SELECT DISTINCT code_schedule , schedule.id , start_time, end_time ,status ,phone_nv ,moneys ,user.fullName as fullName_nv , working_time as fullName_kh ,phone_kh, created_schedule , schedule.id_User as id_User_nv, schedule_details.id_User as id_User_kh FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule JOIN user ON user.id = schedule.id_User WHERE start_time LIKE "${year}%"`;
+        let sql = `SELECT DISTINCT code_schedule , schedule.id , start_time, end_time ,status ,phone_nv ,moneys ,` +
+        `user.fullName as fullName_nv , working_time as fullName_kh ,phone_kh, created_schedule , schedule.id_User as id_User_nv,`+
+         `schedule_details.id_User as id_User_kh FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule `+
+         `JOIN user ON user.id = schedule.id_User WHERE start_time LIKE "${year}%"`;
         console.log("111",sql)
         db.query(sql, (err, rown, fields) => {
             if (err) throw err
