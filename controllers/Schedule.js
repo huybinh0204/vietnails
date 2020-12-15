@@ -33,10 +33,6 @@ module.exports = {
     get_nv: (req, res) => {
         let start_time = req.body.start_time;
         let id_User = req.body.id_User;
-        // let sql = `SELECT * FROM schedule WHERE start_time LIKE '${start_time}%' and id_User = ${id_User}`;
-        // let sql = `SELECT DISTINCT code_schedule , schedule.id , start_time, end_time ,status ,phone_nv ,moneys ,fullName ,phone_kh, ` +
-        //     ` created_schedule , schedule.id_User FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule` +
-        //     ` WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
         let sql = `SELECT DISTINCT code_schedule , schedule.id ,start_time, end_time ,status ,moneys , user.fullName as fullName_nv ,` +
             `phone_nv , schedule_details.phone_kh ,schedule_details.working_time as fullName_kh , schedule.id_User as id_User_nv, ` +
             `schedule_details.id_User as id_User_kh FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule ` +
@@ -77,7 +73,7 @@ module.exports = {
         let sql = `SELECT DISTINCT code_schedule , schedule.id ,start_time, end_time ,status ,moneys , user.fullName as fullName_nv ,` +
             `phone_nv , schedule_details.phone_kh ,schedule_details.working_time as fullName_kh , schedule.id_User as id_User_nv, ` +
             `schedule_details.id_User as id_User_kh FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule ` +
-            `JOIN user ON user.id = schedule.id_User WHERE start_time LIKE "2020-11-19%"`;
+            `JOIN user ON user.id = schedule.id_User WHERE start_time LIKE '${year}%'`;
         // console.log("111", sql)
         db.query(sql, (err, rown, fields) => {
             if (err) throw err
@@ -160,6 +156,7 @@ module.exports = {
             res.json(ArrGetSchedule);
         })
     },
+    // sua hoas ddon
     update: (req, res) => {
         let data = req.body;
         let scheduleId = req.params.scheduleId;
@@ -169,6 +166,7 @@ module.exports = {
             res.json({"status": "200", schedule: 'Update success!'})
         })
     },
+    //taoj hoas ddon
     store: (req, res) => {
         var code_schedule = random_random.randomString(10);
         let start_time = req.body.start_time;
@@ -209,6 +207,7 @@ module.exports = {
                     let sql = `INSERT INTO schedule SET ?`;
                     db.query(sql, [data], (err, response) => {
                         if (err) throw err
+
 
                         let _sqlSELECT = `SELECT * FROM schedule ORDER BY id DESC LIMIT 1`;
                         db.query(_sqlSELECT, (err, rown, fields) => {
@@ -300,7 +299,7 @@ module.exports = {
             res.json({"status": "400", message: 'schedule No Get_Open_Schedule !'});
         }
     },
-
+    // thoi gian dawt lich
     Open_Schedule: (req, res, next) => {
         let start_time = req.body.start_time;
         let id_User = req.body.id_User;
