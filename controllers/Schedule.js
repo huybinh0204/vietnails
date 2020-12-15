@@ -34,10 +34,14 @@ module.exports = {
         let start_time = req.body.start_time;
         let id_User = req.body.id_User;
         // let sql = `SELECT * FROM schedule WHERE start_time LIKE '${start_time}%' and id_User = ${id_User}`;
-        let sql = `SELECT DISTINCT code_schedule , schedule.id , start_time, end_time ,status ,phone_nv ,moneys ,fullName ,phone_kh, ` +
-            ` created_schedule , schedule.id_User FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule` +
-            ` WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
-        console.log("111", sql)
+        // let sql = `SELECT DISTINCT code_schedule , schedule.id , start_time, end_time ,status ,phone_nv ,moneys ,fullName ,phone_kh, ` +
+        //     ` created_schedule , schedule.id_User FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule` +
+        //     ` WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
+        let sql = `SELECT DISTINCT code_schedule , schedule.id ,start_time, end_time ,status ,moneys , user.fullName as fullName_nv ,` +
+            `phone_nv , schedule_details.phone_kh ,schedule_details.working_time as fullName_kh , schedule.id_User as id_User_nv, ` +
+            `schedule_details.id_User as id_User_kh FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule ` +
+            `JOIN user ON user.id = schedule.id_User WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
+        // console.log("111", sql)
         if (start_time && id_User != undefined || '') {
             db.query(sql, [{start_time, id_User}], (err, rown, fields) => {
                 if (err) throw err
@@ -47,13 +51,15 @@ module.exports = {
                         id: rown[i].id,
                         code_schedule: rown[i].code_schedule,
                         start_time: rown[i].start_time,
-                        moneys: rown[i].moneys,
-                        phone_nv: rown[i].phone_nv,
-                        id_User: rown[i].id_User,
+                        end_time: rown[i].end_time,
                         status: rown[i].status,
-                        fullName: rown[i].fullName,
+                        moneys: rown[i].moneys,
+                        fullName_nv: rown[i].fullName_nv,
+                        phone_nv: rown[i].phone_nv,
+                        id_User_nv: rown[i].id_User_nv,
+                        fullName_kh: rown[i].fullName_kh,
                         phone_kh: rown[i].phone_kh,
-                        created_schedule: rown[i].created_schedule,
+                        id_User_kh: rown[i].id_User_kh,
                     };
                     obj.push(ArrSchedule);
                 }
