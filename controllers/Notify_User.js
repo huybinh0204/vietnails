@@ -1,6 +1,7 @@
 const db = require('../service');
 const axios = require('axios');
 const s = require('../config/OpenRoles')
+
 module.exports = {
     get: (req, res) => {
         let sql = `SELECT * FROM notify_key`;
@@ -19,25 +20,36 @@ module.exports = {
         })
     },
     get_key_notify: (req, res) => {
-        let on_key = req.body.on_key;
-        let id_User = req.body.id_User;
-        let data = {on_key: on_key, id_User: id_User}
-
-        if (id_User && on_key != undefined || "") {
-            let sql = `SELECT * FROM notify_key WHERE id_User = ${id_User} and on_key = "${on_key}"`;
-
-            db.query(sql, [data], (err, rown, response) => {
-                if (err) throw err
-                if (rown != "") {
-                    res.json({"status": "200", message: 'Notify key OK key !', data: rown});
-                } else {
-                    res.json({"status": "400", message: 'Notify No key !'});
+        var urls = "https://fcm.googleapis.com/fcm/send";
+        let registration_ids = req.body.registration_ids
+        let priority = req.body.priority;
+        let notification = req.body.notification;
+        let data = req.body.data;
+        console.log("111ssss",s.Key_Notify);
+        // console.log("registration_ids",)
+        // console.log("priority",req.body.priority)
+        // console.log("notification",req.body.notification)
+        // console.log("data",req.body.data)
+        axios.post(urls, {
+            registration_ids: registration_ids,
+            priority: priority,
+            notification: notification,
+            data: data
+        },
+            {
+                headers:{
+                    Authorization: 'key=AAAAI03A8A0:APA91bGsIIK6IvC_0r_mkJo38wpIHuHZoNbGqNzM_17s5FSv7L8fxKCf4fLoB0t61RZb4_dbGYbBdeP2FPxTx8P2K0MAaUJcaTXde4IB00k85yvCKb8SyxnSXUKmvkyI7XjOqrGHgXAI',
+                    'Content-Type': 'application/json'
                 }
+            }
+            )
+            .then(function (response) {
+                res.json({status: '200'});
             })
-
-        } else {
-            res.json({"status": "400", message: 'Notify No key !'});
-        }
+            .catch(function (error) {
+                console.log("error",error)
+                res.json( {status: "403"});
+            });
     },
     store: (req, res) => {
         let on_key = req.body.on_key;

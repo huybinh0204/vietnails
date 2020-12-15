@@ -12,7 +12,9 @@ module.exports = {
 module.exports.url = 'http://vietnails.cf'
 
 // module.exports.url = 'http://localhost:8080';
-
+//notyfile
+module.exports.Key_Notify = "";
+//
 module.exports.esms_url = 'http://rest.esms.vn/MainService.svc/json/SendMultipleMessage_V4_get'
 module.exports.ApiKey = 'F48260F00D837259291DA540B3270C';
 module.exports.SecretKey = 'E98BC403500A84C321D11811EC34CC'

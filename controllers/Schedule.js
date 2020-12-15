@@ -34,10 +34,10 @@ module.exports = {
         let start_time = req.body.start_time;
         let id_User = req.body.id_User;
         // let sql = `SELECT * FROM schedule WHERE start_time LIKE '${start_time}%' and id_User = ${id_User}`;
-        let sql = `SELECT DISTINCT code_schedule , schedule.id , start_time, end_time ,status ,phone_nv ,moneys ,fullName ,phone_kh, `+
-        ` created_schedule , schedule.id_User FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule`+
-        ` WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
-        console.log("111",sql)
+        let sql = `SELECT DISTINCT code_schedule , schedule.id , start_time, end_time ,status ,phone_nv ,moneys ,fullName ,phone_kh, ` +
+            ` created_schedule , schedule.id_User FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule` +
+            ` WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
+        console.log("111", sql)
         if (start_time && id_User != undefined || '') {
             db.query(sql, [{start_time, id_User}], (err, rown, fields) => {
                 if (err) throw err
@@ -62,17 +62,17 @@ module.exports = {
                 var ArrGetSchedule = [{"status": "200", "data": ScheduleJson}]
                 res.json(ArrGetSchedule);
             })
-        }else {
+        } else {
 
-            res.json({"status": "400","message": 'acc no!'});
+            res.json({"status": "400", "message": 'acc no!'});
         }
     },
     get_date_time: (req, res) => {
-        let sql = `SELECT DISTINCT code_schedule , schedule.id , start_time, end_time ,status ,phone_nv ,moneys ,` +
-        `user.fullName as fullName_nv , working_time as fullName_kh ,phone_kh, created_schedule , schedule.id_User as id_User_nv,`+
-         `schedule_details.id_User as id_User_kh FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule `+
-         `JOIN user ON user.id = schedule.id_User WHERE start_time LIKE "${year}%"`;
-        console.log("111",sql)
+        let sql = `SELECT DISTINCT code_schedule , schedule.id ,start_time, end_time ,status ,moneys , user.fullName as fullName_nv ,` +
+            `phone_nv , schedule_details.phone_kh ,schedule_details.working_time as fullName_kh , schedule.id_User as id_User_nv, ` +
+            `schedule_details.id_User as id_User_kh FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule ` +
+            `JOIN user ON user.id = schedule.id_User WHERE start_time LIKE "2020-11-19%"`;
+        // console.log("111", sql)
         db.query(sql, (err, rown, fields) => {
             if (err) throw err
             var obj = [];
@@ -81,13 +81,15 @@ module.exports = {
                     id: rown[i].id,
                     code_schedule: rown[i].code_schedule,
                     start_time: rown[i].start_time,
-                    moneys: rown[i].moneys,
-                    minus_point: rown[i].minus_point,
-                    phone_nv: rown[i].phone_nv,
+                    end_time: rown[i].end_time,
                     status: rown[i].status,
-                    Username: rown[i].Username,
-                    content_schedule: rown[i].content_schedule,
-                    created_schedule: rown[i].created_schedule,
+                    moneys: rown[i].moneys,
+                    fullName_nv: rown[i].fullName_nv,
+                    phone_nv: rown[i].phone_nv,
+                    id_User_nv: rown[i].id_User_nv,
+                    fullName_kh: rown[i].fullName_kh,
+                    phone_kh: rown[i].phone_kh,
+                    id_User_kh: rown[i].id_User_kh,
                 };
                 obj.push(ArrSchedule);
             }
@@ -175,11 +177,12 @@ module.exports = {
         let id_User = req.body.id_User;
         let id_User_nv = req.body.id_User_nv;
 
-        if (id_schedule_details != '' && start_time && end_time && moneys && id_Shop && id_promotion && content_schedule != null || undefined ) {
-            let sql = `SELECT number FROM promotion WHERE id =${id_promotion}`;
-            console.log("123",sql)
+        if (id_schedule_details != '' && start_time && end_time && moneys && id_Shop && id_promotion && content_schedule != null || undefined) {
+
+            let sql = `SELECT * FROM promotion WHERE id =${id_promotion}`;
+            console.log("123", sql)
             db.query(sql, (err, rows, response) => {
-                if(rows != '') {
+                if (rows != '') {
                     if (err) throw err
                     var number = rows.map(x => x.number);
                     var is_number = number.toString();
@@ -196,7 +199,7 @@ module.exports = {
                         status: 0,
                         content_schedule: content_schedule,
                     }
-
+                    console.log("222", data)
                     let sql = `INSERT INTO schedule SET ?`;
                     db.query(sql, [data], (err, response) => {
                         if (err) throw err
@@ -253,7 +256,7 @@ module.exports = {
                             })
                         }
                     })
-                }else {
+                } else {
                     res.json({"status": "400", message: 'schedule No INSERT promotion null  !'});
                 }
             });
