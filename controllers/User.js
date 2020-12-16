@@ -93,7 +93,7 @@ module.exports = {
             if (err) throw err
             var obj = [];
             if (rown != ''){
-                var otp = random_random.randomString(6);
+                var otp = random_random.open_otp(6);
                 var otp_status = "N";
                 var id_User = rown[0].id;
                 var url = `${random_random.esms_url}?Phone=${phone}&Content=${otp}&ApiKey=${random_random.ApiKey}&SecretKey=` +
