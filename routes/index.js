@@ -42,6 +42,7 @@ module.exports = function (app) {
     let Single_wordCtrl = require('../controllers/Single_word');
     let Schedule_historicalCtrl = require('../controllers/Schedule_historical');
     let Notify_UserCtrl = require('../controllers/Notify_User');
+    let StatisticCtrl = require('../controllers/Statistic_Sch');
     app.route('/')
         .get(UserCtrl._get)
     // Login đăng nhập
@@ -224,15 +225,28 @@ module.exports = function (app) {
 
     app.route('/api/get_key_notify/')
         .post(token_config.checkToken,Notify_UserCtrl.get_key_notify);
-
-    app.route('/api/get_get/')
-        .get(Notify_UserCtrl.get);
+    //
+    // app.route('/api/get_get/')
+    //     .get(Notify_UserCtrl.get);
 
     app.route('/api/check_phone/')
         .post(UserCtrl.check_phone);
 
     app.route('/api/check_otp/')
         .post(UserCtrl.check_otp);
+
+//    thong ke
+    app.route('/api/statistic/')
+        .post(StatisticCtrl.get_statistic);
+
+    app.route('/api/statistic/get_statistic/')
+        .post(StatisticCtrl.get_list_statistic);
+
+    app.route('/api/statistic/statistic_schedule/')
+        .post(StatisticCtrl.statistic_schedule);
+
+    app.route('/api/statistic/statistic_sum/')
+        .get(StatisticCtrl.statistic_SUM);
 
 
 };
