@@ -263,7 +263,7 @@ module.exports = {
     //     })
     // },
     store: (req, res) => {
-        var otp = random_random.randomString(6);
+        var otp = random_random.open_otp(6);
         var otp_status = "N";
         let sql_check = `SELECT id , phone , is_status  FROM user WHERE phone =(${req.body.phone})`;
         db.query(sql_check, (err, rown, fields) => {
@@ -351,7 +351,27 @@ module.exports = {
                                     console.log("222s", sql_otp)
                                     db.query(sql_otp, [{otp, otp_status, id_User, created_otp}], (err, response) => {
                                         if (err) throw err
-                                        res.json({"status": "200", "message": 'tao taoi khoan thanh cong'})
+                                        var obj = [];
+                                        for (var i = 0; i < rown.length; i++) {
+                                            var INSERTUser = {
+                                                [user_model.id]: rown[i].id,
+                                                [user_model.phone]: rown[i].phone,
+                                                [user_model.email]: rown[i].email,
+                                                [user_model.fullName]: rown[i].fullName,
+                                                [user_model.id_roles]: rown[i].id_roles,
+                                                [user_model.avatar]: rown[i].avatar,
+                                                [user_model.address]: rown[i].address,
+                                                [user_model.birthday]: rown[i].birthday,
+                                                [user_model.gender]: rown[i].gender,
+                                                [user_model.is_active]: rown[i].is_active,
+                                                [user_model.created_user]: rown[i].created_user
+                                            };
+                                            obj.push(INSERTUser);
+                                        }
+                                        var _INSERTUser = JSON.stringify(obj);
+                                        var INSERTUserJson = JSON.parse(_INSERTUser);
+                                        res.json({"status": "200", "message": 'tao taoi khoan thanh cong!', "data": INSERTUserJson})
+                                        // res.json({"status": "200", "message": 'tao taoi khoan thanh cong'})
                                     })
                                 } else {
                                     res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
