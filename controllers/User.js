@@ -174,7 +174,7 @@ module.exports = {
                             var is_giay = Number(created_otp.slice(17, 19));
                             var d = a - giay;
                             var m = d + is_giay;//gio chay caanf lay
-                            var _phut = phut + 1;
+                            var _phut = phut + 2;
                             if (is_gio >= gio && is_phut >= phut && _phut >= is_phut) {
                                 if (a >= m) {
                                     let otp_status = "Y";
