@@ -9,10 +9,9 @@ const random_random = require("../config/OpenRoles");
 var moment = require('moment-timezone');
 var time = moment().format("YYYY-MM-DD");
 var check_time = moment().tz("Asia/Ho_Chi_Minh").format("YYYY-MM-DD hh-mm-ss");
-var check_otp_gio = check_time.slice(0, 14);
-var check_otp_giay = check_time.slice(16, 19);
-var check_otp_phut = Number(check_time.slice(14, 16))+2;
-var is_created_otp = check_otp_gio + check_otp_phut + check_otp_giay ;
+var date = new Date();
+var is_created_otp = date.valueOf();
+
 module.exports = {
     _get: (req, res) => {
         res.render('index', {title: 'VietNails', Get_api: 'api'});
@@ -95,7 +94,7 @@ module.exports = {
         db.query(sql, [{phone}], (err, rown, response) => {
             if (err) throw err
             var obj = [];
-            if (rown != ''){
+            if (rown != '') {
                 var otp = random_random.randomString(6);
                 var otp_status = "N";
                 var id_User = rown[0].id;
@@ -127,7 +126,11 @@ module.exports = {
                                 }
                                 var _ArrUser = JSON.stringify(obj);
                                 var UserJson = JSON.parse(_ArrUser);
-                                var ArrGetUser = [{"status": "200","message": 'Check phone success!', "data": UserJson}]
+                                var ArrGetUser = [{
+                                    "status": "200",
+                                    "message": 'Check phone success!',
+                                    "data": UserJson
+                                }]
                                 res.json(ArrGetUser);
                             })
                         } else {
@@ -137,8 +140,8 @@ module.exports = {
                     .catch(function (error) {
                         console.log("err11")
                     });
-            }else {
-                res.json({"status": "400","message": 'Check phone on!',});
+            } else {
+                res.json({"status": "400", "message": 'Check phone on!',});
             }
         })
     },
@@ -156,7 +159,7 @@ module.exports = {
     check_otp: (req, res) => {
         let id_User = req.body.id_User;
         let otp = req.body.on_key;
-        let sql = `SELECT * FROM check_otp WHERE id_User = ${id_User} AND created_otp LIKE "${time}%" ORDER BY id DESC LIMIT 1`;
+        let sql = `SELECT * FROM check_otp WHERE id_User = ${id_User} AND at_created LIKE "${time}%" ORDER BY id DESC LIMIT 1`;
         if (id_User != undefined && otp != '') {
             db.query(sql, (err, rown, response) => {
                 if (err) throw err
@@ -165,40 +168,31 @@ module.exports = {
                     db.query(sql_otp, (err, rowns, response) => {
                         if (err) throw err
                         if (rowns != '') {
-                            var a = 60;
                             var id_User = rowns[0].id_User;
-                            var is_created = rowns[0].created_otp.toString();
-                            // gio trong server lay tu d
-                            var gio_db = Number(is_created.slice(11, 13));
-                            var phut_db = Number(is_created.slice(14, 16));
-                            var giay_db = Number(is_created.slice(17, 19));
-                            //gio hien tai lay
-                            var check_time = moment().tz("Asia/Ho_Chi_Minh").format("hh-mm-ss");
-                            var gio_time = Number(check_time.slice(0, 2));
-                            var phut_time =Number(check_time.slice(3, 5));
-                            var giay_time = Number(check_time.slice(6, 8));
+                            var is_created = Number(rowns[0].created_otp);
+                            var check_created_otp = is_created + 120000;
+                            var datetody = new Date();
+                            var check_date_otpt = datetody.valueOf();
+                            console.log("check_created_otp", check_created_otp)
+                            console.log("check_date_otpt", check_date_otpt)
+                            console.log("date", datetody.toString())
                             // luon db >= time
-                            if (gio_db >= gio_time && phut_db >= phut_time) {
-                                if ((phut_db == phut_time && giay_db <= giay_time) || (phut_db > phut_time && (giay_db <= giay_time || giay_db > giay_time))) {
-                                    let otp_status = "Y";
-                                    let id = rowns[0].id
-                                    let is_sql_otp = `UPDATE check_otp SET ? WHERE id = ${id}`;
-                                    db.query(is_sql_otp, [{otp_status}], (err, response) => {
-                                        if (err) throw err
-                                        res.json({"status": "200", "message": 'User otp ok'})
-                                    })
-                                    let user_sql = `UPDATE user SET ? WHERE id = ${id_User}`;
-                                    let is_active = 0;
-                                    db.query(user_sql, [{is_active}], (err, response) => {
-                                        if (err) throw err
-                                        console.log("1111")
-                                    })
-                                }
-                                else {
-                                    res.json({"status": "400", "message": 'User otp no'})
-                                }
+                            let otp_status = "Y";
+                            let id = rowns[0].id;
+                            let is_active = 0;
+                            let is_sql_otp = `UPDATE check_otp SET ? WHERE id = ${id}`;
+                            let user_sql = `UPDATE user SET ? WHERE id = ${id_User}`;
+                            if (check_created_otp >= check_date_otpt) {
+                                db.query(is_sql_otp, [{otp_status}], (err, response) => {
+                                    if (err) throw err
+                                    res.json({"status": "200", "message": 'User otp ok'})
+                                })
+                                db.query(user_sql, [{is_active}], (err, response) => {
+                                    if (err) throw err
+                                    console.log("1111")
+                                })
                             } else {
-                                res.json({"status": "400", "message": 'User otp no '})
+                                res.json({"status": "400", "message": 'User otp no'})
                             }
                         } else {
                             res.json({"status": "400", "message": 'User otp no'})
@@ -238,7 +232,7 @@ module.exports = {
                     .then(function (response) {
                         if (response.data.CodeResult == 100) {
                             let sql = `INSERT INTO user SET ?`;
-                            console.log("11",sql)
+                            console.log("11", sql)
                             db.query(sql, [{
                                 phone,
                                 password,
@@ -250,14 +244,21 @@ module.exports = {
                             }], (err, response) => {
                                 if (err) throw err
                                 let sql_SELECT = 'SELECT * FROM user WHERE phone = ?'
-                                console.log("44444",sql_SELECT)
+                                console.log("44444", sql_SELECT)
                                 db.query(sql_SELECT, [phone, password], (err, rown, fields) => {
                                     if (err) throw err
                                     var id_User = rown[0].id;
                                     let sql_otp = `INSERT INTO check_otp SET ?`;
                                     console.log("11", sql_otp)
-                                    let created_otp = is_created_otp
-                                    db.query(sql_otp, [{otp, otp_status, id_User, created_otp}], (err, response) => {
+                                    let created_otp = is_created_otp;
+                                    let at_created = check_time;
+                                    db.query(sql_otp, [{
+                                        otp,
+                                        otp_status,
+                                        id_User,
+                                        created_otp,
+                                        at_created
+                                    }], (err, response) => {
                                         if (err) throw err
                                         console.log("111",)
                                     })
@@ -294,44 +295,45 @@ module.exports = {
             } else if (rown[0].is_active == 2) {
 
                 var id_User = rown[0].id;
-                console.log("222",id_User)
+                console.log("222", id_User)
                 //check max otp trtong ngay
-                let sql = `SELECT id FROM check_otp WHERE id_User = ${id_User} AND created_otp LIKE "${time}%"`;
+                let sql = `SELECT id FROM check_otp WHERE id_User = ${id_User} AND at_created LIKE "${time}%"`;
                 db.query(sql, (err, rowns, response) => {
                     if (err) throw err
                     if (rowns.length < 3) {
                         axios.get(url)
                             .then(function (response) {
                                 if (response.data.CodeResult == 100) {
-                                    let sql_otp = `INSERT INTO check_otp SET ?`;
-                                    let created_otp = is_created_otp;
-                                    db.query(sql_otp, [{otp, otp_status, id_User, created_otp}], (err, response) => {
-                                        if (err) throw err
-                                        var obj = [];
-                                        for (var i = 0; i < rown.length; i++) {
-                                            var INSERTUser = {
-                                                [user_model.id]: rown[i].id,
-                                                [user_model.phone]: rown[i].phone,
-                                                [user_model.created_user]: rown[i].created_user
-                                            };
-                                            obj.push(INSERTUser);
-                                        }
-                                        var _INSERTUser = JSON.stringify(obj);
-                                        var INSERTUserJson = JSON.parse(_INSERTUser);
-                                        res.json({"status": "200", "message": 'tao taoi khoan thanh cong!', "data": INSERTUserJson})
-                                    })
-                                } else {
-                                    res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
-                                }
-                            })
-                            .catch(function (error) {
-                                console.log("err11")
-                            });
+                        let sql_otp = `INSERT INTO check_otp SET ?`;
+                        let created_otp = is_created_otp;
+                        let at_created = check_time;
+                        db.query(sql_otp, [{otp, otp_status, id_User, created_otp, at_created}], (err, response) => {
+                            if (err) throw err
+                            var obj = [];
+                            for (var i = 0; i < rown.length; i++) {
+                                var INSERTUser = {
+                                    [user_model.id]: rown[i].id,
+                                    [user_model.phone]: rown[i].phone,
+                                    [user_model.created_user]: rown[i].created_user
+                                };
+                                obj.push(INSERTUser);
+                            }
+                            var _INSERTUser = JSON.stringify(obj);
+                            var INSERTUserJson = JSON.parse(_INSERTUser);
+                            res.json({"status": "200", "message": 'tao taoi khoan thanh cong!', "data": INSERTUserJson})
+                        })
+                            } else {
+                                res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log("err11")
+                        });
                     } else {
                         res.json({"status": "400", "message": 'quá 3 lần check otp!'})
                     }
                 })
-            }else {
+            } else {
                 res.json({"status": "400", "message": 'Đã tồn tại !'})
             }
         })
