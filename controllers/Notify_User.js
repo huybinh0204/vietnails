@@ -1,11 +1,12 @@
 const db = require('../service');
 const axios = require('axios');
 const is_OpenRoles = require('../config/OpenRoles')
-
+var moment = require('moment-timezone');
 module.exports = {
     // notify thu ngan
     get_time_schedule: (req, res) => {
         let sql = `SELECT on_key FROM user JOIN notify_key ON user.id = notify_key.id_User WHERE id_roles =4`;
+        console.log("sql thu ngan",sql)
         db.query(sql, (err, rown, response) => {
             if (err) throw err
             if(rown != ''){
@@ -13,7 +14,6 @@ module.exports = {
                 for (var i = 0 ; i<rown.length;i++){
                     registration_ids.push(rown[i].on_key);
                 }
-                console.log("111",registration_ids);
                 var urls = "https://fcm.googleapis.com/fcm/send";
                 let priority = 'high';
                 let notification = {
@@ -45,14 +45,21 @@ module.exports = {
                     });
 
             }else {
-                res.json({"status": "400", message: 'NO User push notify!'});
+                console.log("NO User thtu ngan  push notify!");
             }
         })
     },
     get_notify_nv: (req, res) => {
+        var check_time = moment().tz("Asia/Bangkok").format("YYYY-MM-DD hh:mmA");
+        var  check_PM = check_time.slice(16,18);
+        var  phut = check_time.slice(13,16);
+        var  ngay = check_time.slice(0,11);
+        var  gio = ngay + (Number(check_time.slice(11,13)) +12).toString() +phut;
+        var check_time_schedule = check_PM == 'PM' ? (gio) : (check_time.slice(0,16));
         let sql = `SELECT notify_key.id_User , notify_key.on_key FROM schedule JOIN schedule_historical ON `+
         `schedule.id = schedule_historical.id_schedule JOIN notify_key ON schedule_historical.id_User = notify_key.id_User `+
-        `WHERE start_time LIKE '2020-11-19 19:00%' AND schedule_historical.is_status =1 GROUP BY schedule.id`;
+        `WHERE start_time LIKE '${check_time_schedule}%' AND schedule_historical.is_status =1 GROUP BY schedule.id`;
+        console.log("sql nhan vien ",sql)
         db.query(sql, (err, rown, response) => {
             if (err) throw err
             if(rown != ''){
@@ -60,7 +67,6 @@ module.exports = {
                 for (var i = 0 ; i<rown.length;i++){
                     registration_ids.push(rown[i].on_key);
                 }
-                console.log("111",registration_ids);
                 var urls = "https://fcm.googleapis.com/fcm/send";
                 let priority = 'high';
                 let notification = {
@@ -92,15 +98,22 @@ module.exports = {
                     });
 
             }else {
-                res.json({"status": "400", message: 'NO User push notify!'});
+                console.log("NO User nhan vien push notify!");
             }
         })
     },
     //ban notify khách hàng
     get_notify_kh: (req, res) => {
+        var check_time = moment().tz("Asia/Bangkok").format("YYYY-MM-DD hh:mmA");
+        var  check_PM = check_time.slice(16,18);
+        var  phut = check_time.slice(13,16);
+        var  ngay = check_time.slice(0,11);
+        var  gio = ngay + (Number(check_time.slice(11,13)) +12).toString() +phut;
+        var check_time_schedule = check_PM == 'PM' ? (gio) : (check_time.slice(0,16));
         let sql = `SELECT notify_key.id_User , notify_key.on_key FROM schedule JOIN schedule_details ON `+
         `schedule.id = schedule_details.id_Schedule JOIN notify_key ON schedule_details.id_User = notify_key.id_User `+
-        `WHERE start_time LIKE '2020-11-19 19:00%' GROUP BY schedule_details.id_Schedule`;
+        `WHERE start_time LIKE '${check_time_schedule}%' GROUP BY schedule_details.id_Schedule`;
+        console.log("sql khach hang",sql)
         db.query(sql, (err, rown, response) => {
             if (err) throw err
             if(rown != ''){
@@ -108,7 +121,6 @@ module.exports = {
                 for (var i = 0 ; i<rown.length;i++){
                     registration_ids.push(rown[i].on_key);
                 }
-                console.log("111",registration_ids);
                 var urls = "https://fcm.googleapis.com/fcm/send";
                 let priority = 'high';
                 let notification = {
@@ -140,7 +152,7 @@ module.exports = {
                     });
 
             }else {
-                res.json({"status": "400", message: 'NO User push notify!'});
+                console.log("NO User khach hang push notify!");
             }
         })
     },
