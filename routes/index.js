@@ -30,6 +30,8 @@ var storage = multer.diskStorage({
     }
 });
 var upload = multer({storage: storage});
+var cron = require('node-cron');
+const axios = require("axios");
 module.exports = function (app) {
     let UserCtrl = require('../controllers/User');
     let ServiceCtrl = require('../controllers/Service_shop');
@@ -49,8 +51,7 @@ module.exports = function (app) {
     app.route('/api/login/')
         .post(LoginCtrl.login_user);
 
-    app.route('/api/get_time_schedule/')
-        .get(Notify_UserCtrl.get_time_schedule);
+
     //
     // //roles
 
@@ -223,11 +224,19 @@ module.exports = function (app) {
     app.route('/api/notify_userkey/')
         .post(Notify_UserCtrl.store);
 
-    app.route('/api/get_key_notify/')
-        .post(token_config.checkToken,Notify_UserCtrl.get_key_notify);
-    //
-    // app.route('/api/get_get/')
-    //     .get(Notify_UserCtrl.get);
+
+    // app.route('/api/get_time_schedule/')
+    //     .get(Notify_UserCtrl.get_time_schedule);
+
+
+    cron.schedule('*/1 * * * *', () => {
+        app.get(Notify_UserCtrl.get_time_schedule())
+        app.get(Notify_UserCtrl.get_notify_nv())
+        app.get(Notify_UserCtrl.get_notify_kh())
+    }, {
+        scheduled: true,
+        timezone: "Asia/Bangkok"
+    });
 
     app.route('/api/check_phone/')
         .post(UserCtrl.check_phone);
@@ -247,6 +256,8 @@ module.exports = function (app) {
 
     app.route('/api/statistic/statistic_sum/')
         .get(StatisticCtrl.statistic_SUM);
+
+
 
 
 };
