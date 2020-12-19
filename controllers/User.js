@@ -171,12 +171,12 @@ module.exports = {
                         if (rowns != '') {
                             var id_User = rowns[0].id_User;
                             var is_created = Number(rowns[0].created_otp);
-                            var check_created_otp = is_created + 120000;
+                            var check_created_otp = is_created + 180000;
                             var datetody = new Date();
                             var check_date_otpt = datetody.valueOf();
                             console.log("check_created_otp", check_created_otp)
                             console.log("check_date_otpt", check_date_otpt)
-                            console.log("date", datetody.toString())
+                            console.log("date", datetody.valueOf())
                             // luon db >= time
                             let otp_status = "Y";
                             let id = rowns[0].id;
@@ -296,7 +296,6 @@ module.exports = {
             } else if (rown[0].is_active == 2) {
 
                 var id_User = rown[0].id;
-                console.log("222", id_User)
                 //check max otp trtong ngay
                 let sql = `SELECT id FROM check_otp WHERE id_User = ${id_User} AND at_created LIKE "${time}%"`;
                 db.query(sql, (err, rowns, response) => {
@@ -305,24 +304,24 @@ module.exports = {
                         axios.get(url)
                             .then(function (response) {
                                 if (response.data.CodeResult == 100) {
-                        let sql_otp = `INSERT INTO check_otp SET ?`;
-                        let created_otp = is_created_otp;
-                        let at_created = check_time;
-                        db.query(sql_otp, [{otp, otp_status, id_User, created_otp, at_created}], (err, response) => {
-                            if (err) throw err
-                            var obj = [];
-                            for (var i = 0; i < rown.length; i++) {
-                                var INSERTUser = {
-                                    [user_model.id]: rown[i].id,
-                                    [user_model.phone]: rown[i].phone,
-                                    [user_model.created_user]: rown[i].created_user
-                                };
-                                obj.push(INSERTUser);
-                            }
-                            var _INSERTUser = JSON.stringify(obj);
-                            var INSERTUserJson = JSON.parse(_INSERTUser);
-                            res.json({"status": "200", "message": 'tao taoi khoan thanh cong!', "data": INSERTUserJson})
-                        })
+                                let sql_otp = `INSERT INTO check_otp SET ?`;
+                                let created_otp = is_created_otp;
+                                let at_created = check_time;
+                                db.query(sql_otp, [{otp, otp_status, id_User, created_otp, at_created}], (err, response) => {
+                                    if (err) throw err
+                                    var obj = [];
+                                    for (var i = 0; i < rown.length; i++) {
+                                        var INSERTUser = {
+                                            [user_model.id]: rown[i].id,
+                                            [user_model.phone]: rown[i].phone,
+                                            [user_model.created_user]: rown[i].created_user
+                                        };
+                                        obj.push(INSERTUser);
+                                    }
+                                    var _INSERTUser = JSON.stringify(obj);
+                                    var INSERTUserJson = JSON.parse(_INSERTUser);
+                                    res.json({"status": "200", "message": 'tao taoi khoan thanh cong!', "data": INSERTUserJson})
+                                })
                             } else {
                                 res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
                             }
