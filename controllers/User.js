@@ -106,7 +106,8 @@ module.exports = {
                             let sql_otp = `INSERT INTO check_otp SET ?`;
                             console.log("222s", sql_otp)
                             let created_otp = is_created_otp;
-                            db.query(sql_otp, [{otp, otp_status, id_User, created_otp}], (err, response) => {
+                            let at_created = check_time;
+                            db.query(sql_otp, [{otp, otp_status, id_User, created_otp, at_created}], (err, response) => {
                                 if (err) throw err
                                 for (var i = 0; i < rown.length; i++) {
                                     var ArrUser = {
