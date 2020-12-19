@@ -115,7 +115,7 @@ module.exports = {
                     minus_point: rown[i].minus_point,
                     phone_nv: rown[i].phone_nv,
                     status: rown[i].status,
-                    Username: rown[i].Username,
+                    fullName: rown[i].fullName,
                     content_schedule: rown[i].content_schedule,
                     created_schedule: rown[i].created_schedule,
                 };
@@ -227,7 +227,7 @@ module.exports = {
                                         minus_point: rown[i].minus_point,
                                         phone_nv: rown[i].phone_nv,
                                         status: rown[i].status,
-                                        Username: rown[i].Username,
+                                        fullName: rown[i].fullName,
                                         content_schedule: rown[i].content_schedule,
                                         created_schedule: rown[i].created_schedule,
                                     };
