@@ -8,7 +8,7 @@ const axios = require('axios');
 const random_random = require("../config/OpenRoles");
 var moment = require('moment-timezone');
 var time = moment().format("YYYY-MM-DD");
-var check_time = moment().tz("Asia/Ho_Chi_Minh").format("YYYY-MM-DD hh-mm-ss");
+var check_time = moment().tz("Asia/Ho_Chi_Minh").format("YYYY-MM-DD hh:mm:ss");
 var date = new Date();
 var is_created_otp = date.valueOf();
 

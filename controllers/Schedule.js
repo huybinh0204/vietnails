@@ -208,7 +208,7 @@ module.exports = {
                             status: 0,
                             content_schedule: content_schedule,
                         }
-                        console.log("222", data)
+                        // console.log("222", data)
                         let sql = `INSERT INTO schedule SET ?`;
                         db.query(sql, [data], (err, response) => {
                             if (err) throw err
