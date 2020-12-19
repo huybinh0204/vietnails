@@ -225,18 +225,18 @@ module.exports = function (app) {
         .post(Notify_UserCtrl.store);
 
 
-    app.route('/api/get_time_schedule/')
-        .get(Notify_UserCtrl.get_notify_nv);
+    // app.route('/api/get_time_schedule/')
+    //     .get(Notify_UserCtrl.get_notify_nv);
 
 
-    // cron.schedule('*/15 * * * *', () => {
-    //     app.get(Notify_UserCtrl.get_time_schedule())
-    //     app.get(Notify_UserCtrl.get_notify_nv())
-    //     app.get(Notify_UserCtrl.get_notify_kh())
-    // }, {
-    //     scheduled: true,
-    //     timezone: "Asia/Bangkok"
-    // });
+    cron.schedule('*/15 * * * *', () => {
+        app.get(Notify_UserCtrl.get_time_schedule())
+        app.get(Notify_UserCtrl.get_notify_nv())
+        app.get(Notify_UserCtrl.get_notify_kh())
+    }, {
+        scheduled: true,
+        timezone: "Asia/Bangkok"
+    });
 
     app.route('/api/check_phone/')
         .post(UserCtrl.check_phone);
