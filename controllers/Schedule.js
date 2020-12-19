@@ -5,7 +5,7 @@ var moment = require('moment-timezone');
 var year = moment().tz("Asia/Ho_Chi_Minh").format("YYYY-MM-DD");
 module.exports = {
     get: (req, res) => {
-        let sql = `SELECT * FROM schedule`;
+        let sql = `SELECT * FROM schedule where status = 4`;
         db.query(sql, (err, rown, fields) => {
             if (err) throw err
             var obj = [];
@@ -18,7 +18,7 @@ module.exports = {
                     minus_point: rown[i].minus_point,
                     phone_nv: rown[i].phone_nv,
                     status: rown[i].status,
-                    Username: rown[i].Username,
+                    fullName: rown[i].fullName,
                     content_schedule: rown[i].content_schedule,
                     created_schedule: rown[i].created_schedule,
                 };
@@ -191,76 +191,82 @@ module.exports = {
                     var number = rows.map(x => x.number);
                     var is_number = number.toString();
                     var minus_point = Math.ceil((moneys * is_number) / 100000);
-                    var data = {
-                        code_schedule: code_schedule,
-                        start_time: start_time,
-                        end_time: end_time,
-                        moneys: moneys,
-                        minus_point: minus_point,
-                        id_Shop: id_Shop,
-                        id_promotion: id_promotion,
-                        id_User: id_User_nv,
-                        status: 0,
-                        content_schedule: content_schedule,
-                    }
-                    console.log("222", data)
-                    let sql = `INSERT INTO schedule SET ?`;
-                    db.query(sql, [data], (err, response) => {
-                        if (err) throw err
-
-
-                        let _sqlSELECT = `SELECT * FROM schedule ORDER BY id DESC LIMIT 1`;
-                        db.query(_sqlSELECT, (err, rown, fields) => {
+                    let sql_NV = `SELECT * FROM user WHERE id =${id_User_nv}`;
+                    console.log("1111",sql_NV)
+                    db.query(sql_NV, (err, rows_nv, response) => {
+                        var data = {
+                            code_schedule: code_schedule,
+                            start_time: start_time,
+                            end_time: end_time,
+                            moneys: moneys,
+                            minus_point: minus_point,
+                            fullName:rows_nv[0].fullName,
+                            phone_nv:rows_nv[0].phone,
+                            id_Shop: id_Shop,
+                            id_promotion: id_promotion,
+                            id_User: id_User_nv,
+                            status: 0,
+                            content_schedule: content_schedule,
+                        }
+                        console.log("222", data)
+                        let sql = `INSERT INTO schedule SET ?`;
+                        db.query(sql, [data], (err, response) => {
                             if (err) throw err
-                            var obj = [];
-                            for (var i = 0; i < rown.length; i++) {
-                                var ArrSchedule = {
-                                    id: rown[i].id,
-                                    code_schedule: rown[i].code_schedule,
-                                    start_time: rown[i].start_time,
-                                    end_time: rown[i].end_time,
-                                    moneys: rown[i].moneys,
-                                    minus_point: rown[i].minus_point,
-                                    phone_nv: rown[i].phone_nv,
-                                    status: rown[i].status,
-                                    Username: rown[i].Username,
-                                    content_schedule: rown[i].content_schedule,
-                                    created_schedule: rown[i].created_schedule,
-                                };
-                                obj.push(ArrSchedule);
+
+                            let _sqlSELECT = `SELECT * FROM schedule ORDER BY id DESC LIMIT 1`;
+                            db.query(_sqlSELECT, (err, rown, fields) => {
+                                if (err) throw err
+                                var obj = [];
+                                for (var i = 0; i < rown.length; i++) {
+                                    var ArrSchedule = {
+                                        id: rown[i].id,
+                                        code_schedule: rown[i].code_schedule,
+                                        start_time: rown[i].start_time,
+                                        end_time: rown[i].end_time,
+                                        moneys: rown[i].moneys,
+                                        minus_point: rown[i].minus_point,
+                                        phone_nv: rown[i].phone_nv,
+                                        status: rown[i].status,
+                                        Username: rown[i].Username,
+                                        content_schedule: rown[i].content_schedule,
+                                        created_schedule: rown[i].created_schedule,
+                                    };
+                                    obj.push(ArrSchedule);
+                                }
+                                var _ArrSchedule = JSON.stringify(obj);
+                                var ScheduleJson = JSON.parse(_ArrSchedule);
+                                var ArrGetSchedule = [{
+                                    "status": "200",
+                                    message: 'Schedule INSERT Ok!',
+                                    "data": ScheduleJson
+                                }]
+                                res.json(ArrGetSchedule);
+                            })
+                        })
+                        //INSERT INTO schedule_details
+                        let sql_schedule_details = `SELECT * FROM schedule WHERE code_schedule ="${code_schedule}"`;
+                        db.query(sql_schedule_details, (err, rowsk, response) => {
+                            if (err) throw err
+                            var id_Schedule = Number(rowsk.map(x => x.id).toString());
+                            for (var k = 0; k < id_schedule_details.length; k++) {
+                                var id_Service_shop = id_schedule_details[k].id_Service_shop;
+                                // var working_time = id_schedule_details[k].working_time;
+                                var data_schedule_details = {
+                                    phone_kh: phone_kh,
+                                    id_User: id_User,
+                                    id_Schedule: id_Schedule,
+                                    id_Service_shop: id_Service_shop,
+                                    working_time: fullName_kh,
+                                }
+                                let is_sql_schedule_details = 'INSERT INTO schedule_details SET ?';
+                                db.query(is_sql_schedule_details, [data_schedule_details], (err, rown, fields) => {
+                                    if (err) throw err
+                                    console.log("Schedule_details INSERT OK")
+                                })
                             }
-                            var _ArrSchedule = JSON.stringify(obj);
-                            var ScheduleJson = JSON.parse(_ArrSchedule);
-                            var ArrGetSchedule = [{
-                                "status": "200",
-                                message: 'Schedule INSERT Ok!',
-                                "data": ScheduleJson
-                            }]
-                            res.json(ArrGetSchedule);
                         })
                     })
-                    //INSERT INTO schedule_details
-                    let sql_schedule_details = `SELECT * FROM schedule WHERE code_schedule ="${code_schedule}"`;
-                    db.query(sql_schedule_details, (err, rowsk, response) => {
-                        if (err) throw err
-                        var id_Schedule = Number(rowsk.map(x => x.id).toString());
-                        for (var k = 0; k < id_schedule_details.length; k++) {
-                            var id_Service_shop = id_schedule_details[k].id_Service_shop;
-                            // var working_time = id_schedule_details[k].working_time;
-                            var data_schedule_details = {
-                                phone_kh: phone_kh,
-                                id_User: id_User,
-                                id_Schedule: id_Schedule,
-                                id_Service_shop: id_Service_shop,
-                                working_time: fullName_kh,
-                            }
-                            let is_sql_schedule_details = 'INSERT INTO schedule_details SET ?';
-                            db.query(is_sql_schedule_details, [data_schedule_details], (err, rown, fields) => {
-                                if (err) throw err
-                                console.log("Schedule_details INSERT OK")
-                            })
-                        }
-                    })
+
                 } else {
                     res.json({"status": "400", message: 'schedule No INSERT promotion null  !'});
                 }
