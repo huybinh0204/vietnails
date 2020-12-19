@@ -95,14 +95,14 @@ module.exports = {
             if (err) throw err
             var obj = [];
             if (rown != '') {
-                var otp = random_random.randomString(6);
+                var otp = random_random.open_otp(6);
                 var otp_status = "N";
                 var id_User = rown[0].id;
                 var url = `${random_random.esms_url}?Phone=${phone}&Content=${otp}&ApiKey=${random_random.ApiKey}&SecretKey=` +
                     `${random_random.SecretKey}&Brandname=${random_random.Brandname}&SmsType=${random_random.SmsType}`;
-                axios.get(url)
-                    .then(function (response) {
-                        if (response.data.CodeResult == 100) {
+                // axios.get(url)
+                //     .then(function (response) {
+                //         if (response.data.CodeResult == 100) {
                             let sql_otp = `INSERT INTO check_otp SET ?`;
                             console.log("222s", sql_otp)
                             let created_otp = is_created_otp;
@@ -133,13 +133,13 @@ module.exports = {
                                 }]
                                 res.json(ArrGetUser);
                             })
-                        } else {
-                            res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
-                        }
-                    })
-                    .catch(function (error) {
-                        console.log("err11")
-                    });
+                    //     } else {
+                    //         res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
+                    //     }
+                    // })
+                    // .catch(function (error) {
+                    //     console.log("err11")
+                    // });
             } else {
                 res.json({"status": "400", "message": 'Check phone on!',});
             }
