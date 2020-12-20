@@ -161,11 +161,13 @@ module.exports = {
         let id_User = req.body.id_User;
         let otp = req.body.on_key;
         let sql = `SELECT * FROM check_otp WHERE id_User = ${id_User} AND at_created LIKE "${time}%" ORDER BY id DESC LIMIT 1`;
+        console.log("sql check otp", sql)
         if (id_User != undefined && otp != '') {
             db.query(sql, (err, rown, response) => {
                 if (err) throw err
                 if (rown != '') {
                     let sql_otp = `SELECT * FROM check_otp WHERE otp_status = "N" AND otp="${otp}"`;
+                    console.log("sql_otp check max", sql_otp)
                     db.query(sql_otp, (err, rowns, response) => {
                         if (err) throw err
                         if (rowns != '') {
@@ -182,7 +184,9 @@ module.exports = {
                             let id = rowns[0].id;
                             let is_active = 0;
                             let is_sql_otp = `UPDATE check_otp SET ? WHERE id = ${id}`;
+                            console.log("is_sql_otp",is_sql_otp)
                             let user_sql = `UPDATE user SET ? WHERE id = ${id_User}`;
+                            console.log("user_sql",user_sql)
                             if (check_created_otp >= check_date_otpt) {
                                 db.query(is_sql_otp, [{otp_status}], (err, response) => {
                                     if (err) throw err
@@ -213,7 +217,7 @@ module.exports = {
         var otp = random_random.open_otp(6);
         var otp_status = "N";
         let sql_check = `SELECT id , phone , is_status ,is_active FROM user WHERE phone =(${req.body.phone})`;
-
+        console.log("sql_check",sql_check)
         db.query(sql_check, (err, rown, fields) => {
             if (err) throw err
             let phone = req.body.phone;
@@ -233,7 +237,7 @@ module.exports = {
                 //     .then(function (response) {
                 //         if (response.data.CodeResult == 100) {
                             let sql = `INSERT INTO user SET ?`;
-                            console.log("11", sql)
+                            console.log("sql_user", sql)
                             db.query(sql, [{
                                 phone,
                                 password,
@@ -245,12 +249,12 @@ module.exports = {
                             }], (err, response) => {
                                 if (err) throw err
                                 let sql_SELECT = 'SELECT * FROM user WHERE phone = ?'
-                                console.log("44444", sql_SELECT)
+                                console.log("sql_SELECT", sql_SELECT)
                                 db.query(sql_SELECT, [phone, password], (err, rown, fields) => {
                                     if (err) throw err
                                     var id_User = rown[0].id;
                                     let sql_otp = `INSERT INTO check_otp SET ?`;
-                                    console.log("11", sql_otp)
+                                    console.log("sql_otp", sql_otp)
                                     let created_otp = is_created_otp;
                                     let at_created = check_time;
                                     db.query(sql_otp, [{
@@ -307,6 +311,7 @@ module.exports = {
                                 let sql_otp = `INSERT INTO check_otp SET ?`;
                                 let created_otp = is_created_otp;
                                 let at_created = check_time;
+                                console.log("sql_otp_co tronh db",sql_otp)
                                 db.query(sql_otp, [{otp, otp_status, id_User, created_otp, at_created}], (err, response) => {
                                     if (err) throw err
                                     var obj = [];
