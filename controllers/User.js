@@ -187,18 +187,18 @@ module.exports = {
                             console.log("is_sql_otp",is_sql_otp)
                             let user_sql = `UPDATE user SET ? WHERE id = ${id_User}`;
                             console.log("user_sql",user_sql)
-                            if (check_created_otp >= check_date_otpt) {
-                                db.query(is_sql_otp, [{otp_status}], (err, response) => {
-                                    if (err) throw err
-                                    res.json({"status": "200", "message": 'User otp ok'})
-                                })
-                                db.query(user_sql, [{is_active}], (err, response) => {
-                                    if (err) throw err
-                                    console.log("1111")
-                                })
-                            } else {
-                                res.json({"status": "400", "message": 'User otp no'})
-                            }
+                            // if (check_created_otp >= check_date_otpt) {
+                            //     db.query(is_sql_otp, [{otp_status}], (err, response) => {
+                            //         if (err) throw err
+                            //         res.json({"status": "200", "message": 'User otp ok'})
+                            //     })
+                            //     db.query(user_sql, [{is_active}], (err, response) => {
+                            //         if (err) throw err
+                            //         console.log("1111")
+                            //     })
+                            // } else {
+                            //     res.json({"status": "400", "message": 'User otp no'})
+                            // }
                         } else {
                             res.json({"status": "400", "message": 'User otp no'})
                         }
