@@ -301,7 +301,7 @@ module.exports = {
 
                 var id_User = rown[0].id;
                 //check max otp trtong ngay
-                let sql = `SELECT id FROM check_otp WHERE 1 id_User = ${id_User} AND at_created LIKE "${time}%"`;
+                let sql = `SELECT id FROM check_otp WHERE id_User = ${id_User} AND at_created LIKE "${time}%"`;
                 db.query(sql, (err, rowns, response) => {
                     if (err) throw err
                     if (rowns.length < 3) {
