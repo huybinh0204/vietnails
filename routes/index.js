@@ -230,9 +230,9 @@ module.exports = function (app) {
 
 
     cron.schedule('*/1 * * * *', () => {
-        app.get(Notify_UserCtrl.get_time_schedule())
+        // app.get(Notify_UserCtrl.get_time_schedule())
         app.get(Notify_UserCtrl.get_notify_nv())
-        app.get(Notify_UserCtrl.get_notify_kh())
+        // app.get(Notify_UserCtrl.get_notify_kh())
     }, {
         scheduled: true,
         timezone: "Asia/Bangkok"
