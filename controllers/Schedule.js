@@ -152,7 +152,7 @@ module.exports = {
     },
     list_detail: (req, res) => {
         let scheduleId = req.params.scheduleId;
-        let sql = `SELECT DISTINCT schedule.id, code_schedule,start_time,moneys,minus_point,phone_nv,phone_kh,content_schedule,schedule.status ,schedule.fullName FROM schedule ` +
+        let sql = `SELECT DISTINCT schedule.id, code_schedule,start_time,moneys,minus_point,phone_nv,phone_kh,content_schedule,schedule.status ,schedule.fullName as fullName_nv FROM schedule ` +
             `JOIN schedule_details ON schedule_details.id_Schedule = schedule.id WHERE schedule_details.id_User = ${scheduleId}`;
         // console.log("123",sql)
         db.query(sql, [scheduleId], (err, rown, fields) => {
@@ -167,7 +167,7 @@ module.exports = {
                     minus_point: rown[i].minus_point,
                     phone_kh: rown[i].phone_kh,
                     phone_nv: rown[i].phone_nv,
-                    fullName: rown[i].fullName,
+                    fullName_nv: rown[i].fullName_nv,
                     status: rown[i].status,
                     content_schedule: rown[i].content_schedule,
                 };
