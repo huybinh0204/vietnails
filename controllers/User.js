@@ -10,7 +10,7 @@ var moment = require('moment-timezone');
 var time = moment().format("YYYY-MM-DD");
 var check_time = moment().tz("Asia/Ho_Chi_Minh").format("YYYY-MM-DD hh:mm:ss");
 var date = new Date();
-var is_created_otp = date.valueOf();
+var is_created_otp = date.getTime();
 
 module.exports = {
     _get: (req, res) => {
@@ -175,10 +175,9 @@ module.exports = {
                             var is_created = Number(rowns[0].created_otp);
                             var check_created_otp = is_created + 180000;
                             var datetody = new Date();
-                            var check_date_otpt = datetody.valueOf();
+                            var check_date_otpt = datetody.getTime();
                             console.log("check_created_otp >=", check_created_otp)
                             console.log("check_date_otpt", check_date_otpt)
-                            console.log("date", datetody.valueOf())
                             // luon db >= time
                             let otp_status = "N";
                             let id = rowns[0].id;
