@@ -176,29 +176,29 @@ module.exports = {
                             var check_created_otp = is_created + 180000;
                             var datetody = new Date();
                             var check_date_otpt = datetody.valueOf();
-                            console.log("check_created_otp", check_created_otp)
+                            console.log("check_created_otp >=", check_created_otp)
                             console.log("check_date_otpt", check_date_otpt)
                             console.log("date", datetody.valueOf())
                             // luon db >= time
-                            let otp_status = "Y";
+                            let otp_status = "N";
                             let id = rowns[0].id;
-                            let is_active = 0;
+                            let is_active = 2;
                             let is_sql_otp = `UPDATE check_otp SET ? WHERE id = ${id}`;
                             console.log("is_sql_otp",is_sql_otp)
                             let user_sql = `UPDATE user SET ? WHERE id = ${id_User}`;
                             console.log("user_sql",user_sql)
-                            // if (check_created_otp >= check_date_otpt) {
-                            //     db.query(is_sql_otp, [{otp_status}], (err, response) => {
-                            //         if (err) throw err
-                            //         res.json({"status": "200", "message": 'User otp ok'})
-                            //     })
-                            //     db.query(user_sql, [{is_active}], (err, response) => {
-                            //         if (err) throw err
-                            //         console.log("1111")
-                            //     })
-                            // } else {
-                            //     res.json({"status": "400", "message": 'User otp no'})
-                            // }
+                            if (check_created_otp >= check_date_otpt) {
+                                db.query(is_sql_otp, [{otp_status}], (err, response) => {
+                                    if (err) throw err
+                                    res.json({"status": "200", "message": 'User otp ok'})
+                                })
+                                db.query(user_sql, [{is_active}], (err, response) => {
+                                    if (err) throw err
+                                    console.log("1111")
+                                })
+                            } else {
+                                res.json({"status": "400", "message": 'User otp no'})
+                            }
                         } else {
                             res.json({"status": "400", "message": 'User otp no'})
                         }
