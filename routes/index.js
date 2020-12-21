@@ -237,10 +237,10 @@ module.exports = function (app) {
         var ngay = check_time.slice(0, 11);
         var gio = ngay + (Number(check_time.slice(11, 13)) + 12).toString() + phut;
         var check_time_schedule = check_PM == 'PM' ? (gio) : (check_time.slice(0, 16));
-        let sql = `SELECT * FROM n_vietnails.schedule JOIN ` +
-            `n_vietnails.schedule_historical ON n_vietnails.schedule.id = n_vietnails.schedule_historical.id_schedule JOIN ` +
-            `n_vietnails.notify_key ON n_vietnails.schedule_historical.id_User = n_vietnails.notify_key.id_User WHERE ` +
-            `n_vietnails.schedule.start_time LIKE '${check_time_schedule}%' AND n_vietnails.schedule_historical.is_status =1 GROUP BY n_vietnails.schedule.id`;
+        let sql = `SELECT notify_key.id_User as id_User, notify_key.on_key as on_key FROM schedule JOIN 
+        schedule_historical ON schedule.id = schedule_historical.id_schedule JOIN notify_key ON
+         schedule_historical.id_User = notify_key.id_User WHERE start_time LIKE '${check_time_schedule}%' 
+         AND schedule_historical.is_status =1`;
         console.log("sql nhan vien ", sql)
         db.query(sql, (err, rown, response) => {
             if (err) throw err
