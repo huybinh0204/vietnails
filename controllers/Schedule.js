@@ -127,9 +127,32 @@ module.exports = {
             res.json(ArrGetSchedule);
         })
     },
+    detail_service_shop: (req, res) => {
+        let sql = `SELECT service_shop.id,service_shop.title,service_shop.content,service_shop.moneys_ser, service_shop.created_at,service_shop.image ` +
+            `FROM schedule_details JOIN service_shop ON service_shop.id = schedule_details.id_Service_shop WHERE id_Schedule = ?`
+        db.query(sql, [req.params.scheduleId], (err, rown, fields) => {
+            if (err) throw err
+            var obj = [];
+            for (var i = 0; i < rown.length; i++) {
+                var ArrSchedule = {
+                    id: rown[i].id,
+                    title: rown[i].title,
+                    content: rown[i].content,
+                    moneys_ser: rown[i].moneys_ser,
+                    created_at: rown[i].created_at,
+                    image: rown[i].image
+                };
+                obj.push(ArrSchedule);
+            }
+            var _ArrSchedule = JSON.stringify(obj);
+            var ScheduleJson = JSON.parse(_ArrSchedule);
+            var ArrGetSchedule = [{"status": "200", "data": ScheduleJson}]
+            res.json(ArrGetSchedule);
+        })
+    },
     list_detail: (req, res) => {
         let scheduleId = req.params.scheduleId;
-        let sql = `SELECT DISTINCT schedule.id, code_schedule,start_time,moneys,minus_point,phone_nv,phone_kh,content_schedule,schedule.status ,schedule.fullName ,id_Service_shop FROM schedule ` +
+        let sql = `SELECT DISTINCT schedule.id, code_schedule,start_time,moneys,minus_point,phone_nv,phone_kh,content_schedule,schedule.status ,schedule.fullName FROM schedule ` +
             `JOIN schedule_details ON schedule_details.id_Schedule = schedule.id WHERE schedule_details.id_User = ${scheduleId}`;
         // console.log("123",sql)
         db.query(sql, [scheduleId], (err, rown, fields) => {

@@ -170,6 +170,10 @@ module.exports = function (app) {
     app.route('/api/schedule/:scheduleId')
         .get(token_config.checkToken, ScheduleCtrl.detail);
 
+    //chi tiet hoas down
+    app.route('/api/detail_service_shop/:scheduleId')
+        .get(token_config.checkToken, ScheduleCtrl.detail_service_shop);
+
     app.route('/api/schedule_list/:scheduleId')
         .get(token_config.checkToken, ScheduleCtrl.list_detail);
 
