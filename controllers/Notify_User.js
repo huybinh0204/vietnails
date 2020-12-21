@@ -40,7 +40,7 @@ module.exports = {
                         var data_notification = {
                             content: is_OpenRoles.priority_notify,
                             id_User: id_User,
-                            fullName: rowk[0].fullName,
+                            receiver: rowk[0].fullName,
                         }
                         let sql = `INSERT INTO notification SET ?`;
                         db.query(sql, [data_notification], (err, response) => {
@@ -102,7 +102,7 @@ module.exports = {
                         var data_notification = {
                             content: is_OpenRoles.priority_notify,
                             id_User: id_User,
-                            fullName: rowk[0].fullName,
+                            receiver: rowk[0].fullName,
                         }
                         let sql = `INSERT INTO notification SET ?`;
                         db.query(sql, [data_notification], (err, response) => {
@@ -139,7 +139,7 @@ module.exports = {
                         var data_notification = {
                             content: is_OpenRoles.priority_notify,
                             id_User: id_User,
-                            fullName: rowk[0].fullName,
+                            receiver: rowk[0].fullName,
                         }
                         let sql = `INSERT INTO notification SET ?`;
                         db.query(sql, [data_notification], (err, response) => {
@@ -178,7 +178,7 @@ module.exports = {
                         var data_notification = {
                             content: is_OpenRoles.priority_notify,
                             id_User: id_User,
-                            fullName: rowk[0].fullName,
+                            receiver: rowk[0].fullName,
                         }
                         let sql = `INSERT INTO notification SET ?`;
                         db.query(sql, [data_notification], (err, response) => {
@@ -217,7 +217,7 @@ module.exports = {
                         var data_notification = {
                             content: is_OpenRoles.priority_notify,
                             id_User: id_User,
-                            fullName: rowk[0].fullName,
+                            receiver: rowk[0].fullName,
                         }
                         let sql = `INSERT INTO notification SET ?`;
                         db.query(sql, [data_notification], (err, response) => {
@@ -254,7 +254,7 @@ module.exports = {
                         var data_notification = {
                             content: is_OpenRoles.priority_notify,
                             id_User: id_User,
-                            fullName: rowk[0].fullName,
+                            receiver: rowk[0].fullName,
                         }
                         let sql = `INSERT INTO notification SET ?`;
                         db.query(sql, [data_notification], (err, response) => {
@@ -291,7 +291,7 @@ module.exports = {
                         var data_notification = {
                             content: is_OpenRoles.priority_notify,
                             id_User: id_User,
-                            fullName: rowk[0].fullName,
+                            receiver: rowk[0].fullName,
                         }
                         let sql = `INSERT INTO notification SET ?`;
                         db.query(sql, [data_notification], (err, response) => {
