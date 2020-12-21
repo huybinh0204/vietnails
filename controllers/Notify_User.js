@@ -63,11 +63,8 @@ module.exports = {
         var phut_ht = Number(check_time.slice(14, 16));
         var gio_ht = check_PM == "PM" ? (gio + 12) : gio;
         var is_gio_ht = check_PM == "PM" ? (gio + 13) : gio;
-        // console.log("is_gio",is_gio)
-        // console.log("gio",gio)
-        // console.log("is_gio",check_PM)
         let sql = `SELECT schedule.id,notify_key.id_User as id_User, notify_key.on_key as on_key, schedule.start_time as start_time FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule JOIN notify_key ON schedule_details.id_User = notify_key.id_User WHERE start_time LIKE '${ngay}%' GROUP BY schedule_details.id_Schedule`;
-        console.log("sql khach hang", sql)
+        // console.log("sql khach hang", sql)
         db.query(sql, (err, rown, response) => {
             if (err) throw err
             for (var i = 0; i < rown.length; i++) {
