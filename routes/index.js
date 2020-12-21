@@ -85,7 +85,7 @@ module.exports = function (app) {
         .put(token_config.checkToken, UserCtrl.update);
     // doi mat khau
     app.route('/api/user/edit_password/:userId')
-        .put(token_config.checkToken, UserCtrl.update_password);
+        .put(UserCtrl.update_password);
 
     //Khoa tai khoản (xoá tài khoản)
     app.route('/api/user/delete/:userId')
