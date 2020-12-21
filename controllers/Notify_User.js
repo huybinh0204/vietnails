@@ -57,7 +57,7 @@ module.exports = {
         var  gio = ngay + (Number(check_time.slice(11,13)) +12).toString() +phut;
         var check_time_schedule = check_PM == 'PM' ? (gio) : (check_time.slice(0,16));
         let sql = `SELECT n_vietnails.notify_key.id_User as id_User, n_vietnails.notify_key.on_key as on_key FROM n_vietnails.schedule JOIN `+
-        `n_vietnails.schedule_historical ON schedule.id = schedule_historical.id_schedule JOIN`+
+        `n_vietnails.schedule_historical ON schedule.id = schedule_historical.id_schedule JOIN `+
         `n_vietnails.notify_key ON schedule_historical.id_User = notify_key.id_User WHERE `+
         `start_time LIKE '${check_time_schedule}%' AND schedule_historical.is_status =1 GROUP BY schedule.id`;
         console.log("sql nhan vien ",sql)
