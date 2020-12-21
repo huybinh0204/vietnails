@@ -8,10 +8,6 @@ const axios = require('axios');
 const random_random = require("../config/OpenRoles");
 var moment = require('moment-timezone');
 var time = moment().format("YYYY-MM-DD");
-var check_time = moment().tz("Asia/Ho_Chi_Minh").format("YYYY-MM-DD hh:mm:ss");
-var date = new Date();
-var is_created_otp = date.getTime();
-
 module.exports = {
     _get: (req, res) => {
         res.render('index', {title: 'VietNails', Get_api: 'api'});
@@ -176,8 +172,7 @@ module.exports = {
                             var check_created_otp = is_created + 180000;
                             var datetody = new Date();
                             var check_date_otpt = datetody.getTime();
-                            console.log("check_created_otp >=", check_created_otp)
-                            console.log("check_date_otpt", check_date_otpt)
+                            console.log("check_created_otp >=", check_created_otp +">=" + check_date_otpt)
                             // luon db >= time
                             let otp_status = "N";
                             let id = rowns[0].id;
@@ -215,6 +210,9 @@ module.exports = {
     store: (req, res) => {
         var otp = random_random.open_otp(6);
         var otp_status = "N";
+        var check_time = moment().tz("Asia/Ho_Chi_Minh").format("YYYY-MM-DD hh:mm:ss");
+        var date = new Date();
+        var is_created_otp = date.getTime();
         let sql_check = `SELECT id , phone , is_status ,is_active FROM user WHERE phone =(${req.body.phone})`;
         console.log("sql_check",sql_check)
         db.query(sql_check, (err, rown, fields) => {
