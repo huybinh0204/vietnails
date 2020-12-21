@@ -238,7 +238,7 @@ module.exports = function (app) {
     // app.route('/api/get_notify_kh/')
     //     .get(Notify_UserCtrl.get_notify_kh)
 
-    cron.schedule('*/1 * * * *', () => {
+    cron.schedule('*/2 * * * *', () => {
 
         app.get(Notify_UserCtrl.get_time_schedule())
         app.get(Notify_UserCtrl.get_notify_kh())
