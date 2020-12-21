@@ -232,20 +232,20 @@ module.exports = function (app) {
         .post(Notify_UserCtrl.store);
 
 
-    app.route('/api/get_time_schedule/')
-        .get(Notify_UserCtrl.get_time_schedule)
-
-    app.route('/api/get_notify_kh/')
-        .get(Notify_UserCtrl.get_notify_kh)
-
-    // cron.schedule('*/1 * * * *', () => {
+    // app.route('/api/get_time_schedule/')
+    //     .get(Notify_UserCtrl.get_time_schedule)
     //
-    //     app.get(Notify_UserCtrl.get_time_schedule())
-    //     app.get(Notify_UserCtrl.get_notify_kh())
-    // }, {
-    //     scheduled: true,
-    //     timezone: "Asia/Bangkok"
-    // });
+    // app.route('/api/get_notify_kh/')
+    //     .get(Notify_UserCtrl.get_notify_kh)
+
+    cron.schedule('*/1 * * * *', () => {
+
+        app.get(Notify_UserCtrl.get_time_schedule())
+        app.get(Notify_UserCtrl.get_notify_kh())
+    }, {
+        scheduled: true,
+        timezone: "Asia/Bangkok"
+    });
 
     app.route('/api/check_phone/')
         .post(UserCtrl.check_phone);
