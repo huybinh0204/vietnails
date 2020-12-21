@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var shortid = require('shortid');
 var multer = require('multer');
 router.use(bodyParser.json());
-
+const db = require('../service');
 let token_config = require('../config/ConfigJwt');
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -21,11 +21,11 @@ var storage = multer.diskStorage({
                 || _LowerCase.endsWith(".psd") || _LowerCase.endsWith(".mp4") || _LowerCase.endsWith(".mov")
                 || _LowerCase.endsWith(".docx") || _LowerCase.endsWith(".txt") || _LowerCase.endsWith(".pdf") == true) {
                 cb(null, shortid.generate() + "00" + file.originalname)
-            }else {
-                cb(null,"aa.png")
+            } else {
+                cb(null, "aa.png")
             }
         } catch (e) {
-            console.log("err",e.toString())
+            console.log("err", e.toString())
         }
     }
 });
@@ -125,7 +125,7 @@ module.exports = function (app) {
     app.route('/api/service/edit/:serviceId')
         .put(token_config.checkToken, ServiceCtrl.update);
     app.route('/api/service/delete/:serviceId')
-        .delete(token_config.checkToken,ServiceCtrl.delete);
+        .delete(token_config.checkToken, ServiceCtrl.delete);
 
     // api News shop bài
     app.route('/api/news_shop/')
@@ -230,7 +230,26 @@ module.exports = function (app) {
 
 
     cron.schedule('*/1 * * * *', () => {
-        console.log("1111")
+        var check_time = moment().tz("Asia/Bangkok").format("YYYY-MM-DD hh:mmA");
+        var check_PM = check_time.slice(16, 18);
+        var phut = check_time.slice(13, 16);
+        var ngay = check_time.slice(0, 11);
+        var gio = ngay + (Number(check_time.slice(11, 13)) + 12).toString() + phut;
+        var check_time_schedule = check_PM == 'PM' ? (gio) : (check_time.slice(0, 16));
+        let sql = `SELECT * FROM n_vietnails.schedule JOIN ` +
+            `n_vietnails.schedule_historical ON n_vietnails.schedule.id = n_vietnails.schedule_historical.id_schedule JOIN ` +
+            `n_vietnails.notify_key ON n_vietnails.schedule_historical.id_User = n_vietnails.notify_key.id_User WHERE ` +
+            `n_vietnails.schedule.start_time LIKE '${check_time_schedule}%' AND n_vietnails.schedule_historical.is_status =1 GROUP BY n_vietnails.schedule.id`;
+        console.log("sql nhan vien ", sql)
+        db.query(sql, (err, rown, response) => {
+            if (err) throw err
+            console.log("2222 ,nhan vioen")
+            if (rown != '') {
+                console.log(" ok vao")
+            } else {
+                console.log("NO User nhan vien push notify!");
+            }
+        })
         // app.get(Notify_UserCtrl.get_time_schedule())
         // app.get(Notify_UserCtrl.get_notify_nv())
         // app.get(Notify_UserCtrl.get_notify_kh())
@@ -257,8 +276,6 @@ module.exports = function (app) {
 
     app.route('/api/statistic/statistic_sum/')
         .get(StatisticCtrl.statistic_SUM);
-
-
 
 
 };
