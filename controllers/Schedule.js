@@ -129,7 +129,7 @@ module.exports = {
     },
     list_detail: (req, res) => {
         let scheduleId = req.params.scheduleId;
-        let sql = `SELECT DISTINCT schedule.id, code_schedule,start_time,moneys,minus_point,phone_nv,content_schedule,schedule.status ,schedule.fullName FROM schedule ` +
+        let sql = `SELECT DISTINCT schedule.id, code_schedule,start_time,moneys,minus_point,phone_nv,phone_kh,content_schedule,schedule.status ,schedule.fullName ,id_Service_shop FROM schedule ` +
             `JOIN schedule_details ON schedule_details.id_Schedule = schedule.id WHERE schedule_details.id_User = ${scheduleId}`;
         // console.log("123",sql)
         db.query(sql, [scheduleId], (err, rown, fields) => {
@@ -142,6 +142,7 @@ module.exports = {
                     start_time: rown[i].start_time,
                     moneys: rown[i].moneys,
                     minus_point: rown[i].minus_point,
+                    phone_kh: rown[i].phone_kh,
                     phone_nv: rown[i].phone_nv,
                     fullName: rown[i].fullName,
                     status: rown[i].status,
@@ -279,7 +280,7 @@ module.exports = {
         let id_User = req.body.id_User;
         if (start_time && id_User != undefined) {
             let sql = `SELECT * FROM schedule_details JOIN schedule ` +
-                `ON schedule_details.id_Schedule = schedule.id WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User}`;
+                `ON schedule_details.id_Schedule = schedule.id WHERE start_time LIKE '${start_time}%' and schedule.id_User = ${id_User} `;
             db.query(sql, [start_time, req.params.start_time], (err, rown, fields) => {
                 if (err) throw err
                 var obj = [];

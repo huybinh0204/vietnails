@@ -39,10 +39,10 @@ module.exports = {
 
     get_list_time: (req, res) => {
         let toong = moment().tz("Asia/Ho_Chi_Minh").format();
-        let get_yeur = toong.slice(0,10);
-        let  get_home = toong.slice(11,19);
+        let get_yeur = toong.slice(0, 10);
+        let get_home = toong.slice(11, 19);
 
-        let moth = get_yeur+ " "+  get_home;
+        let moth = get_yeur + " " + get_home;
         var ArrGetschedule_historical = [{"status": "200", "data": moth}]
         res.json(ArrGetschedule_historical);
     },
@@ -53,7 +53,7 @@ module.exports = {
         let status = req.body.status;
         let phone_nv = req.body.phone_nv;
         let content = req.body.content;
-        console.log("1222",id_User + " :"+ status + ":"+ content);
+        console.log("1222", id_User + " :" + status + ":" + content);
         if (status == 1) {
             var data = {
                 status: 1,
@@ -89,30 +89,42 @@ module.exports = {
                 })
             })
         } else if (status == 3) {
-            var data = {
-                id_User: null,
-                status: 0,
-            }
-            let sql = 'UPDATE schedule SET ? WHERE id = ?'
-            db.query(sql, [data, schedule_historicalID], (err, response) => {
+            let sql = `SELECT * FROM user WHERE id_roles = 4 and id = ${id_User}`;
+            db.query(sql, (err,rown_s, response) => {
                 if (err) throw err
-                let schedule_sql = `SELECT * FROM schedule WHERE id = ${schedule_historicalID}`
-                db.query(schedule_sql, (err, rown, fields) => {
-                    if (err) throw err
+                if(rown_s != ''){
                     var data = {
-                        end_code_schedule: rown[0].code_schedule,
-                        is_status: 2,
-                        id_schedule: rown[0].id,
-                        id_User: id_User,
-                        content: content
+                        id_User: rown_s[0].id,
+                        phone_nv:rown_s[0].phone,
+                        fullName:rown_s[0].fullName,
+                        status: 0,
                     }
-                    let sql = `INSERT INTO schedule_historical SET ?`;
-                    db.query(sql, [data], (err, response) => {
+                    let sql = 'UPDATE schedule SET ? WHERE  id = ?'
+                    db.query(sql, [data, schedule_historicalID], (err, response) => {
                         if (err) throw err
-                        res.json({"status": "200", "message": 'Nhân viên huỷ đơn thành công!'});
-                    });
-                })
+                        let schedule_sql = `SELECT * FROM schedule WHERE id = ${schedule_historicalID}`
+                        db.query(schedule_sql, (err, rown, fields) => {
+                            if (err) throw err
+                            var data = {
+                                end_code_schedule: rown[0].code_schedule,
+                                is_status: 2,
+                                id_schedule: rown[0].id,
+                                id_User: id_User,
+                                content: content
+                            }
+                            let sql = `INSERT INTO schedule_historical SET ?`;
+                            db.query(sql, [data], (err, response) => {
+                                if (err) throw err
+                                res.json({"status": "200", "message": 'Nhân viên huỷ đơn thành công!'});
+                            });
+                        })
+                    })
+                }else {
+                    res.json({"status": "400", "message": 'Nhân viên khong huỷ đơn duoc!'});
+                }
+
             })
+
         } else if (status == 4) {
             var data = {
                 status: 4,
