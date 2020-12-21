@@ -101,7 +101,7 @@ module.exports = {
             console.log("22",as)
 
         }
-        console.log("1231231231223",obj)
+        console.log("123123123223",obj)
         // var _Arrstatistic = JSON.stringify(obj);
         // var statisticJson = JSON.parse(_Arrstatistic);
         // var ArrGetstatistic = [{"status": "200", message: 'thống kê các loại đơn theo trạng thái, tiền khắc hàng đặt theo tháng', "data": statisticJson}]
