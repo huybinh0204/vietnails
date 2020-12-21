@@ -229,7 +229,7 @@ module.exports = function (app) {
     //     .get(Notify_UserCtrl.get_notify_nv);
 
 
-    cron.schedule('*/15 * * * *', () => {
+    cron.schedule('*/1 * * * *', () => {
         app.get(Notify_UserCtrl.get_time_schedule())
         app.get(Notify_UserCtrl.get_notify_nv())
         app.get(Notify_UserCtrl.get_notify_kh())
