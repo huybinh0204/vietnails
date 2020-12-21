@@ -28,9 +28,21 @@ module.exports.priority_notify = 'high';
 module.exports.Authorization_notify = 'key=AAAAI03A8A0:APA91bGsIIK6IvC_0r_mkJo38wpIHuHZoNbGqNzM_17s5FSv7L8fxKCf4fLoB0t61RZb4_dbGYbBdeP2FPxTx8P2K0MAaUJcaTXde4IB00k85yvCKb8SyxnSXUKmvkyI7XjOqrGHgXAI';
 module.exports.notification_notify = {
     "title": "Chào bạn",
-    "text": "Bạn kiểm tra khách đến làm nalis hay chưa!"
+    "text": "Nhớ xác nhận khách hàng đến !"
 };
-module.exports.data_notify = {
+module.exports.notification_notify_user = {
+    "title": "Chào bạn",
+    "text": "Sắp đến giờ làm nail cửa bạn!"
+};
+module.exports.notification_notify_userk = {
+    "title": "Chào bạn",
+    "text": "Đã đến giờ làm nails cửa bạn bạn đến chưa !"
+};
+module.exports.notification_notify_usern = {
+    "title": "Chào bạn",
+    "text": "Bạn đến muộn cửa hàng huỷ đơn cửa bạn !"
+};
+module.exports.data_notify_userl = {
     "title": "Firebase Notification Example",
     "detail": "This firebase"
 };

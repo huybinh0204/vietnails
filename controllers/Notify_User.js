@@ -38,7 +38,7 @@ module.exports = {
                     db.query(sql_select, (err, rowk, response) => {
                         if (err) throw err
                         var data_notification = {
-                            content: is_OpenRoles.priority_notify,
+                            content: 'Nhớ xác nhận khách hàng đến !',
                             id_User: id_User,
                             receiver: rowk[0].fullName,
                         }
@@ -66,7 +66,7 @@ module.exports = {
         // console.log("is_gio",is_gio)
         // console.log("gio",gio)
         // console.log("is_gio",check_PM)
-        let sql = `SELECT notify_key.id_User as id_User, notify_key.on_key as on_key, schedule.start_time as start_time FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule JOIN notify_key ON schedule_details.id_User = notify_key.id_User WHERE start_time LIKE '${ngay}%' GROUP BY schedule_details.id_Schedule`;
+        let sql = `SELECT schedule.id,notify_key.id_User as id_User, notify_key.on_key as on_key, schedule.start_time as start_time FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule JOIN notify_key ON schedule_details.id_User = notify_key.id_User WHERE start_time LIKE '${ngay}%' GROUP BY schedule_details.id_Schedule`;
         console.log("sql khach hang", sql)
         db.query(sql, (err, rown, response) => {
             if (err) throw err
@@ -74,11 +74,11 @@ module.exports = {
                 var a = rown[i].start_time.toString();
                 var gio_db = Number(a.slice(16, 18));
                 var phut_db = Number(a.slice(19, 21));
-                if (is_gio_ht == gio_db && phut_db == 0) {
+                if (is_gio_ht == gio_db && phut_db == 0 && phut_ht >= 45) {
                     axios.post(is_OpenRoles.urls_notify, {
                             registration_ids: [rown[i].on_key],
                             priority: is_OpenRoles.priority_notify,
-                            notification: is_OpenRoles.notification_notify,
+                            notification: is_OpenRoles.notification_notify_user,
                             data: is_OpenRoles.data_notify
                         },
                         {
@@ -100,7 +100,7 @@ module.exports = {
                     db.query(sql_select, (err, rowk, response) => {
                         if (err) throw err
                         var data_notification = {
-                            content: is_OpenRoles.priority_notify,
+                            content: "Sắp đến giờ làm nail cửa bạn!",
                             id_User: id_User,
                             receiver: rowk[0].fullName,
                         }
@@ -114,7 +114,7 @@ module.exports = {
                     axios.post(is_OpenRoles.urls_notify, {
                             registration_ids: rown[i].on_key,
                             priority: is_OpenRoles.priority_notify,
-                            notification: is_OpenRoles.notification_notify,
+                            notification: is_OpenRoles.notification_notify_userk,
                             data: is_OpenRoles.data_notify
                         },
                         {
@@ -137,7 +137,7 @@ module.exports = {
                     db.query(sql_select, (err, rowk, response) => {
                         if (err) throw err
                         var data_notification = {
-                            content: is_OpenRoles.priority_notify,
+                            content: 'Đã đến giờ làm nails cửa bạn bạn đến chưa !',
                             id_User: id_User,
                             receiver: rowk[0].fullName,
                         }
@@ -149,12 +149,12 @@ module.exports = {
                     });
 
 
-                } else if (gio_ht == gio_db && phut_db == 0 && phut_ht <= 30) {
+                } else if (gio_ht == gio_db && phut_db == 0 && phut_ht < 30) {
 
                     axios.post(is_OpenRoles.urls_notify, {
                             registration_ids: rown[i].on_key,
                             priority: is_OpenRoles.priority_notify,
-                            notification: is_OpenRoles.notification_notify,
+                            notification: is_OpenRoles.notification_notify_userk,
                             data: is_OpenRoles.data_notify
                         },
                         {
@@ -176,7 +176,43 @@ module.exports = {
                     db.query(sql_select, (err, rowk, response) => {
                         if (err) throw err
                         var data_notification = {
-                            content: is_OpenRoles.priority_notify,
+                            content: "Đã đến giờ làm nails cửa bạn bạn đến chưa !",
+                            id_User: id_User,
+                            receiver: rowk[0].fullName,
+                        }
+                        let sql = `INSERT INTO notification SET ?`;
+                        db.query(sql, [data_notification], (err, response) => {
+                            if (err) throw err
+                            console.log("thong bao thanh cong")
+                        });
+                    });
+                }else if (gio_ht == gio_db && phut_db == 0 && phut_ht == 30) {
+                    axios.post(is_OpenRoles.urls_notify, {
+                            registration_ids: rown[i].on_key,
+                            priority: is_OpenRoles.priority_notify,
+                            notification: is_OpenRoles.notification_notify_usern,
+                            data: is_OpenRoles.data_notify
+                        },
+                        {
+                            headers: {
+                                Authorization: is_OpenRoles.Authorization_notify,
+                                'Content-Type': 'application/json'
+                            }
+                        }
+                    )
+                        .then(function (response) {
+                            console.log("notify thanh cong")
+                        })
+                        .catch(function (error) {
+                            console.log("error", error)
+                        });
+
+                    var id_User = rown[i].id_User;
+                    let sql_select = `SELECT fullName FROM user WHERE id = ${id_User}`;
+                    db.query(sql_select, (err, rowk, response) => {
+                        if (err) throw err
+                        var data_notification = {
+                            content: "Bạn đến muộn cửa hàng huỷ đơin cửa bạn !",
                             id_User: id_User,
                             receiver: rowk[0].fullName,
                         }
@@ -193,7 +229,7 @@ module.exports = {
                     axios.post(is_OpenRoles.urls_notify, {
                             registration_ids: rown[i].on_key,
                             priority: is_OpenRoles.priority_notify,
-                            notification: is_OpenRoles.notification_notify,
+                            notification: is_OpenRoles.notification_notify_user,
                             data: is_OpenRoles.data_notify
                         },
                         {
@@ -215,7 +251,7 @@ module.exports = {
                     db.query(sql_select, (err, rowk, response) => {
                         if (err) throw err
                         var data_notification = {
-                            content: is_OpenRoles.priority_notify,
+                            content: 'Sắp đến giờ làm nail cửa bạn!',
                             id_User: id_User,
                             receiver: rowk[0].fullName,
                         }
@@ -230,7 +266,7 @@ module.exports = {
                     axios.post(is_OpenRoles.urls_notify, {
                             registration_ids: rown[i].on_key,
                             priority: is_OpenRoles.priority_notify,
-                            notification: is_OpenRoles.notification_notify,
+                            notification: is_OpenRoles.notification_notify_userk,
                             data: is_OpenRoles.data_notify
                         },
                         {
@@ -252,7 +288,7 @@ module.exports = {
                     db.query(sql_select, (err, rowk, response) => {
                         if (err) throw err
                         var data_notification = {
-                            content: is_OpenRoles.priority_notify,
+                            content: 'Đã đến giờ làm nails cửa bạn bạn đến chưa !',
                             id_User: id_User,
                             receiver: rowk[0].fullName,
                         }
@@ -262,12 +298,12 @@ module.exports = {
                             console.log("thong bao thanh cong")
                         });
                     });
-                } else if (is_gio_ht == gio_db && phut_db == 30 && phut_ht >= 0) {
+                } else if (is_gio_ht == gio_db && phut_db == 30 && phut_ht > 0) {
 
                     axios.post(is_OpenRoles.urls_notify, {
                             registration_ids: rown[i].on_key,
                             priority: is_OpenRoles.priority_notify,
-                            notification: is_OpenRoles.notification_notify,
+                            notification: is_OpenRoles.notification_notify_userk,
                             data: is_OpenRoles.data_notify
                         },
                         {
@@ -289,7 +325,45 @@ module.exports = {
                     db.query(sql_select, (err, rowk, response) => {
                         if (err) throw err
                         var data_notification = {
-                            content: is_OpenRoles.priority_notify,
+                            content: 'Đã đến giờ làm nails cửa bạn bạn đến chưa !',
+                            id_User: id_User,
+                            receiver: rowk[0].fullName,
+                        }
+                        let sql = `INSERT INTO notification SET ?`;
+                        db.query(sql, [data_notification], (err, response) => {
+                            if (err) throw err
+                            console.log("thong bao thanh cong")
+                        });
+                    });
+
+                } else if (is_gio_ht == gio_db && phut_db == 30 && phut_ht == 0) {
+
+                    axios.post(is_OpenRoles.urls_notify, {
+                            registration_ids: rown[i].on_key,
+                            priority: is_OpenRoles.priority_notify,
+                            notification: is_OpenRoles.notification_notify_usern,
+                            data: is_OpenRoles.data_notify
+                        },
+                        {
+                            headers: {
+                                Authorization: is_OpenRoles.Authorization_notify,
+                                'Content-Type': 'application/json'
+                            }
+                        }
+                    )
+                        .then(function (response) {
+                            console.log("notify thanh cong")
+                        })
+                        .catch(function (error) {
+                            console.log("error", error)
+                        });
+
+                    var id_User = rown[i].id_User;
+                    let sql_select = `SELECT fullName FROM user WHERE id = ${id_User}`;
+                    db.query(sql_select, (err, rowk, response) => {
+                        if (err) throw err
+                        var data_notification = {
+                            content: 'Bạn đến muộn cửa hàng huỷ đơn cửa bạn !',
                             id_User: id_User,
                             receiver: rowk[0].fullName,
                         }
