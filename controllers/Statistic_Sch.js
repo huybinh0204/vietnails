@@ -59,7 +59,7 @@ module.exports = {
     // thống kê các loại hoá đơn theo trạng thái theo tháng
     statistic_schedule: (req, res) => {
         let start_time = req.body.start_time ;
-        let sql = `SELECT status,COUNT(*) AS sum_schedule,SUM(moneys) as sum_moneys FROM schedule WHERE schedule.start_time LIKE '${start_time}%' GROUP BY schedule.status`;
+        let sql = `SELECT status,COUNT(*) AS sum_schedule,SUM(moneys) as sum_moneys, n_vietnails.schedule.created_schedule FROM schedule WHERE schedule.start_time LIKE '${start_time}%' GROUP BY schedule.status`;
         db.query(sql, (err, rown, fields) => {
             if (err) throw err
             var obj = [];
