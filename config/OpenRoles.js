@@ -23,6 +23,17 @@ module.exports.url = 'http://vietnail.tk'
 // module.exports.url = 'http://localhost:8080';
 //notyfile
 module.exports.Key_Notify = "";
+module.exports.urls_notify = "https://fcm.googleapis.com/fcm/send";
+module.exports.priority_notify = 'high';
+module.exports.Authorization_notify = 'key=AAAAI03A8A0:APA91bGsIIK6IvC_0r_mkJo38wpIHuHZoNbGqNzM_17s5FSv7L8fxKCf4fLoB0t61RZb4_dbGYbBdeP2FPxTx8P2K0MAaUJcaTXde4IB00k85yvCKb8SyxnSXUKmvkyI7XjOqrGHgXAI';
+module.exports.notification_notify = {
+    "title": "Chào bạn",
+    "text": "Bạn kiểm tra khách đến làm nalis hay chưa!"
+};
+module.exports.data_notify = {
+    "title": "Firebase Notification Example",
+    "detail": "This firebase"
+};
 //
 module.exports.esms_url = 'http://rest.esms.vn/MainService.svc/json/SendMultipleMessage_V4_get'
 module.exports.ApiKey = 'F48260F00D837259291DA540B3270C';
