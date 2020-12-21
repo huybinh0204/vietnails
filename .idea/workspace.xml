@@ -12,9 +12,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ba4a68ca-13aa-4ecd-9129-6ded7f0d04bc" name="Default Changelist" comment="updata notify">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/bin/www" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/OpenRoles.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/OpenRoles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service.js" beforeDir="false" afterPath="$PROJECT_DIR$/service.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,6 +141,7 @@
       <workItem from="1607397122308" duration="1946000" />
       <workItem from="1607442850044" duration="2485000" />
       <workItem from="1607486525340" duration="12527000" />
+      <workItem from="1608458088974" duration="311000" />
     </task>
     <task id="LOCAL-00027" summary="update 10a">
       <created>1606829556289</created>
