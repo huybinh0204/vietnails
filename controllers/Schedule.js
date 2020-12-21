@@ -5,7 +5,7 @@ var moment = require('moment-timezone');
 var year = moment().tz("Asia/Ho_Chi_Minh").format("YYYY-MM-DD");
 module.exports = {
     get: (req, res) => {
-        let sql = `SELECT * FROM schedule where status = 4`;
+        let sql = `SELECT schedule.id,code_schedule,minus_point,moneys,start_time, schedule.fullName AS fullName_nv,phone_nv,schedule_details.working_time as fullName_kh,phone_kh ,status,content_schedule FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule where status = 4`;
         db.query(sql, (err, rown, fields) => {
             if (err) throw err
             var obj = [];
@@ -18,9 +18,10 @@ module.exports = {
                     minus_point: rown[i].minus_point,
                     phone_nv: rown[i].phone_nv,
                     status: rown[i].status,
-                    fullName: rown[i].fullName,
+                    fullName_nv: rown[i].fullName_nv,
                     content_schedule: rown[i].content_schedule,
-                    created_schedule: rown[i].created_schedule,
+                    fullName_kh: rown[i].fullName_kh,
+                    phone_kh: rown[i].phone_kh,
                 };
                 obj.push(ArrSchedule);
             }
