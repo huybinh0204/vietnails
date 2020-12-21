@@ -18,7 +18,7 @@ module.exports = {
         return randomString;
     }
 }
-module.exports.url = 'http://vietnails.cf'
+module.exports.url = 'http://vietnail.cf'
 
 // module.exports.url = 'http://localhost:8080';
 //notyfile
