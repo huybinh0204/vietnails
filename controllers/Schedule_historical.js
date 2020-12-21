@@ -98,7 +98,7 @@ module.exports = {
                         id_User: rown_s[0].id,
                         phone_nv:rown_s[0].phone,
                         fullName:rown_s[0].fullName,
-                        status: 0,
+                        status: 3,
                     }
                     let sql = 'UPDATE schedule SET ? WHERE  id = ?'
                     db.query(sql, [data, schedule_historicalID], (err, response) => {
