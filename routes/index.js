@@ -4,8 +4,6 @@ var bodyParser = require('body-parser');
 var shortid = require('shortid');
 var multer = require('multer');
 router.use(bodyParser.json());
-const db = require('../service');
-var moment = require('moment-timezone');
 let token_config = require('../config/ConfigJwt');
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -235,62 +233,10 @@ module.exports = function (app) {
 
 
     cron.schedule('*/1 * * * *', () => {
-        var check_time = moment().tz("Asia/Bangkok").format("YYYY-MM-DD hh:mmA");
-        var check_PM = check_time.slice(16, 18);
-        var phut = check_time.slice(13, 16);
-        var ngay = check_time.slice(0, 11);
-        var gio = ngay + (Number(check_time.slice(11, 13)) + 12).toString() + phut;
-        var check_time_schedule = check_PM == 'PM' ? (gio) : (check_time.slice(0, 16));
-        let sql = `SELECT notify_key.id_User as id_User, notify_key.on_key as on_key FROM schedule JOIN `+
-        `schedule_historical ON schedule.id = schedule_historical.id_schedule JOIN notify_key ON `+
-         `schedule_historical.id_User = notify_key.id_User WHERE start_time LIKE '${check_time_schedule}%' `+
-         `AND schedule_historical.is_status =1`;
-        console.log("sql nhan vien ", sql)
-        db.query(sql, (err, rown, response) => {
-            if (err) throw err
-            if (rown != '') {
-                console.log(" ok vao")
-                    var  registration_ids =[];
-                    for (var i = 0 ; i<rown.length;i++){
-                        registration_ids.push(rown[i].on_key);
-                    }
-                    var urls = "https://fcm.googleapis.com/fcm/send";
-                    let priority = 'high';
-                    let notification = {
-                        "title": "Chào bạn",
-                        "text": "Bạn đến lịch làm nails cho khách hàng!"
-                    };
-                    let data = {
-                        "title": "Firebase Notification Example",
-                        "detail": "This firebase"
-                    };
-                    axios.post(urls, {
-                            registration_ids: registration_ids,
-                            priority: priority,
-                            notification: notification,
-                            data: data
-                        },
-                        {
-                            headers:{
-                                Authorization: 'key=AAAAI03A8A0:APA91bGsIIK6IvC_0r_mkJo38wpIHuHZoNbGqNzM_17s5FSv7L8fxKCf4fLoB0t61RZb4_dbGYbBdeP2FPxTx8P2K0MAaUJcaTXde4IB00k85yvCKb8SyxnSXUKmvkyI7XjOqrGHgXAI',
-                                'Content-Type': 'application/json'
-                            }
-                        }
-                    )
-                        .then(function (response) {
-                            console.log("notify thanh cong")
-                        })
-                        .catch(function (error) {
-                            console.log("error",error)
-                        });
 
-            } else {
-                console.log("NO User nhan vien push notify!");
-            }
-        })
-        // app.get(Notify_UserCtrl.get_time_schedule())
-        // app.get(Notify_UserCtrl.get_notify_nv())
-        // app.get(Notify_UserCtrl.get_notify_kh())
+        app.get(Notify_UserCtrl.get_time_schedule())
+        app.get(Notify_UserCtrl.get_notify_nv())
+        app.get(Notify_UserCtrl.get_notify_kh())
     }, {
         scheduled: true,
         timezone: "Asia/Bangkok"
