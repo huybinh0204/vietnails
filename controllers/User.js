@@ -157,30 +157,30 @@ module.exports = {
         let id_User = req.body.id_User;
         let otp = req.body.on_key;
         let sql = `SELECT * FROM check_otp WHERE id_User = ${id_User} AND at_created LIKE "${time}%" ORDER BY id DESC LIMIT 1`;
-        console.log("sql check otp", sql)
+        // console.log("sql check otp", sql)
         if (id_User != undefined && otp != '') {
             db.query(sql, (err, rown, response) => {
                 if (err) throw err
                 if (rown != '') {
                     let sql_otp = `SELECT * FROM check_otp WHERE otp_status = "N" AND otp="${otp}"`;
-                    console.log("sql_otp check max", sql_otp)
+                    // console.log("sql_otp check max", sql_otp)
                     db.query(sql_otp, (err, rowns, response) => {
                         if (err) throw err
                         if (rowns != '') {
                             var id_User = rowns[0].id_User;
                             var is_created = Number(rowns[0].created_otp);
-                            var check_created_otp = is_created + 180000;
+                            var check_created_otp = is_created + 120000;
                             var datetody = new Date();
                             var check_date_otpt = datetody.getTime();
                             console.log("check_created_otp", check_created_otp +">=" + check_date_otpt)
                             // luon db >= time
-                            let otp_status = "N";
+                            let otp_status = "Y";
                             let id = rowns[0].id;
-                            let is_active = 2;
+                            let is_active = 0;
                             let is_sql_otp = `UPDATE check_otp SET ? WHERE id = ${id}`;
-                            console.log("is_sql_otp",is_sql_otp)
+                            // console.log("is_sql_otp",is_sql_otp)
                             let user_sql = `UPDATE user SET ? WHERE id = ${id_User}`;
-                            console.log("user_sql",user_sql)
+                            // console.log("user_sql",user_sql)
                             if (check_created_otp >= check_date_otpt) {
                                 db.query(is_sql_otp, [{otp_status}], (err, response) => {
                                     if (err) throw err
@@ -188,7 +188,7 @@ module.exports = {
                                 })
                                 db.query(user_sql, [{is_active}], (err, response) => {
                                     if (err) throw err
-                                    console.log("1111")
+                                    console.log("check max otp thanh cong")
                                 })
                             } else {
                                 res.json({"status": "400", "message": 'User otp no'})
@@ -214,7 +214,7 @@ module.exports = {
         var date = new Date();
         var is_created_otp = date.getTime();
         let sql_check = `SELECT id , phone , is_status ,is_active FROM user WHERE phone =(${req.body.phone})`;
-        console.log("sql_check",sql_check)
+        // console.log("sql_check",sql_check)
         db.query(sql_check, (err, rown, fields) => {
             if (err) throw err
             let phone = req.body.phone;
