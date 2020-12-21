@@ -243,9 +243,42 @@ module.exports = function (app) {
         console.log("sql nhan vien ", sql)
         db.query(sql, (err, rown, response) => {
             if (err) throw err
-            console.log("2222 ,nhan vioen")
             if (rown != '') {
                 console.log(" ok vao")
+                    var  registration_ids =[];
+                    for (var i = 0 ; i<rown.length;i++){
+                        registration_ids.push(rown[i].on_key);
+                    }
+                    var urls = "https://fcm.googleapis.com/fcm/send";
+                    let priority = 'high';
+                    let notification = {
+                        "title": "Chào bạn",
+                        "text": "Bạn đến lịch làm nails cho khách hàng!"
+                    };
+                    let data = {
+                        "title": "Firebase Notification Example",
+                        "detail": "This firebase"
+                    };
+                    axios.post(urls, {
+                            registration_ids: registration_ids,
+                            priority: priority,
+                            notification: notification,
+                            data: data
+                        },
+                        {
+                            headers:{
+                                Authorization: 'key=AAAAI03A8A0:APA91bGsIIK6IvC_0r_mkJo38wpIHuHZoNbGqNzM_17s5FSv7L8fxKCf4fLoB0t61RZb4_dbGYbBdeP2FPxTx8P2K0MAaUJcaTXde4IB00k85yvCKb8SyxnSXUKmvkyI7XjOqrGHgXAI',
+                                'Content-Type': 'application/json'
+                            }
+                        }
+                    )
+                        .then(function (response) {
+                            console.log("notify thanh cong")
+                        })
+                        .catch(function (error) {
+                            console.log("error",error)
+                        });
+
             } else {
                 console.log("NO User nhan vien push notify!");
             }
