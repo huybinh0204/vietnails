@@ -66,7 +66,15 @@ module.exports = {
         })
     },
     store: (req, res) => {
-        let data = req.body;
+
+        let title = req.body.title;
+        let content = req.body.content;
+        let moneys_ser = req.body.moneySer;
+        let image = req.body.imagePath;
+        let id_Shop = 1;
+        let is_status = 0;
+        let data = {title,content,moneys_ser,image,id_Shop,is_status};
+
         if (JSON.stringify(data) != '{}') {
             let sql = `INSERT INTO service_shop SET ?`;
             console.log("111",sql)

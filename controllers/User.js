@@ -290,7 +290,7 @@ module.exports = {
                                 })
                             })
                         } else {
-                            res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
+                            res.json({"status": "400", "message": 'Phone not valid', "data": response.data})
                         }
 
                     })
@@ -328,7 +328,7 @@ module.exports = {
                                     res.json({"status": "200", "message": 'tao taoi khoan thanh cong!', "data": INSERTUserJson})
                                 })
                                 } else {
-                                    res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
+                                    res.json({"status": "400", "message": 'Phone not valid', "data": response.data})
                                 }
                             })
                             .catch(function (error) {
