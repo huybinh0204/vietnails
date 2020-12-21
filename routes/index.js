@@ -44,6 +44,7 @@ module.exports = function (app) {
     let Schedule_historicalCtrl = require('../controllers/Schedule_historical');
     let Notify_UserCtrl = require('../controllers/Notify_User');
     let StatisticCtrl = require('../controllers/Statistic_Sch');
+    let NotificationCtrl = require('../controllers/Notification');
     app.route('/')
         .get(UserCtrl._get)
     // Login đăng nhập
@@ -58,6 +59,9 @@ module.exports = function (app) {
     //     .post(token_config.checkToken,RolesCtrl.store);
     // app.route('/api/roles/edit/:rolesId')
     //     .put(token_config.checkToken,RolesCtrl.update);
+
+    app.route('/api/notification/:idUserNotification')
+        .get(NotificationCtrl.detail);
 
     app.route('/api/roles/')
         .get(token_config.checkToken, RolesCtrl.get);
@@ -228,19 +232,20 @@ module.exports = function (app) {
         .post(Notify_UserCtrl.store);
 
 
-    // app.route('/api/get_time_schedule/')
-    //     .get(Notify_UserCtrl.get_notify_nv);
+    app.route('/api/get_time_schedule/')
+        .get(Notify_UserCtrl.get_time_schedule)
 
+    app.route('/api/get_notify_kh/')
+        .get(Notify_UserCtrl.get_notify_kh)
 
-    cron.schedule('*/1 * * * *', () => {
-
-        app.get(Notify_UserCtrl.get_time_schedule())
-        app.get(Notify_UserCtrl.get_notify_nv())
-        app.get(Notify_UserCtrl.get_notify_kh())
-    }, {
-        scheduled: true,
-        timezone: "Asia/Bangkok"
-    });
+    // cron.schedule('*/1 * * * *', () => {
+    //
+    //     app.get(Notify_UserCtrl.get_time_schedule())
+    //     app.get(Notify_UserCtrl.get_notify_kh())
+    // }, {
+    //     scheduled: true,
+    //     timezone: "Asia/Bangkok"
+    // });
 
     app.route('/api/check_phone/')
         .post(UserCtrl.check_phone);
@@ -260,6 +265,7 @@ module.exports = function (app) {
 
     app.route('/api/statistic/statistic_sum/')
         .get(StatisticCtrl.statistic_SUM);
+
 
 
 };
