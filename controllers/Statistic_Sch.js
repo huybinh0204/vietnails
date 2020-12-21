@@ -5,8 +5,8 @@ module.exports = {
     get_statistic: (req, res) => {
         let start_time = req.body.start_time ;
         let sql = `SELECT id_Service_shop, COUNT(*) as sum_Service , title , start_time FROM schedule JOIN schedule_details ON `+
-        `schedule.id = schedule_details.id_Schedule JOIN service_shop ON service_shop.id = schedule_details.id_Service_shop `+
-        `WHERE schedule.start_time LIKE '${start_time}%' GROUP BY id_Service_shop`;
+            `schedule.id = schedule_details.id_Schedule JOIN service_shop ON service_shop.id = schedule_details.id_Service_shop `+
+            `WHERE schedule.start_time LIKE '${start_time}%' GROUP BY id_Service_shop`;
         db.query(sql,[{start_time}], (err, rown, fields) => {
             if (err) throw err
             var obj = [];
@@ -32,9 +32,9 @@ module.exports = {
         let start_time = req.body.start_time ;
         let id_User= req.body.id_User ;
         let sql = `SELECT schedule_historical.is_status as is_status ,COUNT(*) as sum_schedule_user_nv , user.id , user.phone, user.fullName`+
-        `,start_time FROM schedule_historical JOIN user ON user.id = schedule_historical.id_User JOIN schedule on `+
-        `schedule_historical.id_schedule = schedule.id WHERE schedule.start_time LIKE '${start_time}%' and `+
-        `schedule_historical.id_User = ${id_User} GROUP BY schedule_historical.is_status`;
+            `,start_time FROM schedule_historical JOIN user ON user.id = schedule_historical.id_User JOIN schedule on `+
+            `schedule_historical.id_schedule = schedule.id WHERE schedule.start_time LIKE '${start_time}%' and `+
+            `schedule_historical.id_User = ${id_User} GROUP BY schedule_historical.is_status`;
         db.query(sql, (err, rown, fields) => {
             if (err) throw err
             var obj = [];
@@ -101,7 +101,7 @@ module.exports = {
             console.log("22",as)
 
         }
-        console.log("1231231231223",obj)
+        console.log("123123123223",obj)
         // var _Arrstatistic = JSON.stringify(obj);
         // var statisticJson = JSON.parse(_Arrstatistic);
         // var ArrGetstatistic = [{"status": "200", message: 'thống kê các loại đơn theo trạng thái, tiền khắc hàng đặt theo tháng', "data": statisticJson}]
