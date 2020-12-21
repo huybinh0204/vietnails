@@ -8,6 +8,7 @@ module.exports = {
             for (var i = 0; i < rown.length; i++) {
                 var Arrnotification = {
                     id: rown[i].id,
+                    content: rown[i].content,
                     id_User: rown[i].id_User,
                     receiver_name: rown[i].receiver,
                     date_notification: rown[i].date_notification,
