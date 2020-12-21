@@ -240,7 +240,7 @@ module.exports = function (app) {
         let sql = `SELECT notify_key.id_User as id_User, notify_key.on_key as on_key FROM schedule JOIN `+
         `schedule_historical ON schedule.id = schedule_historical.id_schedule JOIN notify_key ON `+
          `schedule_historical.id_User = notify_key.id_User WHERE start_time LIKE '${check_time_schedule}%' `+
-         `AND schedule_historical.is_status =1 GROUP BY schedule.id`;
+         `AND schedule_historical.is_status =1`;
         console.log("sql nhan vien ", sql)
         db.query(sql, (err, rown, response) => {
             if (err) throw err
