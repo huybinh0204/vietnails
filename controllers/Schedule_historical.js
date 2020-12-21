@@ -56,6 +56,7 @@ module.exports = {
         console.log("1222", id_User + " :" + status + ":" + content);
         if (status == 1) {
             var data = {
+                id_User:id_User,
                 status: 1,
             }
             let sql = 'UPDATE schedule SET ? WHERE id = ?'
