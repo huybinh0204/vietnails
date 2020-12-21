@@ -86,6 +86,9 @@ module.exports = {
     //check sddt
     check_phone: (req, res) => {
         let phone = req.body.phone;
+        var check_time = moment().tz("Asia/Ho_Chi_Minh").format("YYYY-MM-DD hh:mm:ss");
+        var date = new Date();
+        var is_created_otp = date.getTime();
         let sql = `SELECT * FROM user WHERE phone = "${phone}"`;
         db.query(sql, [{phone}], (err, rown, response) => {
             if (err) throw err
@@ -96,9 +99,9 @@ module.exports = {
                 var id_User = rown[0].id;
                 var url = `${random_random.esms_url}?Phone=${phone}&Content=${otp}&ApiKey=${random_random.ApiKey}&SecretKey=` +
                     `${random_random.SecretKey}&Brandname=${random_random.Brandname}&SmsType=${random_random.SmsType}`;
-                // axios.get(url)
-                //     .then(function (response) {
-                //         if (response.data.CodeResult == 100) {
+                axios.get(url)
+                    .then(function (response) {
+                        if (response.data.CodeResult == 100) {
                             let sql_otp = `INSERT INTO check_otp SET ?`;
                             console.log("222s", sql_otp)
                             let created_otp = is_created_otp;
@@ -130,13 +133,13 @@ module.exports = {
                                 }]
                                 res.json(ArrGetUser);
                             })
-                    //     } else {
-                    //         res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
-                    //     }
-                    // })
-                    // .catch(function (error) {
-                    //     console.log("err11")
-                    // });
+                        } else {
+                            res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("err11")
+                    });
             } else {
                 res.json({"status": "400", "message": 'Check phone on!',});
             }
@@ -230,9 +233,9 @@ module.exports = {
                 let email = req.body.email;
                 let is_status = 1;
                 let is_active = 2;
-                // axios.get(url)
-                //     .then(function (response) {
-                //         if (response.data.CodeResult == 100) {
+                axios.get(url)
+                    .then(function (response) {
+                        if (response.data.CodeResult == 100) {
                             let sql = `INSERT INTO user SET ?`;
                             console.log("sql_user", sql)
                             db.query(sql, [{
@@ -286,14 +289,14 @@ module.exports = {
                                     res.json({"status": "200", "message": 'User INSERT Ok!', "data": INSERTUserJson})
                                 })
                             })
-                    //     } else {
-                    //         res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
-                    //     }
-                    //
-                    // })
-                    // .catch(function (error) {
-                    //     console.log("err1")
-                    // });
+                        } else {
+                            res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
+                        }
+
+                    })
+                    .catch(function (error) {
+                        console.log("err1")
+                    });
             } else if (rown[0].is_active == 2) {
 
                 var id_User = rown[0].id;
@@ -302,9 +305,9 @@ module.exports = {
                 db.query(sql, (err, rowns, response) => {
                     if (err) throw err
                     if (rowns.length < 3) {
-                        // axios.get(url)
-                        //     .then(function (response) {
-                        //         if (response.data.CodeResult == 100) {
+                        axios.get(url)
+                            .then(function (response) {
+                                if (response.data.CodeResult == 100) {
                                 let sql_otp = `INSERT INTO check_otp SET ?`;
                                 let created_otp = is_created_otp;
                                 let at_created = check_time;
@@ -324,13 +327,13 @@ module.exports = {
                                     var INSERTUserJson = JSON.parse(_INSERTUser);
                                     res.json({"status": "200", "message": 'tao taoi khoan thanh cong!', "data": INSERTUserJson})
                                 })
-                        //     } else {
-                        //         res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
-                        //     }
-                        // })
-                        // .catch(function (error) {
-                        //     console.log("err11")
-                        // });
+                                } else {
+                                    res.json({"status": "400", "message": 'Phone not valid:', "data": response.data})
+                                }
+                            })
+                            .catch(function (error) {
+                                console.log("err11")
+                            });
                     } else {
                         res.json({"status": "400", "message": 'quá 3 lần check otp!'})
                     }
