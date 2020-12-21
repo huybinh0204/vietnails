@@ -63,12 +63,13 @@ module.exports = {
         var phut_ht = Number(check_time.slice(14, 16));
         var gio_ht = check_PM == "PM" ? (gio + 12) : gio;
         var is_gio_ht = check_PM == "PM" ? (gio + 13) : gio;
-        let sql = `SELECT schedule.id,notify_key.id_User as id_User, notify_key.on_key as on_key, schedule.start_time as start_time FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule JOIN notify_key ON schedule_details.id_User = notify_key.id_User WHERE start_time LIKE '${ngay}%' GROUP BY schedule_details.id_Schedule`;
+        let sql = `SELECT schedule.id as id,notify_key.id_User as id_User, notify_key.on_key as on_key, schedule.start_time as start_time FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule JOIN notify_key ON schedule_details.id_User = notify_key.id_User WHERE start_time LIKE '${ngay}%' GROUP BY schedule_details.id_Schedule`;
         // console.log("sql khach hang", sql)
         db.query(sql, (err, rown, response) => {
             if (err) throw err
             for (var i = 0; i < rown.length; i++) {
                 var a = rown[i].start_time.toString();
+                var schedule_id = rown[i].id;
                 var gio_db = Number(a.slice(16, 18));
                 var phut_db = Number(a.slice(19, 21));
                 if (is_gio_ht == gio_db && phut_db == 0 && phut_ht >= 45) {
@@ -134,7 +135,7 @@ module.exports = {
                     db.query(sql_select, (err, rowk, response) => {
                         if (err) throw err
                         var data_notification = {
-                            content: 'Đã đến giờ làm nails cửa bạn bạn đến chưa !',
+                            content: 'Đã đến giờ làm nails của bạn, bạn đến chưa !',
                             id_User: id_User,
                             receiver: rowk[0].fullName,
                         }
@@ -173,7 +174,7 @@ module.exports = {
                     db.query(sql_select, (err, rowk, response) => {
                         if (err) throw err
                         var data_notification = {
-                            content: "Đã đến giờ làm nails cửa bạn bạn đến chưa !",
+                            content: "Đã đến giờ làm nails ca bạn, bạn đến chưa !",
                             id_User: id_User,
                             receiver: rowk[0].fullName,
                         }
@@ -218,6 +219,15 @@ module.exports = {
                             if (err) throw err
                             console.log("thong bao thanh cong")
                         });
+                        var data_kh = {
+                            id_User:id_User,
+                            status: 1,
+                        }
+                        let sql_schedule = `UPDATE schedule SET ? WHERE id = ${schedule_id}`
+                        db.query(sql_schedule, [data_kh], (err, response) => {
+                            if (err) throw err
+                            console.log('he thong huy khách hàng huỷ đơn!');
+                        })
                     });
                 }
 
@@ -369,60 +379,19 @@ module.exports = {
                             if (err) throw err
                             console.log("thong bao thanh cong")
                         });
+                        var data_kh = {
+                            id_User:id_User,
+                            status: 1,
+                        }
+                        let sql_schedule = `UPDATE schedule SET ? WHERE id = ${schedule_id}`
+                        db.query(sql_schedule, [data_kh], (err, response) => {
+                            if (err) throw err
+                            console.log('he thong huy khách hàng huỷ đơn!');
+                        })
                     });
-
                 }
             }
-
         })
-
-        // res.json(rown);
-
-// var  gio = ngay + (Number(check_time.slice(11,13)) +12).toString() +phut;
-// var check_time_schedule = check_PM == 'PM' ? (gio) : (check_time.slice(0,16));
-// let sql = `SELECT notify_key.id_User as id_User, notify_key.on_key as on_key FROM schedule JOIN schedule_details ON schedule.id = schedule_details.id_Schedule JOIN notify_key ON schedule_details.id_User = notify_key.id_User WHERE start_time LIKE '${check_time_schedule}%' GROUP BY schedule_details.id_Schedule`;
-// console.log("sql khach hang",sql)
-// db.query(sql, (err, rown, response) => {
-//     if (err) throw err
-//     if(rown != ''){
-//         var  registration_ids =[];
-//         for (var i = 0 ; i<rown.length;i++){
-//             registration_ids.push(rown[i].on_key);
-//         }
-//         var urls = "https://fcm.googleapis.com/fcm/send";
-//         let priority = 'high';
-//         let notification = {
-//             "title": "Chào bạn",
-//             "text": "Chào bạn đến lịch làm nails của bạn!"
-//         };
-//         let data = {
-//             "title": "Firebase Notification Example",
-//             "detail": "This firebase"
-//         };
-//         axios.post(urls, {
-//                 registration_ids: registration_ids,
-//                 priority: priority,
-//                 notification: notification,
-//                 data: data
-//             },
-//             {
-//                 headers:{
-//                     Authorization: 'key=AAAAI03A8A0:APA91bGsIIK6IvC_0r_mkJo38wpIHuHZoNbGqNzM_17s5FSv7L8fxKCf4fLoB0t61RZb4_dbGYbBdeP2FPxTx8P2K0MAaUJcaTXde4IB00k85yvCKb8SyxnSXUKmvkyI7XjOqrGHgXAI',
-//                     'Content-Type': 'application/json'
-//                 }
-//             }
-//         )
-//             .then(function (response) {
-//                 console.log("notify thanh cong")
-//             })
-//             .catch(function (error) {
-//                 console.log("error",error)
-//             });
-//
-//     }else {
-//         console.log("NO User khach hang push notify!");
-//     }
-// })
     },
     store: (req, res) => {
         let on_key = req.body.on_key;
