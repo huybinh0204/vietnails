@@ -172,7 +172,7 @@ module.exports = {
                             var check_created_otp = is_created + 180000;
                             var datetody = new Date();
                             var check_date_otpt = datetody.getTime();
-                            console.log("check_created_otp >=", check_created_otp +">=" + check_date_otpt)
+                            console.log("check_created_otp", check_created_otp +">=" + check_date_otpt)
                             // luon db >= time
                             let otp_status = "N";
                             let id = rowns[0].id;
